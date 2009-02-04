@@ -1,0 +1,64 @@
+	======================
+	|		     |
+	| geoGraph TODO list |
+	| 	   	     |
+	======================
+Please list here all intended modifications
+and all detected bugs
+
+=== EDITING CONVENTION ===
+=> Add a "-- done" or "-- fixed" tag when you achieved something
+=> '*' indicates stuff to do
+=> 'o' indicates done stuff
+=> '*o*' indicates partly done stuff
+=> Inside a given section, priority goes decreasing.
+=> Delete fixed things each new release.
+=========================================================
+=========================================================
+
+
+
+=========================
+=========================
+ FOR NEXT STABLE VERSION
+=========================
+=========================
+
+==============
+ CODE ISSUES:
+==============
+* 
+
+=======================
+ DOCUMENTATION ISSUES:
+=======================
+* 
+
+=====================
+ NEW IMPLEMENTATIONS:
+=====================
+
+
+
+==========
+ TESTING:
+==========
+*
+
+
+
+=============================
+=============================
+ LOW PRIORITY / MINOR ISSUES
+=============================
+=============================
+*
+
+
+
+============
+============
+ LONG TERM
+============
+============
+* 
