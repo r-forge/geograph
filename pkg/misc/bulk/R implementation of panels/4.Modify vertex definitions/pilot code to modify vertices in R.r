@@ -5,7 +5,7 @@ habitat.ver<-1 ##version file for the habitat variables
 
 
 ##Data directory
-data.dir<-c("E:/Docs/Projects/Genetics/Isolation_by_distance/R implementation of panels/0.Data/")
+data.dir<-c("../0.Data/")
 setwd(paste(data.dir,file.name,sep=""))
 
 ##libraries needed
