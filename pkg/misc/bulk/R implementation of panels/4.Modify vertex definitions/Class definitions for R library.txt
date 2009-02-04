@@ -1,0 +1,10 @@
+frictionGraph
+
+centers = data.frame of id, long and lat coordinates for centers with numeric id as rownames
+habitat = habitat characteristics for vertices
+habitatDef = habitat definitions (types, colours, costs)
+edgesRef = all edges for the graph
+edgesCost = edges weighted by the friction cost (with zero edges removed)
+edgesRemoved = dataframe with vertices pairs of edges that have been removed
+
+

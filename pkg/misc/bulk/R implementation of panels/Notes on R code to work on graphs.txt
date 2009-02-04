@@ -1,0 +1,3 @@
+Steps to create a graph in R:
+
+1) The first step is to read in an NCDF file. Only change the name of the file, all other computations will be sorted out automatically. This generates two files, one containing the "layers" with the hexagons IDs, the other with the coordinates referring to each ID.
