@@ -1,7 +1,7 @@
 file.name<-"C10242.global"
 
 ##Data directory
-data.dir<-c("E:/Docs/Projects/Genetics/Isolation_by_distance/R implementation of panels/0.Data/")
+data.dir<-c("../0.Data/")
 
 setwd(paste(data.dir,file.name,sep=""))
 read.csv(paste(file.name,".center.coord.csv",sep=""))->Coord
