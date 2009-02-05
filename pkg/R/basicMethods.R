@@ -40,11 +40,13 @@ setMethod("show", "gGraphHistory", function(object){
     N <- length(x@cmd)
 
     ## printing
-    cat("\n=== gGgraphHistory ===\n")
+    ## cat("\n=== gGgraphHistory ===\n")
     if(N > 0){
         for(i in 1:N){
-            cat(i, "// Date:", x@dates[i], "\n")
-            cat("// Comment:", x@comments[i], "\n")
+            cat("=",i, "=\n")
+            cat("Date:", x@dates[i], "\n")
+            cat("Comment:", x@comments[i], "\n")
+            cat("Command: ")
             print(x@cmd[[i]])
             cat("\n")
         }
@@ -65,22 +67,17 @@ setMethod("show", "gGraph", function(object){
 
     ## printing
     cat("\n=== gGgraph object ===\n")
-    if(N > 0){
-        cat("\n\t- @coords: spatial coordinates of nodes -\n")
-        head(x@coords, nDisp)
+    cat("\n@coords: spatial coordinates of",nrow(x@coords),"nodes\n")
+    print(head(x@coords, nDisp))
 
-        cat("\n\t- @nodes.attr: nodes attributes -\n")
-        head(x@nodes.attr, nDisp)
+    cat("\n@nodes.attr:",nrow(x@nodes.attr),"nodes attributes\n")
+    print(head(x@nodes.attr, nDisp))
 
-        cat("\n\t- @graph: -\n")
-        print(x@graph)
+    cat("\n@graph:\n")
+    print(x@graph)
 
-        cat("\n\t- @gGraphHistory -\n")
-        print(x@history[1:nDisp])
-
-    } else{
-        cat("\t- empty object -\n")
-    }
+    cat("\n@gGraphHistory:\n")
+    print(x@history[1:min(nDisp,length(x@history@cmd))])
 
 }) # end show gGraph
 
