@@ -13,7 +13,7 @@ habitat.details<-rbind(habitat.details,c("landbridge","light green","y"))   ##la
 habitat.details<-rbind(habitat.details,c("oceanic.crossing","light blue","y"))  ##oceanic.crossing = sea which might have been crossed to reach an oceanic island
 
 habitat.details<-as.data.frame(habitat.details)
- 
+habitat.details$habitat <- factor(habitat.details$habitat)
 
 
 
@@ -28,7 +28,8 @@ library(maptools)
 ##Read in informations
 
 ##Read map
-readShapePoly("E:/Docs/Pictures/Maps/Arcview_shapefiles/world/world_merged_polygons.shp")->world
+##readShapePoly("E:/Docs/Pictures/Maps/Arcview_shapefiles/world/world_merged_polygons.shp")->world
+readShapePoly("/home/master/dev/geograph/pkg/misc/bulk/Shapefiles/bluemarblegeo/world_countries_shp/World_countries_shp.shp",force_ring=T)->world
 
 ##read vertext coordinates
 read.csv(paste(file.name,".center.coord.csv",sep=""))->coord.centers
@@ -46,8 +47,6 @@ load(paste(file.name,".edgeList.R.object",sep=""))
 ##We need a removed.edges file that contains edges that should be removed from the graph
 read.csv(paste(file.name,".removed.edges.csv",sep=""),row.names=1)->removed.edges
 
-
-                    
 
 
 ##object to store zoom logs to be able to zoom out
@@ -109,7 +108,7 @@ change.vertices<-function(habitat.type=NULL) {
       spoint<-identify(coord.centers$long,coord.centers$lat,plot=F,n=1)
       if (length(spoint)>0) {
        vertex.habitat$habitat[spoint]<<-habitat.type
-       
+
        ##replot the point with its new colour
        points(coord.centers[spoint,2:3],pch=19,cex=psize.def,col=as.character(habitat.details[habitat.details$habitat==habitat.type,2]))
 
@@ -166,27 +165,27 @@ plot.edges<-function()  {
      id1.cross<-habitat.details[habitat.details$habitat==vertex.habitat$habitat[id1],3]
      if (id1.cross=="y") {
         for (j in 1:length(connected.vertices)) {
-          id2<-connected.vertices[j]      
+          id2<-connected.vertices[j]
           id2.cross<-habitat.details[habitat.details$habitat==vertex.habitat$habitat[id2],3]
             if (id2.cross=="y") {
                 segments(coord.centers$long[id1],coord.centers$lat[id1],coord.centers$long[id2],coord.centers$lat[id2],lwd=2)
             }
         }
-     }   
+     }
   }
   ##there is an issue when points from one end of map are connected to the other end (i.e. where the map "wraps" around
-  
+
   ##plot removed edges differently (in red)
   if (dim(removed.edges)[1]>0) {
     for (i in 1:dim(removed.edges)[1]) {
       segments(coord.centers$long[removed.edges[i,1]],coord.centers$lat[removed.edges[i,1]],coord.centers$long[removed.edges[i,2]],coord.centers$lat[removed.edges[i,2]], col="red",lwd=2)
     }
   }
-  
+
   ##replot the poinst to make the figure prettier
 	for (i in 1:dim(habitat.details)[1]) {
 	 points(coord.centers[vertex.habitat$habitat==habitat.details[i,1],2:3],pch=19,cex=psize.def,col=as.character(habitat.details[i,2]))
-  }  
+  }
 }
 
 
@@ -199,10 +198,10 @@ remove.edges<-function() {
       spoint<-NULL
       spoint<-identify(coord.centers$long,coord.centers$lat,plot=F,n=2)
       if(length(spoint)>1) {
-        segments(coord.centers$long[spoint[1]],coord.centers$lat[spoint[1]],coord.centers$long[spoint[2]],coord.centers$lat[spoint[2]],col="red",lwd=2) 
+        segments(coord.centers$long[spoint[1]],coord.centers$lat[spoint[1]],coord.centers$long[spoint[2]],coord.centers$lat[spoint[2]],col="red",lwd=2)
         points(coord.centers$long[spoint[1]],coord.centers$lat[spoint[1]],pch=19,cex=psize.def,col=as.character(habitat.details[habitat.details$habitat== vertex.habitat$habitat[spoint[1]],2]))
         points(coord.centers$long[spoint[2]],coord.centers$lat[spoint[2]],pch=19,cex=psize.def,col=as.character(habitat.details[habitat.details$habitat== vertex.habitat$habitat[spoint[1]],2]))
-        
+
         removed.edges[dim(removed.edges)[1]+1,]<<-sort(c(as.numeric(row.names(coord.centers)[spoint[1]]),as.numeric(row.names(coord.centers)[spoint[2]])))
       }
     }
@@ -219,10 +218,10 @@ readd.edges<-function() {
       spoint<-NULL
       spoint<-identify(coord.centers$long,coord.centers$lat,plot=F,n=2)
       if(length(spoint)>1) {
-        segments(coord.centers$long[spoint[1]],coord.centers$lat[spoint[1]],coord.centers$long[spoint[2]],coord.centers$lat[spoint[2]],lwd=2) 
+        segments(coord.centers$long[spoint[1]],coord.centers$lat[spoint[1]],coord.centers$long[spoint[2]],coord.centers$lat[spoint[2]],lwd=2)
         points(coord.centers$long[spoint[1]],coord.centers$lat[spoint[1]],pch=19,cex=psize.def,col=as.character(habitat.details[habitat.details$habitat== vertex.habitat$habitat[spoint[1]],2]))
         points(coord.centers$long[spoint[2]],coord.centers$lat[spoint[2]],pch=19,cex=psize.def,col=as.character(habitat.details[habitat.details$habitat== vertex.habitat$habitat[spoint[1]],2]))
-        
+
         ##now remove this pair from the removed edges
         removed.edges<<-removed.edges[(removed.edges[,1]==spoint[1]) + (removed.edges[,2]==spoint[2])<2,]
       }
@@ -266,13 +265,13 @@ for (i in 1:dim(friction.details)[1]) {
 if (sum(is.na(vertex.friction))>0) {
   cat("There is a problem with the classification system\n")
 }
-##change weights of edges in edgeList.friction depending on the friction values of vertices, while removing edges of zero length (to make life easier on the graph algorithms) 
+##change weights of edges in edgeList.friction depending on the friction values of vertices, while removing edges of zero length (to make life easier on the graph algorithms)
 for (i in 1:dim(coord.centers)[1]) {
   if (vertex.friction[i]>0) {
     neighbours<-edgeList.friction[[i]]$edges
     edgeList.friction[[i]]$edges<-edgeList.friction[[i]]$edges[vertex.friction[neighbours]>0]
     edgeList.friction[[i]]$weights<-edgeList.friction[[i]]$weights[vertex.friction[neighbours]>0]
-    
+
   edgeList.friction[[i]]$weights<-edgeList.friction[[i]]$weights*((vertex.friction[edgeList.friction[[i]]$edges]+vertex.friction[i])/2)
   ##subset the above to only contain edges bigger than zero
    edgeList.friction[[i]][[2]]<-edgeList.friction[[i]][[2]][edgeList.friction[[i]][[2]]>0]
@@ -300,7 +299,7 @@ if (dim(removed.edges)[1]>0) {
     }
     if (length(edgeList.friction[[id2]]$edge)==0) {
       edgeList.friction[[id2]]<-list(edges=NULL,weights=NULL)
-    }    
+    }
   }
 }
 
