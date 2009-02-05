@@ -43,7 +43,8 @@ and all detected bugs
 ==========
  TESTING:
 ==========
-*
+* test all relevant components of the bulk code:
+- plots -- done
 
 
 
