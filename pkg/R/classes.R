@@ -100,3 +100,82 @@ setClass("gGraph",
 setValidity("gGraph", .gGprah.valid)
 setValidity("gGraphHistory", .gGprahHistory.valid)
 
+
+
+
+
+################
+## CONSTRUCTORS
+################
+setMethod("initialize", "gGraph", function(.Object, ...) {
+    x <- .Object
+    input <- list(...)
+
+    ## handle @coords ##
+    if(!is.null(input$coords)){
+        if(is.list(input$coords) && length(input$coords)==2) {
+            input$coords <- as.data.frame(input$coords)
+        }
+
+        if(is.data.frame(input$coords)){
+            input$coords <- as.matrix(input$coords)
+        }
+
+        if(nrow(input$coords)>0 && !is.numeric(input$coords)) stop("Argument coords has to be numeric.")
+
+        ## names of the matrix
+        colnames(input$coords) <- c("lon","lat")
+        rownames(input$coords) <- as.character(1:nrow(input$coords))
+
+        ## check/rectify longitudes
+        temp <- input$coords[,"lon"]>180
+        input$coords[temp,"lon"] <- input$coords[temp,"lon"]-360
+
+         x@coords <- input$coords
+    }
+
+
+    ## handle @nodes.attr ##
+    if(!is.null(input$nodes.attr)){
+        input$nodes.attr <- as.data.frame(input$nodes.attr)
+
+        if(nrow(input$nodes.attr) != nrow(x@coords)){
+            stop("Number of rows in nodes.attr differ from that of coords.")
+        }
+
+        x@nodes.attr <- input$nodes.attr
+    }
+
+
+    ## handle @graph ##
+    if(is.null(input$graph)){ # graph not provided
+        if(nrow(x@coords)>0){
+            input$graph <- new("graphNEL", nodes=rownames(x@coords))
+        } else{
+            input$graph <- new("graphNEL")
+        }
+    } else { # graph provided
+        if(nrow(x@coords)>0){
+            nodes(input$graph) <- rownames(x@coords)
+        }
+    }
+
+    x@graph <- input$graph
+
+
+    ## handle history ##
+    if(is.null(input$history)){
+        input$history <- new("gGraphHistory")
+    }
+
+    curCall <- match.call(call = sys.call(sys.parent(n=2)))
+    input$history@cmd <- c(input$history@cmd, curCall)
+    input$history@dates <- c(input$history@dates, format(Sys.time()))
+    input$history@comments <- c(input$history@comments, "Object creation (call to new)")
+
+    x@history <- input$history
+
+    ## return object
+    return(x)
+})
+

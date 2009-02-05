@@ -41,11 +41,14 @@ and all detected bugs
 *o* define basic methods
 * define constructor(s)
 * make a worldshape dataset
+* make a worldgraph.10k dataset
+* make a worldgraph.40k dataset
 * provide plot method
 * provide zoom method(s)
 * provide points add/removal methods
 * provide edge add/removal methods
 * provide revert method
+* provide a method to define connectivity from the @nodes.attr slot.
 
 
 ==========
