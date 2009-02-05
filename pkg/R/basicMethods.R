@@ -1,7 +1,7 @@
 #################
 ## BASIC METHODS
 #################
-setMethod("[", "gGraphHistory", function(x, i) {
+setMethod("[", "gGraphHistory", function(x, i, j = "missing", drop = "missing") {
     if(missing(i)) i <- TRUE
 
     res <- x

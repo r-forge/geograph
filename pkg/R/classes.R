@@ -18,10 +18,10 @@ setClass("gGraphHistory", representation(cmd = "list", dates = "character", comm
 setClass("gGraph",
          representation(coords = "matrix", nodes.attr = "data.frame", graph = "graphNEL",
                         history = "gGraphHistory"),
-         prototype(coords = matrix(numeric(0), ncol=2, dimnames=list(NULL, c("lon","lat")))
+         prototype(coords = matrix(numeric(0), ncol=2, dimnames=list(NULL, c("lon","lat"))),
                    nodes.attr = data.frame(),
                    graph = new("graphNEL"),
-                   history = new("gGraphHistory"))
+                   history = new("gGraphHistory") )
          )
 
 
@@ -33,7 +33,7 @@ setClass("gGraph",
 ####################
 ## VALIDITY METHODS
 ####################
-.gGprah.valid <- function(x){
+.gGprah.valid <- function(object){
     N <- nrow(x@coords)
 
     ## several cases of non-validity
@@ -64,14 +64,14 @@ setClass("gGraph",
 
 
 
-.gGprahHistory.valid <- function(x){
+.gGprahHistory.valid <- function(object){
     Lcmd <- length(x@cmd)
     Ldates <- length(x@dates)
     Lcomments <- length(x@comments)
     ## several cases of non-validity ##
 
     ## empty object always ok
-    if(Lcmd == Ldates == Lcomments = 0) return(TRUE)
+    if(all(c(Lcmd,Ldates,Lcomments) == 0)) return(TRUE)
 
     ## different length
     if(length(unique(c(Lcmd, Ldates, Lcomments)))>1) {
