@@ -19,12 +19,15 @@ setMethod("[", "gGraph", function(x, i, j, ..., drop=TRUE) {
     if(missing(i)) i <- TRUE
     if(missing(j)) j <- TRUE
 
+    ## do the subsetting
     res <- x
     res@coords <- res@coords[i, , drop=FALSE]
     res@coords.attr <- res@nodes.attr[i, j, drop=FALSE]
     res@graph <- subGraph(nodes(res@graph)[i], res@graph)
     res@history <- res@history[i]
 
+    ## remember this subsetting
+    
     return(res)
 })
 
