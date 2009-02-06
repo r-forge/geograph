@@ -211,7 +211,7 @@ setMethod("initialize", "gGraph", function(.Object, ...) {
 
     ## handle history ##
     if(is.null(input$cmd)){
-        input$cmd <- match.call(call=sys.call(-2))
+        input$cmd <-sys.call(-2)
     }
 
     temp <- list(Class="gGraphHistory", history=input$history,
