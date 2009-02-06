@@ -28,8 +28,6 @@ setClass("gGraph",
 
 
 
-
-
 ####################
 ## VALIDITY METHODS
 ####################
@@ -214,8 +212,9 @@ setMethod("initialize", "gGraph", function(.Object, ...) {
         input$cmd <-sys.call(-2)
     }
 
-    temp <- list(Class="gGraphHistory", history=input$history,
-                 cmd=input$cmd, dates=input$dates, comments=input$comments)
+    if(is.null(input$comments) || input$comments==""){
+        input$comments <- "Creation of the object (using new)."
+    }
 
     x@history <- new("gGraphHistory", history=input$history,
                  cmd=input$cmd, dates=input$dates, comments=input$comments)
