@@ -168,7 +168,7 @@ setMethod("initialize", "gGraph", function(.Object, ...) {
         input$history <- new("gGraphHistory")
     }
 
-    curCall <- match.call(call = sys.call(sys.parent(n=2)))
+    curCall <- match.call(call=sys.call(-2))
     input$history@cmd <- c(input$history@cmd, curCall)
     input$history@dates <- c(input$history@dates, format(Sys.time()))
     input$history@comments <- c(input$history@comments, "Object creation (call to new)")
