@@ -26,7 +26,7 @@ setMethod("[", "gGraph", function(x, i, j, ..., drop=TRUE) {
         res@nodes.attr <- res@nodes.attr[i, j, drop=FALSE]
     }
     res@graph <- subGraph(nodes(res@graph)[i], res@graph)
-    res@history <- res@history[i]
+    res@history <- res@history
 
     ## remember this subsetting
     curCall <- match.call()
@@ -77,15 +77,18 @@ setMethod("show", "gGraph", function(object){
     cat("\n=== gGgraph object ===\n")
     cat("\n@coords: spatial coordinates of",nrow(x@coords),"nodes\n")
     print(head(x@coords, nDisp))
+    if(N > nDisp) cat("...\n")
 
     cat("\n@nodes.attr:",nrow(x@nodes.attr),"nodes attributes\n")
     print(head(x@nodes.attr, nDisp))
+    if(nrow(x@nodes.attr) > nDisp) cat("...\n")
 
     cat("\n@graph:\n")
     print(x@graph)
 
-    cat("\n@gGraphHistory:\n")
+    cat("\n@gGraphHistory: (", length(x@history@cmd),") items\n")
     print(x@history[1:min(nDisp,length(x@history@cmd))])
+    if(length(x@history@cmd) > nDisp) cat("\n...\n")
 
 }) # end show gGraph
 
