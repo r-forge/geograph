@@ -95,6 +95,19 @@ setMethod("show", "gGraph", function(object){
 
 
 
+is.gGraphHistory <- function(x){
+    res <- (is(x, "gGraphHistory") & validObject(x))
+    return(res)
+}
 
+
+
+
+
+
+is.gGraph <- function(x){
+    res <- (is(x, "gGraph") & validObject(x))
+    return(res)
+}
 
 
