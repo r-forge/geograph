@@ -32,7 +32,10 @@ setClass("gGraph",
 ## VALIDITY METHODS
 ####################
 .gGprah.valid <- function(object){
+    object <- x
     N <- nrow(x@coords)
+
+    if(N == 0) return(TRUE) # empty object always valid
 
     ## several cases of non-validity
 
@@ -42,8 +45,9 @@ setClass("gGraph",
         return(FALSE)
     }
 
-    ## wrong nrow for coords
-    if(nrow(x@coords.attr != N)){
+    ## wrong nrow for nodes attributes
+    temp <- nrow(x@nodes.attr)
+    if(temp > 0 && temp != N){
         cat("\n Number of coords do not match number of node attributes.")
         return(FALSE)
     }
@@ -63,6 +67,7 @@ setClass("gGraph",
 
 
 .gGprahHistory.valid <- function(object){
+    x <- object
     Lcmd <- length(x@cmd)
     Ldates <- length(x@dates)
     Lcomments <- length(x@comments)
@@ -97,6 +102,16 @@ setClass("gGraph",
 
 setValidity("gGraph", .gGprah.valid)
 setValidity("gGraphHistory", .gGprahHistory.valid)
+
+is.gGraphHistory <- function(x){
+    res <- (is(x, "gGraphHistory") & validObject(x))
+    return(res)
+}
+
+is.gGraph <- function(x){
+    res <- (is(x, "gGraph") & validObject(x))
+    return(res)
+}
 
 
 
