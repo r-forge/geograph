@@ -107,6 +107,52 @@ setValidity("gGraphHistory", .gGprahHistory.valid)
 ################
 ## CONSTRUCTORS
 ################
+setMethod("initialize", "gGraphHistory", function(.Object, ...) {
+    x <- .Object
+    input <- list(...)
+    inputClasses <- sapply(input, class)
+
+
+    ## handle ... ##
+    if(is.null(input$cmd)){
+        input$cmd <- expression()
+    }
+
+    if(is.null(input$dates)){
+        input$dates <- format(Sys.time())
+    } else{
+        input$dates <- as.character(input$dates)
+    }
+
+    if(is.null(input$comments)){
+        input$comments <- ""
+    } else{
+        input$comments <- as.character(input$comments)
+    }
+
+
+    ## if a gGraphHistory object is provided in ..., merge data with it. ##
+    if(length(input)>0 && any(inputClasses=="gGraphHistory")){
+        prevObj <- input[[which(inputClasses=="gGraphHistory")[1]]] # 1st obj taken if several provided
+        res <- prevObj
+        res@cmd[[length(res@cmd)+1]] <- input$cmd
+        res@dates <- c(res@dates, input$dates)
+        res@comments <- c(res@comments, input$comments)
+    } else{
+        res <- x
+        res@cmd[[length(res@cmd)+1]] <- input$cmd
+        res@dates <- input$dates
+        res@comments <- input$comments
+    }
+
+    return(res)
+}) # end gGraphHistory constructor
+
+
+
+
+
+
 setMethod("initialize", "gGraph", function(.Object, ...) {
     x <- .Object
     input <- list(...)
@@ -164,18 +210,18 @@ setMethod("initialize", "gGraph", function(.Object, ...) {
 
 
     ## handle history ##
-    if(is.null(input$history)){
-        input$history <- new("gGraphHistory")
+    if(is.null(input$cmd)){
+        input$cmd <- match.call(call=sys.call(-2))
     }
 
-    curCall <- match.call(call=sys.call(-2))
-    input$history@cmd <- c(input$history@cmd, curCall)
-    input$history@dates <- c(input$history@dates, format(Sys.time()))
-    input$history@comments <- c(input$history@comments, "Object creation (call to new)")
+    temp <- list(Class="gGraphHistory", history=input$history,
+                 cmd=input$cmd, dates=input$dates, comments=input$comments)
 
-    x@history <- input$history
+    x@history <- new("gGraphHistory", history=input$history,
+                 cmd=input$cmd, dates=input$dates, comments=input$comments)
+
 
     ## return object
     return(x)
-})
+}) # end gGraph constructor
 
