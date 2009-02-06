@@ -86,28 +86,9 @@ setMethod("show", "gGraph", function(object){
     cat("\n@graph:\n")
     print(x@graph)
 
-    cat("\n@gGraphHistory: (", length(x@history@cmd),") items\n")
+    cat("\n@gGraphHistory: (", length(x@history@cmd)," items )\n")
     print(x@history[1:min(nDisp,length(x@history@cmd))])
     if(length(x@history@cmd) > nDisp) cat("\n...\n")
 
 }) # end show gGraph
-
-
-
-
-is.gGraphHistory <- function(x){
-    res <- (is(x, "gGraphHistory") & validObject(x))
-    return(res)
-}
-
-
-
-
-
-
-is.gGraph <- function(x){
-    res <- (is(x, "gGraph") & validObject(x))
-    return(res)
-}
-
 
