@@ -44,3 +44,29 @@ setMethod("getAttr", "gGraph", function(x, ...) {
     res <- x@nodes.attr
     return(res)
 })
+
+
+
+
+
+#############
+## getDates
+#############
+setGeneric("getDates", function(x, ...) {
+    standardGeneric("getDates")
+})
+
+
+
+setMethod("getDates", "gGraphHistory", function(x, ...) {
+    res <- x@dates
+    res <- as.POSIXct(res)
+    return(res)
+})
+
+
+
+setMethod("getDates", "gGraph", function(x, ...) {
+    res <- getDates(getHistory(x))
+    return(res)
+})
