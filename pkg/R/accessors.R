@@ -70,3 +70,20 @@ setMethod("getDates", "gGraph", function(x, ...) {
     res <- getDates(getHistory(x))
     return(res)
 })
+
+
+
+
+#############
+## getCoords
+#############
+setGeneric("getCoords", function(x, ...) {
+    standardGeneric("getCoords")
+})
+
+
+
+setMethod("getCoords", "gGraph", function(x, ...) {
+    res <- x@coords
+    return(res)
+})

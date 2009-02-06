@@ -39,7 +39,8 @@ and all detected bugs
 =====================
 *o* define classes
 *o* define basic methods
-* define constructor(s)
+*o* define constructor(s)
+*o* provide accessors
 * make a worldshape dataset
 * make a worldgraph.10k dataset
 * make a worldgraph.40k dataset
@@ -47,7 +48,7 @@ and all detected bugs
 * provide zoom method(s)
 * provide points add/removal methods
 * provide edge add/removal methods
-* provide revert method
+*o* provide revert method
 * provide a method to define connectivity from the @nodes.attr slot.
 
 
