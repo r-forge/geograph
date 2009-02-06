@@ -22,12 +22,17 @@ setMethod("[", "gGraph", function(x, i, j, ..., drop=TRUE) {
     ## do the subsetting
     res <- x
     res@coords <- res@coords[i, , drop=FALSE]
-    res@coords.attr <- res@nodes.attr[i, j, drop=FALSE]
+    if(nrow(res@nodes.attr)>0){
+        res@nodes.attr <- res@nodes.attr[i, j, drop=FALSE]
+    }
     res@graph <- subGraph(nodes(res@graph)[i], res@graph)
     res@history <- res@history[i]
 
     ## remember this subsetting
-    
+    curCall <- match.call()
+    newHist <- new("gGraphHistory", res@history, cmd=curCall, comments="Subsetting using [...]")
+    res@history <- newHist
+
     return(res)
 })
 
