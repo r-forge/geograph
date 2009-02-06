@@ -31,11 +31,13 @@ rebuild <- function(x, upTo){
     ## handle history
     myHistory <- myHistory[toKeep]
     myCmd <- myHistory@cmd
+    objName <- deparse(substitute(x))
 
     for(i in 1:upTo){
-        res <- eval(myCmd[[i]])
+        assign(objName, eval(myCmd[[i]]) )
     }
 
+    res <- get(objName)
     return(res)
 
 } # end rebuild
