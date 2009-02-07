@@ -9,6 +9,7 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world",
     ## create the .geoGraphEnv if it does not exist
     if(!exists(".geoGraphEnv", envir=.GlobalEnv)) {
         assign(".geoGraphEnv",  new.env(parent=.GlobalEnv), envir=.GlobalEnv)
+        warning(".geoGraphEnv was not present, which may indicate a problem in loading geoGraph.")
     }
 
     env <- get(".geoGraphEnv", envir=.GlobalEnv) # env is our target environnement
