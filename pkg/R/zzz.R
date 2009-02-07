@@ -5,6 +5,6 @@
 
     cat("\n\t====================\n")
     cat("\t geoGraph is loaded ")
-    cat("\t\n====================\n")
+    cat("\n\t====================\n")
     assign(".geoGraphEnv", new.env(parent=.GlobalEnv), env=.GlobalEnv)
 }
