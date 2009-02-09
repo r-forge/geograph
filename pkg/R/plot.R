@@ -16,16 +16,16 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
     coords <- getCoords(x)
 
     ## handle xlim and ylim
-    if((!exists("xlim", envir=env)) | reset) { # if xlim absent or if reset
-        assign("xlim", range(coords[,1]), envir=env)
+    if((!exists("zoom.log", envir=env)) | reset) { # if xlim absent or if reset
+        temp <- c(range(coords[,1]), range(coords[,2]))
+        .zoomlog.up(temp)
     }
 
-    if((!exists("ylim", envir=env)) | reset) {# if ylim absent or if reset
-        assign("ylim", range(coords[,2]), envir=env)
-    }
+    zoomlog <- get("zoom.log", envir=env)
+    zoomlog <- zoomlog[1,]
 
-    xlim <- get("xlim", envir=env)
-    ylim <- get("ylim", envir=env)
+    xlim <- zoomlog[1:2]
+    ylim <- zoomlog[3:4]
 
     ## handle zoom and psize
     if(is.null(psize)){
@@ -64,7 +64,7 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
 
     assign("usr", par("usr"), envir=env)
 
-    curCall <- match.call()
+    curCall <- sys.call(-1)
     assign("last.plot", curCall, envir=env)
 
     return(invisible())
@@ -77,7 +77,7 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
 ############
 ## plotEdges
 ############
-plotEdges <- function(x, replot=TRUE, col="grey", pch=1, psize=NULL,...){
+plotEdges <- function(x, replot=TRUE, col="grey", lwd=2, pch=1, psize=NULL,...){
     ## some checks
     if(!is.gGraph(x)) stop("x is not a valid gGraph object.")
 
@@ -107,11 +107,11 @@ plotEdges <- function(x, replot=TRUE, col="grey", pch=1, psize=NULL,...){
 
     ## plot segments
     segments(keptCoords[keptEdges[,1],1], keptCoords[keptEdges[,1],2],
-             keptCoords[keptEdges[,2],1], keptCoords[keptEdges[,2],2], col=col, ...)
+             keptCoords[keptEdges[,2],1], keptCoords[keptEdges[,2],2], col=col, lwd=lwd, ...)
 
     ## replot points
     if(replot){
-        points(keptCoords[,1], keptCoords[,2], pch=pch, cex=cex)
+        points(keptCoords[,1], keptCoords[,2], pch=pch, cex=psize)
     }
 
     return(invisible())
