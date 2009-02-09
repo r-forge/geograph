@@ -18,6 +18,12 @@ setMethod("[", "gGraphHistory", function(x, i, j = "missing", drop = "missing") 
 setMethod("[", "gGraph", function(x, i, j, ..., drop=TRUE) {
     if(missing(i)) i <- TRUE
     if(missing(j)) j <- TRUE
+    argList <- list(...)
+    if(is.null(argList$useSubGraph)){
+        useSubGraph <- FALSE
+    } else {
+        useSubGraph <- argList$useSubGraph
+    }
 
     ## do the subsetting
     res <- x
@@ -25,7 +31,32 @@ setMethod("[", "gGraph", function(x, i, j, ..., drop=TRUE) {
     if(nrow(res@nodes.attr)>0){
         res@nodes.attr <- res@nodes.attr[i, j, drop=FALSE]
     }
-    res@graph <- subGraph(nodes(res@graph)[i], res@graph)
+    if(useSubGraph){ # use procedure from graph package to subset graph (slow)
+        res@graph <- subGraph(nodes(res@graph)[i], res@graph)
+    } else{ # use a customized procedure (faster)
+        myGraph <- getGraph(x)
+        myGraph@nodes <- myGraph@nodes[i]
+        myGraph@edgeL <- myGraph@edgeL[myGraph@nodes]
+        nodeId <- as.integer(myGraph@nodes)
+        f1.noweights <- function(oneNode){ # function to subset graph without weights
+            res <- oneNode
+            res$edges <- res$edges[res$edges %in% nodeId]
+            return(res)
+        }
+        f1.withweights <- function(oneNode){ # function to subset graph with weights
+            res <- oneNode
+            res$edges <- res$edges[res$edges %in% nodeId]
+            res$weights <- res$weights[res$edges %in% nodeId]
+            return(res)
+        }
+
+        if(is.null(myGraph@edgeL$weights)){
+            myGraph@edgeL <- lapply(myGraph@edgeL, f1.noweights)
+        } else {
+            myGraph@edgeL <- lapply(myGraph@edgeL, f1.withweights)
+        }
+    } # end subset graph
+
     res@history <- res@history
 
     ## remember this subsetting

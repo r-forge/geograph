@@ -87,3 +87,22 @@ setMethod("getCoords", "gGraph", function(x, ...) {
     res <- x@coords
     return(res)
 })
+
+
+
+
+
+
+#############
+## getCoords
+#############
+setGeneric("getEdges", function(x, ...) {
+    standardGeneric("getEdges")
+})
+
+
+
+setMethod("getCoords", "gGraph", function(x, ...) {
+    res <- edges(x@graph)
+    return(res)
+})
