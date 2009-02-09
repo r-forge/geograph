@@ -66,7 +66,7 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world",
 ############
 ## plotEdges
 ############
-plotEdges <- function(x,...){
+plotEdges <- function(x, replot=TRUE, col="grey",...){
     ## some checks
     if(!is.gGraph(x)) stop("x is not a valid gGraph object.")
 
@@ -88,10 +88,12 @@ plotEdges <- function(x,...){
 
     ## plot segments
     segments(keptCoords[keptEdges[,1],1], keptCoords[keptEdges[,1],2],
-             keptCoords[keptEdges[,2],1], keptCoords[keptEdges[,2],2])
+             keptCoords[keptEdges[,2],1], keptCoords[keptEdges[,2],2], col=col)
 
     ## replot points
-    points(keptCoords[,1], keptCoords[,2])
+    if(replot){
+        points(keptCoords[,1], keptCoords[,2])
+    }
 
     return(invisible())
 } # end plotEdges
