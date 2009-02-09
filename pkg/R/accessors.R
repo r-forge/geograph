@@ -102,7 +102,7 @@ setGeneric("getEdges", function(x, ...) {
 
 
 
-setMethod("getCoords", "gGraph", function(x, mode=c("asIs","matrix"), unique=FALSE, ...) {
+setMethod("getEdges", "gGraph", function(x, mode=c("asIs","matrix"), unique=FALSE, ...) {
     mode <- match.arg(mode)
     if(mode=="asIs") return(x@graph)
 
@@ -113,7 +113,7 @@ setMethod("getCoords", "gGraph", function(x, mode=c("asIs","matrix"), unique=FAL
     res <- cbind(Vi=col1, Vj=col2)
     if(unique){
         toKeep <- res[,1] < res[,2]
-        res <- res[toKeep,]
+        res <- res[toKeep,, drop=FALSE]
     }
     return(res)
 })

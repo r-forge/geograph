@@ -57,6 +57,8 @@ setMethod("[", "gGraph", function(x, i, j, ..., drop=TRUE) {
         }
     } # end subset graph
 
+    res@graph <- myGraph
+
     res@history <- res@history
 
     ## remember this subsetting

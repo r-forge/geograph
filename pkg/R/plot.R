@@ -64,25 +64,34 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world",
 
 
 ############
-## addEdges
+## plotEdges
 ############
-addEdges <- function(x,...){
+plotEdges <- function(x,...){
     ## some checks
     if(!is.gGraph(x)) stop("x is not a valid gGraph object.")
+
 
     ## retained coords (those within plotting area)
     env <- get(".geoGraphEnv", envir=.GlobalEnv)
     curUsr <- get("usr", envir=env)
     coords <- getCoords(x)
-    toKeep <- ( (coords[,1] > curUsr[1]) && (coords[,1] < curUsr[2])  # matching longitude
-               && (coords[,2] > curUsr[3]) && (coords[,2] < curUsr[4]) ) # matching latitude
+    toKeep <- ( (coords[,1] > curUsr[1]) & (coords[,1] < curUsr[2])  # matching longitude
+               & (coords[,2] > curUsr[3]) & (coords[,2] < curUsr[4]) ) # matching latitude
 
     x <- x[toKeep]
+    keptCoords <- getCoords(x)
+    keptEdges <- getEdges(x, mode="matrix", unique=TRUE)
+    if(nrow(keptEdges) < 1) {
+        cat("\nNo edge to plot.\n")
+        return(invisible())
+    }
 
-    ## make vectors of plotted coords
-    
+    ## plot segments
+    segments(keptCoords[keptEdges[,1],1], keptCoords[keptEdges[,1],2],
+             keptCoords[keptEdges[,2],1], keptCoords[keptEdges[,2],2])
 
+    ## replot points
+    points(keptCoords[,1], keptCoords[,2])
 
-
-
-} # end addEdges
+    return(invisible())
+} # end plotEdges
