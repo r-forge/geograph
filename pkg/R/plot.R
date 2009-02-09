@@ -2,7 +2,7 @@
 ## plot for gGraph
 ###################
 setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world",
-                                     bg.col="gray", border.col="dark gray", ...){
+                                      edges=TRUE, bg.col="gray", border.col="dark gray", ...){
     ## some checks
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
 
@@ -27,6 +27,11 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world",
     xlim <- get("xlim", envir=env)
     ylim <- get("ylim", envir=env)
 
+    ## retained coords (those within plotting area)
+    curUsr <- par("usr")
+    coords <- getCoords(x)
+    toKeep <- ( (coords[,1] > curUsr[1]) && (coords[,1] < curUsr[2])  # matching longitude
+               && (coords[,2] > curUsr[3]) && (coords[,2] < curUsr[4]) ) # matching latitude
 
     ## handle arguments
     if(shape=="world"){
@@ -40,13 +45,44 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world",
             stop("Shape must be a SpatialPolygonsDataFrame object \n(see readShapePoly in maptools to import such data from a GIS shapefile).")
 
         ## plot background
-    plot(shape, col=bg.col, border=border.col, xlim=xlim, ylim=ylim)
+        plot(shape, col=bg.col, border=border.col, xlim=xlim, ylim=ylim)
 
-    ## add points
-    points(getCoords(x), ...)
+        ## add points
+        points(getCoords(x), ...)
 
     } else{ # no background
         plot(getCoords(x), xlab="longitude", ylab="latitude", xlim=xlim, ylim=ylim, ...)
     }
 
+    assign("usr", par("usr"), envir=env)
+
+    return(invisible())
 }) # end plot method
+
+
+
+
+
+############
+## addEdges
+############
+addEdges <- function(x,...){
+    ## some checks
+    if(!is.gGraph(x)) stop("x is not a valid gGraph object.")
+
+    ## retained coords (those within plotting area)
+    env <- get(".geoGraphEnv", envir=.GlobalEnv)
+    curUsr <- get("usr", envir=env)
+    coords <- getCoords(x)
+    toKeep <- ( (coords[,1] > curUsr[1]) && (coords[,1] < curUsr[2])  # matching longitude
+               && (coords[,2] > curUsr[3]) && (coords[,2] < curUsr[4]) ) # matching latitude
+
+    x <- x[toKeep]
+
+    ## make vectors of plotted coords
+    
+
+
+
+
+} # end addEdges
