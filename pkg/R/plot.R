@@ -1,7 +1,7 @@
 ###################
 ## plot for gGraph
 ###################
-setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", psize=NULL,
+setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", psize=NULL, pch=19,
                                       edges=FALSE, reset=FALSE, bg.col="gray", border.col="dark gray", ...){
     ## some checks
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
@@ -33,8 +33,7 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
     }
 
     coords <- getCoords(x)
-    toKeep <- ( (coords[,1] >= xlim[1]) & (coords[,1] <= xlim[2])  # matching longitude
-               & (coords[,2] >= ylim[1]) & (coords[,2] <= ylim[2]) ) # matching latitude
+    toKeep <- isInArea(x)
 
     coords <- coords[toKeep, ]
 
@@ -55,11 +54,11 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
         ## add edges and points
         if(edges){
             plotEdges(x, replot=FALSE)
-            points(coords, cex=psize,...)
-        } else points(coords, cex=psize,...)
+            points(coords, cex=psize, pch=pch, ...)
+        } else points(coords, cex=psize, pch=pch,...)
 
     } else{ # add only points
-        plot(coords, xlab="longitude", ylab="latitude", xlim=xlim, ylim=ylim, cex=psize, ...)
+        plot(coords, xlab="longitude", ylab="latitude", xlim=xlim, ylim=ylim, cex=psize, pch=pch,...)
     }
 
     assign("usr", par("usr"), envir=env)
@@ -77,7 +76,7 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
 ############
 ## plotEdges
 ############
-plotEdges <- function(x, replot=TRUE, col="grey", lwd=2, pch=1, psize=NULL,...){
+plotEdges <- function(x, replot=TRUE, col="brown", lwd=1, pch=19, psize=NULL,...){
     ## some checks
     if(!is.gGraph(x)) stop("x is not a valid gGraph object.")
 
@@ -93,21 +92,24 @@ plotEdges <- function(x, replot=TRUE, col="grey", lwd=2, pch=1, psize=NULL,...){
 
 
     ## retained coords (those within plotting area)
-    coords <- getCoords(x)
-    toKeep <- ( (coords[,1] >= curUsr[1]) & (coords[,1] <= curUsr[2])  # matching longitude
-               & (coords[,2] >= curUsr[3]) & (coords[,2] <= curUsr[4]) ) # matching latitude
+    toKeep <- isInArea(x)
+    keptCoords <- getCoords(x)[toKeep, ]
 
-    x <- x[toKeep]
-    keptCoords <- getCoords(x)
-    keptEdges <- getEdges(x, mode="matrix", unique=TRUE)
+    edges <- getEdges(x, mode="matrix", unique=TRUE)
+    temp <- (edges[,1] %in% rownames(keptCoords)) & (edges[,2] %in% rownames(keptCoords))
+    keptEdges <- edges[temp, ]
+
     if(nrow(keptEdges) < 1) {
         cat("\nNo edge to plot.\n")
         return(invisible())
     }
 
     ## plot segments
-    segments(keptCoords[keptEdges[,1],1], keptCoords[keptEdges[,1],2],
-             keptCoords[keptEdges[,2],1], keptCoords[keptEdges[,2],2], col=col, lwd=lwd, ...)
+    idx1 <- match(as.character(keptEdges[,1]), rownames(keptCoords))
+    idx2 <- match(as.character(keptEdges[,2]), rownames(keptCoords))
+
+    segments(keptCoords[idx1, 1], keptCoords[idx1, 2],
+             keptCoords[idx2, 1], keptCoords[idx2, 2], col=col, lwd=lwd, ...)
 
     ## replot points
     if(replot){

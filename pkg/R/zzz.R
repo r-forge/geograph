@@ -3,9 +3,9 @@
     ##.initAdegenetUtils()
     ## library.dynam("adegenet", pkg, lib)
 
-    cat("\n\t=========================\n")
-    cat("\t geoGraph 1.0-0 is loaded")
-    cat("\n\t=========================\n")
+    cat("\n\t========================\n")
+    cat("\tgeoGraph 1.0-0 is loaded")
+    cat("\n\t========================\n")
 
     ## define various items in our specific environment
     assign(".geoGraphEnv", new.env(parent=.GlobalEnv), env=.GlobalEnv)
