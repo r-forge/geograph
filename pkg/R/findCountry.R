@@ -1,0 +1,40 @@
+###############
+## findCountry
+###############
+findCountry <- function(coords, shape="world") {
+
+    ## This functions automatically assigns to land all points overlapping the country polygons
+    if(!require(maptools)) stop("maptools package is required.")
+
+    ## Load country shapefile
+    if(shape=="world"){
+        if(!require(sp)) stop("sp package needed to map the world")
+        data(worldshape)
+        shape <- worldshape
+    }
+
+    if(!is.null(shape)){ # with background
+        if(!inherits(shape,"SpatialPolygonsDataFrame"))
+            stop("Shape must be a SpatialPolygonsDataFrame object \n(see readShapePoly in maptools to import such data from a GIS shapefile).")
+    }
+
+    long <- coords[,1]
+    lat <- coords[,2]
+    n.country <- length(shape@polygons)
+
+    for(i in 1:n.country) {
+        this.country <- shape@polygons[i][[1]]
+        n.polys <- length(this.country@Polygons)
+        points.in.this.country <- rep(0, length(long))
+
+        for (p in 1:n.polys) {
+            this.poly <- this.country@Polygons[p][[1]]
+            points.in.this.country <- points.in.this.country +
+                point.in.polygon(long,lat, this.poly@coords[,1], this.poly@coords[,2])
+        }
+
+        countries[points.in.this.country>0] <- as.character(shape@data$CNTRY_NAME[i])
+    }
+
+    return(factor(countries))
+} # end findCountry

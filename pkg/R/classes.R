@@ -16,10 +16,11 @@ setClass("gGraphHistory", representation(cmd = "list", dates = "character", comm
 
 
 setClass("gGraph",
-         representation(coords = "matrix", nodes.attr = "data.frame", graph = "graphNEL",
-                        history = "gGraphHistory"),
+         representation(coords = "matrix", nodes.attr = "data.frame", meta = "list",
+                        graph = "graphNEL", history = "gGraphHistory"),
          prototype(coords = matrix(numeric(0), ncol=2, dimnames=list(NULL, c("lon","lat"))),
                    nodes.attr = data.frame(),
+                   meta = list(),
                    graph = new("graphNEL"),
                    history = new("gGraphHistory") )
          )

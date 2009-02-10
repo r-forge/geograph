@@ -118,6 +118,9 @@ setMethod("show", "gGraph", function(object){
     print(head(x@nodes.attr, nDisp))
     if(nrow(x@nodes.attr) > nDisp) cat("...\n")
 
+    cat("\n@meta: list of meta information with", length(x@meta),"items\n")
+    if(length(x@meta)>0) print(paste("$", names(x@meta), sep=""))
+
     cat("\n@graph:\n")
     print(x@graph)
 
