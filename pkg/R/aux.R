@@ -1,7 +1,7 @@
 ############
 ## isInArea
 ############
-isInArea <- function(x){
+isInArea <- function(x, buffer=0){
     ## some checks
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
 
@@ -15,6 +15,14 @@ isInArea <- function(x){
 
         xlim <- zoomlog[1:2]
         ylim <- zoomlog[3:4]
+
+        ## handle a buffer around area
+        bufferx <- (xlim[2]-xlim[1])*buffer
+        buffery <- (ylim[2]-ylim[1])*buffer
+
+        xlim <- xlim + c(-bufferx, bufferx)
+        ylim <- ylim + c(-buffery, buffery)
+
 
         toKeep <- ( (coords[,1] >= xlim[1]) & (coords[,1] <= xlim[2])  # matching longitude
                    & (coords[,2] >= ylim[1]) & (coords[,2] <= ylim[2]) ) # matching latitude

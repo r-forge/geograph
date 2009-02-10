@@ -33,7 +33,8 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
     }
 
     coords <- getCoords(x)
-    toKeep <- isInArea(x)
+    buffer <- ifelse(edges, 0.1, 0)
+    toKeep <- isInArea(x, buffer=buffer)
 
     coords <- coords[toKeep, ]
 
