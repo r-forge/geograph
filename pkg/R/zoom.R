@@ -25,7 +25,7 @@
 ##############
 ## zoomin.geo
 ##############
-zoomin.geo <- function(){
+zoomin.geo <- function(reg=locator(2)){
     ## get environment
     geoEnv <- get(".geoGraphEnv", envir=.GlobalEnv)
 
@@ -33,7 +33,7 @@ zoomin.geo <- function(){
     last.plot.call <- get("last.plot", envir=geoEnv)
 
     ## define new xlim and ylim
-    reg <- locator(2)
+    if(!is.list(reg) || length(reg)!=2) stop("Wrong reg specified.")
     reg <- lapply(reg, sort)
 
    .zoomlog.up(c(reg$x, reg$y))
