@@ -1,7 +1,7 @@
 ###################
 ## plot for gGraph
 ###################
-setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", psize=NULL, pch=19,
+setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", psize=NULL, pch=19, col=NULL,
                                       edges=FALSE, reset=FALSE, bg.col="gray", border.col="dark gray", ...){
     ## some checks
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
@@ -38,6 +38,21 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
 
     coords <- coords[toKeep, ]
 
+    ## handle colors
+    if( (!is.null(x@meta$color)) && nrow(x@meta$color)>0 ){
+        rules <- x@meta$color
+        criterion <- as.list(x@nodes.attr)[[names(rules)[1]]] # seek criterion in nodes.attr
+        if(!is.null(criterion)){
+            col <- as.character(criterion)
+            for(i in 1:nrow(rules)){
+                col[col==rules[i,1]] <- rules[i,2]
+            }
+        }
+    } # end handle color
+    if(is.null(col)) {
+        col <- "black"
+    }
+
     ## handle arguments
     if(shape=="world"){
         if(!require(sp)) stop("sp package needed to map the world")
@@ -56,10 +71,11 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
         if(edges){
             plotEdges(x, replot=FALSE)
             points(coords, cex=psize, pch=pch, ...)
-        } else points(coords, cex=psize, pch=pch,...)
+        } else points(coords, cex=psize, pch=pch, col=col, ...)
 
     } else{ # add only points
-        plot(coords, xlab="longitude", ylab="latitude", xlim=xlim, ylim=ylim, cex=psize, pch=pch,...)
+        plot(coords, xlab="longitude", ylab="latitude", xlim=xlim, ylim=ylim,
+             cex=psize, pch=pch, col=col, ...)
     }
 
     assign("usr", par("usr"), envir=env)
