@@ -52,3 +52,37 @@ zoomin.geo <- function(){
     eval(newCall)
 
 }
+
+
+
+
+
+##############
+## zoomout.geo
+##############
+zoomout.geo <- function(){
+    ## get environment
+    geoEnv <- get(".geoGraphEnv", envir=.GlobalEnv)
+
+    ## get last plot
+    last.plot.call <- get("last.plot", envir=geoEnv)
+
+    ## get former coordinates and go one step back
+    zoomLog <- get("zoom.log", env=geoEnv)
+    if(nrow(zoomLog) < 2) {
+        cat("\nNo previous zoom coordinates in zoom history.\n")
+        return(invisible())
+    }
+
+    zoomLog <- zoomLog[-1,,drop=FALSE]
+    assign("zoom.log", zoomLog, env=geoEnv)
+
+    ## reconstruct a valid call to plot
+    temp <- deparse(last.plot.call)
+
+    newCall <- parse(text=temp)
+
+    eval(newCall)
+
+} # end zoomout.geo
+
