@@ -33,7 +33,7 @@ setClass("gGraph",
 ## VALIDITY METHODS
 ####################
 .gGprah.valid <- function(object){
-    object <- x
+    x <- object
     N <- nrow(x@coords)
 
     if(N == 0) return(TRUE) # empty object always valid
