@@ -41,16 +41,18 @@ setMethod("[", "gGraph", function(x, i, j, ..., drop=TRUE) {
         f1.noweights <- function(oneNode){ # function to subset graph without weights
             res <- oneNode
             res$edges <- res$edges[res$edges %in% nodeId]
+            res$edges <- match(res$edges, nodeId) # rematch with new positions
             return(res)
         }
         f1.withweights <- function(oneNode){ # function to subset graph with weights
             res <- oneNode
             res$edges <- res$edges[res$edges %in% nodeId]
             res$weights <- res$weights[res$edges %in% nodeId]
+            res$edges <- match(res$edges, nodeId) # rematch with new positions
             return(res)
         }
 
-        if(is.null(myGraph@edgeL$weights)){
+        if(is.null(myGraph@edgeL[[1]]$weights)){
             myGraph@edgeL <- lapply(myGraph@edgeL, f1.noweights)
         } else {
             myGraph@edgeL <- lapply(myGraph@edgeL, f1.withweights)
