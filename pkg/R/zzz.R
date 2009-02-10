@@ -15,5 +15,5 @@
     colnames(zoom.log) <- c("x1","x2","y1","y2")
 
     assign("zoom.log", zoom.log, env=geoEnv)
-    assign("psize", 2, env=geoEnv)
+    assign("psize", 0.5, env=geoEnv)
 }

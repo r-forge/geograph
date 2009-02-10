@@ -33,13 +33,14 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
     }
 
     coords <- getCoords(x)
-    buffer <- ifelse(edges, 0.1, 0)
-    toKeep <- isInArea(x, buffer=buffer)
+####buffer <- ifelse(edges, 0.1, 0)
+####toKeep <- isInArea(x, buffer=buffer)
+    toKeep <- isInArea(x)
 
     coords <- coords[toKeep, ]
 
     ## handle colors
-    if( (!is.null(x@meta$color)) && nrow(x@meta$color)>0 ){
+    if( (!is.null(x@meta$color)) && nrow(x@meta$color)>0 && is.null(col)){
         rules <- x@meta$color
         criterion <- as.list(x@nodes.attr)[[names(rules)[1]]] # seek criterion in nodes.attr
         if(!is.null(criterion)){
@@ -70,7 +71,7 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
         ## add edges and points
         if(edges){
             plotEdges(x, replot=FALSE)
-            points(coords, cex=psize, pch=pch, ...)
+            points(coords, cex=psize, pch=pch, col=col, ...)
         } else points(coords, cex=psize, pch=pch, col=col, ...)
 
     } else{ # add only points
@@ -93,7 +94,7 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
 ############
 ## plotEdges
 ############
-plotEdges <- function(x, replot=TRUE, col="brown", lwd=1, pch=19, psize=NULL,...){
+plotEdges <- function(x, replot=TRUE, col="black", lwd=1, pch=19, psize=NULL, pcol=NULL,...){
     ## some checks
     if(!is.gGraph(x)) stop("x is not a valid gGraph object.")
 
@@ -128,9 +129,27 @@ plotEdges <- function(x, replot=TRUE, col="brown", lwd=1, pch=19, psize=NULL,...
     segments(keptCoords[idx1, 1], keptCoords[idx1, 2],
              keptCoords[idx2, 1], keptCoords[idx2, 2], col=col, lwd=lwd, ...)
 
+
     ## replot points
     if(replot){
-        points(keptCoords[,1], keptCoords[,2], pch=pch, cex=psize)
+
+        ## handle colors
+        if( (!is.null(x@meta$color)) && nrow(x@meta$color)>0 && is.null(pcol)){
+            rules <- x@meta$color
+            criterion <- as.list(x@nodes.attr)[[names(rules)[1]]] # seek criterion in nodes.attr
+            if(!is.null(criterion)){
+                pcol <- as.character(criterion)[toKeep]
+                for(i in 1:nrow(rules)){
+                    pcol[pcol==rules[i,1]] <- rules[i,2]
+                }
+            }
+        } # end handle color
+
+        if(is.null(pcol)) {
+            pcol <- "black"
+        }
+
+        points(keptCoords[,1], keptCoords[,2], pch=pch, cex=psize, col=pcol)
     }
 
     return(invisible())
