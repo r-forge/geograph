@@ -40,7 +40,9 @@ zoomin.geo <- function(reg=locator(2)){
 
     ## reconstruct a valid call to plot
     temp <- deparse(last.plot.call)
-    ##  temp <- sub("xlim[^,]*,","",temp) # remove xlim if given
+    temp <- sub("reset[^,]*,","",temp) # remove subset if provided
+    temp <- sub(",[[:blank:]]*reset[^)]*", "",temp) # same thing, if last arg
+
     ##     temp <- sub("ylim[^,]*,","",temp) # idem, ylim
     ##     temp <- sub(")$","",temp) # idem, ylim
     ##     temp <- paste(temp, ", xlim = c(", reg$x[1], ",", reg$x[2],")")
@@ -50,7 +52,6 @@ zoomin.geo <- function(reg=locator(2)){
     newCall <- parse(text=temp)
 
     eval(newCall)
-
 }
 
 
