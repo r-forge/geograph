@@ -32,8 +32,8 @@ setMethod("[", "gGraph", function(x, i, j, ..., drop=TRUE) {
         res@nodes.attr <- res@nodes.attr[i, j, drop=FALSE]
     }
     if(useSubGraph){ # use procedure from graph package to subset graph (slow)
-        res@graph <- subGraph(nodes(res@graph)[i], res@graph)
-    } else{ # use a customized procedure (faster)
+        myGraph <- subGraph(nodes(res@graph)[i], res@graph)
+    } else { # use a customized procedure (faster)
         myGraph <- getGraph(x)
         myGraph@nodes <- myGraph@nodes[i]
         myGraph@edgeL <- myGraph@edgeL[myGraph@nodes]
