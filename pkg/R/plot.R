@@ -43,7 +43,7 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
         rules <- x@meta$color
         criterion <- as.list(x@nodes.attr)[[names(rules)[1]]] # seek criterion in nodes.attr
         if(!is.null(criterion)){
-            col <- as.character(criterion)
+            col <- as.character(criterion)[toKeep]
             for(i in 1:nrow(rules)){
                 col[col==rules[i,1]] <- rules[i,2]
             }
