@@ -13,7 +13,6 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
     }
 
     env <- get(".geoGraphEnv", envir=.GlobalEnv) # env is our target environnement
-    coords <- getCoords(x)
 
     ## handle xlim and ylim
     if((!exists("zoom.log", envir=env)) | reset) { # if xlim absent or if reset
@@ -86,6 +85,81 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
 
     return(invisible())
 }) # end plot method
+
+
+
+
+
+
+
+
+
+
+#####################
+## points for gGraph
+#####################
+setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=19, col=NULL,
+                                      edges=FALSE, ...){
+    ## some checks
+    if(!is.gGraph(x)) stop("x is not a valid gGraph object")
+
+    ## create the .geoGraphEnv if it does not exist
+    if(!exists(".geoGraphEnv", envir=.GlobalEnv)) {
+        assign(".geoGraphEnv",  new.env(parent=.GlobalEnv), envir=.GlobalEnv)
+        warning(".geoGraphEnv was not present, which may indicate a problem in loading geoGraph.")
+    }
+
+    env <- get(".geoGraphEnv", envir=.GlobalEnv) # env is our target environnement
+
+    zoomlog <- get("zoom.log", envir=env)
+    zoomlog <- zoomlog[1,]
+
+    xlim <- zoomlog[1:2]
+    ylim <- zoomlog[3:4]
+
+    ## handle zoom and psize
+    if(is.null(psize)){
+        psize <- get("psize", env=env)
+    }
+
+    coords <- getCoords(x)
+    toKeep <- isInArea(x)
+    coords <- coords[toKeep, ]
+
+    ## handle colors
+    if( (!is.null(x@meta$color)) && nrow(x@meta$color)>0 && is.null(col)){
+        rules <- x@meta$color
+        criterion <- as.list(x@nodes.attr)[[names(rules)[1]]] # seek criterion in nodes.attr
+        if(!is.null(criterion)){
+            col <- as.character(criterion)[toKeep]
+            for(i in 1:nrow(rules)){
+                col[col==rules[i,1]] <- rules[i,2]
+            }
+        }
+    } # end handle color
+    if(is.null(col)) {
+        col <- "black"
+    }
+
+    ## add only points
+        points(coords, xlab="longitude", ylab="latitude", xlim=xlim, ylim=ylim,
+             cex=psize, pch=pch, col=col, ...)
+    }
+
+    ## curCall <- sys.call(-1)
+    ## assign("last.plot", curCall, envir=env)
+
+    return(invisible())
+}) # end points method
+
+
+
+
+
+
+
+
+
 
 
 
