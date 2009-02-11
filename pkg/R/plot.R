@@ -140,8 +140,8 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=N
     coords <- coords[toKeep, ]
 
     ## adjust pcol to subset of points in area
-    pcol <- rep(pcol, length=nrow(x@coords))
-    pcol <- pcol[toKeep]
+    col <- rep(col, length=nrow(x@coords))
+    col <- col[toKeep]
 
     ## handle colors
     ##  if( (!is.null(x@meta$color)) && nrow(x@meta$color)>0 && is.null(col)){
