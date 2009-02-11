@@ -182,7 +182,7 @@ plotEdges <- function(x, replot=TRUE, col="black", lwd=1, pch=19, psize=NULL, pc
     toKeep <- isInArea(x)
     keptCoords <- getCoords(x)[toKeep, ]
 
-    edges <- getEdges(x, mode="matrix", unique=TRUE)
+    edges <- getEdges(x, mode="matNames", unique=TRUE)
     temp <- (edges[,1] %in% rownames(keptCoords)) & (edges[,2] %in% rownames(keptCoords))
     keptEdges <- edges[temp, ]
 
