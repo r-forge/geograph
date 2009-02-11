@@ -16,4 +16,7 @@
 
     assign("zoom.log", zoom.log, env=geoEnv)
     assign("psize", 0.5, env=geoEnv)
+
+    temp <- list(psize=0.5, pch=19, col="black")
+    assign("last.plot.param", temp, env=geoEnv)
 }
