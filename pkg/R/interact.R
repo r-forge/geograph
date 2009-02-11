@@ -128,3 +128,89 @@ geo.remove.edges <- function(x, mode=c("points","area")) {
 } # end geo.remove.edges
 
 
+
+
+
+#################
+## geo.change.attr
+#################
+geo.change.attr <- function(x, mode=c("points","area"), attr.name, attr.value, newCol="black") {
+    ## preliminary stuff
+    if(!is.gGraph(x)) stop("x is not a valid gGraph object")
+    coords <- getCoords(x)
+    lon <- coords[,1]
+    lat <- coords[,2]
+    env <- get(".geoGraphEnv", envir=.GlobalEnv) # env is our target environnement
+    psize <- get("psize", env=env) # get psize
+    mode <- match.arg(mode)
+    if(!attr.name %in% colnames(x@nodes.attr)) stop("specified node attribute name not found")
+
+    ## set replacement color
+    if(!is.null(x@meta$color) && attr.name %in% colnames(x@meta$color)){
+        temp <- attr.value %in% x@meta$color[attr.name]
+        if(any(temp)){ # attr.value is documented in @meta$color
+            newCol <- x@meta$color[temp,2]
+            newCol <- newCol[1] # in case rules would attributes 2 colors to a value
+        } else{ # if attr.value is not documented, we document it in @meta$color
+            x@meta$color <- rbind.data.frame(x@meta$color, c(attr.value,newCol))
+        }
+    }
+
+
+    ## initialize toChange
+    toChange <- integer(0)
+
+
+    ## mode: points ##
+
+    if(mode=="points"){
+        spoint <- 0
+        ## getting input from the user
+        while(length(spoint) > 0) {
+            spoint <- NULL
+            spoint <- identify(lon, lat, plot=FALSE, n=1)
+            if(length(spoint) > 0) {
+                points(lon[spoint], lat[spoint], cex=psize, col=newCol)
+
+                toChange <- c(toChange, spoint)
+            }
+        }
+    } # end mode: points
+
+    if(mode=="area"){
+        selArea <- data.frame(x=1:2,y=1:2)
+
+        ## getting input from the user
+        while(nrow(selArea) > 1) {
+            selArea <- selArea[integer(0),]
+            selArea <- data.frame(locator(2))
+
+            if(nrow(selArea) > 1) {
+                selIdx <- which(isInArea(x, reg=selArea)) # indices of selected points
+                points(lon[selIdx], lat[selIdx], cex=psize, col=newCol)
+
+                toChange <- c(toChange, selIdx)
+            }
+        }
+
+    } # end mode: area
+
+
+    ## make changes ##
+    toChange <- unique(toChange)
+    res <- x
+
+    if(is.factor(res@nodes.attr[attr.name])){ # special handling if attr is a factor
+        temp <- as.character(res@nodes.attr[attr.name])
+        temp[toChange] <- attr.value
+        res@nodes.attr[,attr.name] <- factor(temp)
+    } else { # in other cases...
+        res@nodes.attr[toChange,attr.name] <- attr.value
+    }
+
+    ## need to save the call here ! ##
+
+    return(res)
+} # end geo.change.attr
+
+
