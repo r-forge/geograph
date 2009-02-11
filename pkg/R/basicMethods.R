@@ -25,14 +25,19 @@ setMethod("[", "gGraph", function(x, i, j, ..., drop=TRUE) {
     if(missing(j)) {
         j <- TRUE
     }
+
+    if(is.logical(i) && is.logical(j) && all(c(i,j))) return(x) # don't loose time for silly trials
+
     argList <- list(...)
     if(is.null(argList$useSubGraph)){
-        useSubGraph <- FALSE
+        useSubGraph <- TRUE
     } else {
         useSubGraph <- argList$useSubGraph
     }
 
-    nodeNames <- getNodes(x)
+    oldNodeNames <- getNodes(x) # node names before subsetting
+    newNodeNames <- oldNodeNames[i] # node names after subsetting
+
 
     ## do the subsetting ##
     res <- x
@@ -40,9 +45,9 @@ setMethod("[", "gGraph", function(x, i, j, ..., drop=TRUE) {
     if(nrow(res@nodes.attr)>0){
         res@nodes.attr <- res@nodes.attr[i, j, drop=FALSE]
     }
-    if(useSubGraph){ # use procedure from graph package to subset graph (slow)
+    if(useSubGraph){ # use procedure from graph package to subset graph (slow) #
         myGraph <- subGraph(nodes(res@graph)[i], res@graph)
-    } else { # use a customized procedure (faster)
+    } else { # use a customized procedure (faster) #
         myGraph <- getGraph(res)
         myGraph@nodes <- myGraph@nodes[i]
         myGraph@edgeL <- myGraph@edgeL[myGraph@nodes]
@@ -62,9 +67,10 @@ setMethod("[", "gGraph", function(x, i, j, ..., drop=TRUE) {
             }
         }
 
-        f1.noweights <- function(oneNode){ # function to subset graph without weights
-            oneNode$edges <- oneNode$edges[oneNode$edges %in% keptIdx]
-            return(oneNode)
+        f1.noweights <- function(nodeIdc){ # function to subset graph without weights
+            nodeIdc$edges <- nodeIdc$edges[nodeIdc$edges %in% keptIdx] # erase non kept indices
+            nodeIdc$edges <- match(oldNodeNames[nodeIdc$edges], newNodeNames) # match indices with new positions
+            return(nodeIdc)
         }
         f1.withweights <- function(oneNode){ # function to subset graph with weights
             temp <- oneNode$edges %in% keptIdx
