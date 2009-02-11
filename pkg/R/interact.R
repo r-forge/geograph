@@ -151,7 +151,6 @@ geo.change.attr <- function(x, mode=c("points","area"), attr.name, attr.value, n
     lon <- coords[,1]
     lat <- coords[,2]
     env <- get(".geoGraphEnv", envir=.GlobalEnv) # env is our target environnement
-    psize <- get("psize", env=env) # get psize
     mode <- match.arg(mode)
     if(!attr.name %in% colnames(x@nodes.attr)) stop("specified node attribute name not found")
 
@@ -169,8 +168,8 @@ geo.change.attr <- function(x, mode=c("points","area"), attr.name, attr.value, n
 
     ## handle plot param
     last.plot.param <- get("last.plot.param", envir=env)
-    if(is.null(psize)) psize <- last.plot.param$psize
-    if(is.null(pch)) pch <- last.plot.param$pch
+    psize <- last.plot.param$psize
+    pch <- last.plot.param$pch
 
     ## initialize toChange
     toChange <- integer(0)
