@@ -119,19 +119,33 @@ setGeneric("getEdges", function(x, ...) {
 
 
 
-setMethod("getEdges", "gGraph", function(x, mode=c("asIs","matrix"), unique=FALSE, ...) {
+setMethod("getEdges", "gGraph", function(x, mode=c("asIs","matNames", "matId"), unique=FALSE, ...) {
     mode <- match.arg(mode)
     if(mode=="asIs") return(x@graph@edgeL)
 
-    res <- edges(x@graph)
-    temp <- sapply(res, length)
-    col1 <- as.integer(rep(names(res), temp))
-    col2 <- as.integer(unlist(res))
-    res <- cbind(Vi=col1, Vj=col2)
-    if(unique){
-        toKeep <- res[,1] < res[,2]
-        res <- res[toKeep,, drop=FALSE]
+    if(mode=="matNames"){ # return matrix of node names
+        res <- edges(x@graph)
+        temp <- sapply(res, length)
+        col1 <- rep(names(res), temp)
+        ## col1 <- rep(1:length(res), temp)
+        col2 <- unlist(res)
+        res <- cbind(Vi=col1, Vj=col2)
     }
+
+    if(mode=="matId"){ # return matrix of node numbers
+        res <- edgeL(x@graph)
+        temp <- sapply(res, function(e) length(e$edges))
+        col1 <- rep(1:length(res), temp)
+        col2 <- unlist(res)
+        res <- cbind(Vi=col1, Vj=col2)
+    }
+
+    if(unique){
+            toKeep <- res[,1] < res[,2]
+            res <- res[toKeep,, drop=FALSE]
+        }
+
+    rownames(res) <- NULL
     return(res)
 })
 

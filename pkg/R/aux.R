@@ -9,7 +9,7 @@ isInArea <- function(x, reg="current", buffer=0){
     coords <- getCoords(x)
 
     ## get xlim and ylim
-    if(exists("zoom.log", envir=env) & reg=="current"){ # xlim/ylim taken from log
+    if(exists("zoom.log", envir=env) && reg=="current"){ # xlim/ylim taken from log
         zoomlog <- get("zoom.log", envir=env)
         zoomlog <- zoomlog[1,]
 

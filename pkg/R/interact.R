@@ -57,7 +57,7 @@ geo.remove.edges <- function(x, mode=c("points","area")) {
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
     temp <- isInArea(x)
     coords <- getCoords(x)[temp,]
-    nodes <- getNodes(x)[temp]
+    nodeNames <- getNodes(x)
     lon <- coords[,1]
     lat <- coords[,2]
     env <- get(".geoGraphEnv", envir=.GlobalEnv) # env is our target environnement
@@ -78,39 +78,39 @@ geo.remove.edges <- function(x, mode=c("points","area")) {
             spoint <- identify(lon, lat, plot=FALSE, n=2)
             if(length(spoint) > 1) {
                 segments(lon[spoint[1]], lat[spoint[1]], lon[spoint[2]], lat[spoint[2]], col="red")
-                points(lon[spoint[1]],lat[spoint[1]],cex=psize)
-                points(lon[spoint[2]],lat[spoint[2]],cex=psize)
+                points(lon[spoint[1]],lat[spoint[1]],cex=psize, col="red")
 
-                toRemove$from <- c(toRemove$from, nodes[spoint[1]])
-                toRemove$to <- c(toRemove$to, nodes[spoint[2]])
+                toRemove$from <- c(toRemove$from, nodeNames[spoint[1]])
+                toRemove$to <- c(toRemove$to, nodeNames[spoint[2]])
             }
         }
     } # end mode: points
 
     if(mode=="area"){
-        sarea <- data.frame(x=1:2,y=1:2)
-        edg <- getEdges(x[isInArea(x)], mode="matrix", unique=TRUE)
+        selArea <- data.frame(x=1:2,y=1:2)
 
         ## getting input from the user
-        while(nrow(sarea[[1]]) > 1) {
-            sarea <- sarea[integer(0),]
-            sarea <- locator(2)
+        while(nrow(selArea) > 1) {
+            selArea <- selArea[integer(0),]
+            selArea <- data.frame(locator(2))
 
-            if(nrow(sarea[[1]]) > 1) {
-                selPoints <- isInArea(x, reg=sarea)
+            if(nrow(selArea) > 1) {
+                selIdx <- which(isInArea(x, reg=selArea)) # indices of selected points
+                selEdges <- getEdges(x, mode="matId", unique=TRUE) # edges, nodes=numerical indices
+                temp <- (selEdges[,1] %in% selIdx) & (selEdges[,2] %in% selIdx)
+                selEdges <- selEdges[temp,] # edges wholly inside the selected area
 
-                segments(lon[selPoints[1]], lat[spoint[1]], lon[spoint[2]], lat[spoint[2]], col="red")
-                points(lon[spoint[1]],lat[spoint[1]],cex=psize)
-                points(lon[spoint[2]],lat[spoint[2]],cex=psize)
+                segments(lon[selEdges[,1]], lat[selEdges[,1]], lon[selEdges[,2]], lat[selEdges[,2]], col="red")
+                points(lon[selIdx], lat[selIdx], cex=psize, col="red")
 
-                toRemove$from <- c(toRemove$from, nodes[spoint[1]])
-                toRemove$to <- c(toRemove$to, nodes[spoint[2]])
+                toRemove$from <- c(toRemove$from, nodeNames[selEdges[,1]])
+                toRemove$to <- c(toRemove$to, nodeNames[selEdges[,2]])
             }
         }
 
     } # end mode: area
 
-
+    print(toRemove)
 
     ## handle toRemove ##
     ## make sure removed edges are unique
