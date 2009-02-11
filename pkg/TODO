@@ -32,7 +32,8 @@ and all detected bugs
 ======================
  DOCUMENTATION ISSUES
 ======================
-* 
+* document all items
+* make a vignette, or several (classes, graphics, data handling, graph operations)
 
 =====================
  NEW IMPLEMENTATIONS
@@ -41,13 +42,14 @@ and all detected bugs
 *o* define basic methods
 *o* define constructor(s)
 *o* provide accessors
-* make a worldshape dataset
-* make a worldgraph.10k dataset
+o make a worldshape dataset
+o make a worldgraph.10k dataset
 * make a worldgraph.40k dataset
-* provide plot method
-* provide zoom method(s)
+o provide plot method
+*o* provide zoom method(s)
 * provide points add/removal methods
 * provide edge add/removal methods
+* provide nodes.attr change methods
 *o* provide revert method
 * provide a method to define connectivity from the @nodes.attr slot.
 
