@@ -83,10 +83,17 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
         }
     }
 
+
+    ## misc assignement in our dedicated environment
     assign("usr", par("usr"), envir=env)
 
     curCall <- sys.call(-1)
     assign("last.plot", curCall, envir=env)
+    temp <- get("last.plot.param", envir=env)
+    temp$psize <- psize
+    temp$pch <- pch
+    temp$col <- col
+    assign("last.plot.param", temp, envir=env)
 
     return(invisible())
 }) # end plot method
@@ -98,7 +105,7 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
 #####################
 ## points for gGraph
 #####################
-setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=19, col=NULL,
+setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=NULL,
                                       edges=FALSE, ...){
     ## some checks
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
@@ -117,6 +124,12 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=19, col=NUL
     xlim <- zoomlog[1:2]
     ylim <- zoomlog[3:4]
 
+    ## handle plot param
+    last.plot.param <- get("last.plot.param", envir=env)
+    if(is.null(psize)) psize <- last.plot.param$psize
+    if(is.null(pch)) pch <- last.plot.param$pch
+    if(is.null(col)) col <- last.plot.param$col
+
     ## handle zoom and psize
     if(is.null(psize)){
         psize <- get("psize", env=env)
@@ -126,20 +139,24 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=19, col=NUL
     toKeep <- isInArea(x)
     coords <- coords[toKeep, ]
 
+    ## adjust pcol to subset of points in area
+    pcol <- rep(pcol, length=nrow(x@coords))
+    pcol <- pcol[toKeep]
+
     ## handle colors
-    if( (!is.null(x@meta$color)) && nrow(x@meta$color)>0 && is.null(col)){
-        rules <- x@meta$color
-        criterion <- as.list(x@nodes.attr)[[names(rules)[1]]] # seek criterion in nodes.attr
-        if(!is.null(criterion)){
-            col <- as.character(criterion)[toKeep]
-            for(i in 1:nrow(rules)){
-                col[col==rules[i,1]] <- rules[i,2]
-            }
-        }
-    } # end handle color
-    if(is.null(col)) {
-        col <- "black"
-    }
+    ##  if( (!is.null(x@meta$color)) && nrow(x@meta$color)>0 && is.null(col)){
+    ##         rules <- x@meta$color
+    ##         criterion <- as.list(x@nodes.attr)[[names(rules)[1]]] # seek criterion in nodes.attr
+    ##         if(!is.null(criterion)){
+    ##             col <- as.character(criterion)[toKeep]
+    ##             for(i in 1:nrow(rules)){
+    ##                 col[col==rules[i,1]] <- rules[i,2]
+    ##             }
+    ##         }
+    ##     } # end handle color
+    ##     if(is.null(col)) {
+    ##         col <- "black"
+    ##     }
 
     ## add only points and optionally edges
      if(edges){
@@ -163,7 +180,7 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=19, col=NUL
 ############
 ## plotEdges
 ############
-plotEdges <- function(x, replot=TRUE, col="black", lwd=1, pch=19, psize=NULL, pcol=NULL,...){
+plotEdges <- function(x, replot=TRUE, col="black", lwd=1, pch=NULL, psize=NULL, pcol=NULL,...){
     ## some checks
     if(!is.gGraph(x)) stop("x is not a valid gGraph object.")
 
@@ -171,16 +188,26 @@ plotEdges <- function(x, replot=TRUE, col="black", lwd=1, pch=19, psize=NULL, pc
     env <- get(".geoGraphEnv", envir=.GlobalEnv)
 
     ## retrieve some general plot info
+
+    curUsr <- get("usr", envir=env)
+
+    ## handle plot param
+    last.plot.param <- get("last.plot.param", envir=env)
+    if(is.null(psize)) psize <- last.plot.param$psize
+    if(is.null(pch)) pch <- last.plot.param$pch
+    ##if(is.null(pcol)) pcol <- last.plot.param$col
+
     if(is.null(psize)){
         psize <- get("psize", env=env)
     }
 
-    curUsr <- get("usr", envir=env)
-
-
     ## retained coords (those within plotting area)
     toKeep <- isInArea(x)
     keptCoords <- getCoords(x)[toKeep, ]
+
+    ## adjust pcol to subset of points in area
+    pcol <- rep(pcol, length=nrow(x@coords))
+    pcol <- pcol[toKeep]
 
     edges <- getEdges(x, mode="matNames", unique=TRUE)
     temp <- (edges[,1] %in% rownames(keptCoords)) & (edges[,2] %in% rownames(keptCoords))
@@ -202,21 +229,21 @@ plotEdges <- function(x, replot=TRUE, col="black", lwd=1, pch=19, psize=NULL, pc
     ## replot points
     if(replot){
 
-        ## handle colors
-        if( (!is.null(x@meta$color)) && nrow(x@meta$color)>0 && is.null(pcol)){
-            rules <- x@meta$color
-            criterion <- as.list(x@nodes.attr)[[names(rules)[1]]] # seek criterion in nodes.attr
-            if(!is.null(criterion)){
-                pcol <- as.character(criterion)[toKeep]
-                for(i in 1:nrow(rules)){
-                    pcol[pcol==rules[i,1]] <- rules[i,2]
-                }
-            }
-        } # end handle color
+        ##   ## handle colors
+        ##         if( (!is.null(x@meta$color)) && nrow(x@meta$color)>0 && is.null(pcol)){
+        ##             rules <- x@meta$color
+        ##             criterion <- as.list(x@nodes.attr)[[names(rules)[1]]] # seek criterion in nodes.attr
+        ##             if(!is.null(criterion)){
+        ##                 pcol <- as.character(criterion)[toKeep]
+        ##                 for(i in 1:nrow(rules)){
+        ##                     pcol[pcol==rules[i,1]] <- rules[i,2]
+        ##                 }
+        ##             }
+        ##         } # end handle color
 
-        if(is.null(pcol)) {
-            pcol <- "black"
-        }
+        ##         if(is.null(pcol)) {
+        ##             pcol <- "black"
+        ##         }
 
         points(keptCoords[,1], keptCoords[,2], pch=pch, cex=psize, col=pcol)
     }

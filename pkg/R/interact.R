@@ -10,7 +10,12 @@ geo.add.edges <- function(x) {
     lon <- coords[,1]
     lat <- coords[,2]
     env <- get(".geoGraphEnv", envir=.GlobalEnv) # env is our target environnement
-    psize <- get("psize", env=env)
+
+    ## handle plot param
+    last.plot.param <- get("last.plot.param", envir=env)
+    psize <- last.plot.param$psize
+    pch <- last.plot.param$pch
+
 
     ## initialize toAdd
     toAdd <- list(from=NULL, to=NULL)
@@ -22,8 +27,8 @@ geo.add.edges <- function(x) {
         spoint <- identify(lon, lat, plot=FALSE, n=2)
         if(length(spoint) > 1) {
             segments(lon[spoint[1]], lat[spoint[1]], lon[spoint[2]], lat[spoint[2]], col="green")
-            points(lon[spoint[1]],lat[spoint[1]],cex=psize)
-            points(lon[spoint[2]],lat[spoint[2]],cex=psize)
+            points(lon[spoint[1]],lat[spoint[1]],cex=psize, col="green", pch=pch)
+            points(lon[spoint[2]],lat[spoint[2]],cex=psize, col="green", pch=pch)
 
             toAdd$from <- c(toAdd$from, nodes[spoint[1]])
             toAdd$to <- c(toAdd$to, nodes[spoint[2]])
@@ -64,6 +69,11 @@ geo.remove.edges <- function(x, mode=c("points","area")) {
     psize <- get("psize", env=env)
     mode <- match.arg(mode)
 
+    ## handle plot param
+    last.plot.param <- get("last.plot.param", envir=env)
+    psize <- last.plot.param$psize
+    pch <- last.plot.param$pch
+
     ## initialize toRemove
     toRemove <- list(from=NULL, to=NULL)
 
@@ -78,7 +88,7 @@ geo.remove.edges <- function(x, mode=c("points","area")) {
             spoint <- identify(lon, lat, plot=FALSE, n=2)
             if(length(spoint) > 1) {
                 segments(lon[spoint[1]], lat[spoint[1]], lon[spoint[2]], lat[spoint[2]], col="red")
-                points(lon[spoint[1]],lat[spoint[1]],cex=psize, col="red")
+                points(lon[spoint[1]], lat[spoint[1]], cex=psize, col="red", pch=pch)
 
                 toRemove$from <- c(toRemove$from, nodeNames[spoint[1]])
                 toRemove$to <- c(toRemove$to, nodeNames[spoint[2]])
@@ -101,7 +111,7 @@ geo.remove.edges <- function(x, mode=c("points","area")) {
                 selEdges <- selEdges[temp,] # edges wholly inside the selected area
 
                 segments(lon[selEdges[,1]], lat[selEdges[,1]], lon[selEdges[,2]], lat[selEdges[,2]], col="red")
-                points(lon[selIdx], lat[selIdx], cex=psize, col="red")
+                points(lon[selIdx], lat[selIdx], cex=psize*1.5, col="red")
 
                 toRemove$from <- c(toRemove$from, nodeNames[selEdges[,1]])
                 toRemove$to <- c(toRemove$to, nodeNames[selEdges[,2]])
@@ -146,9 +156,9 @@ geo.change.attr <- function(x, mode=c("points","area"), attr.name, attr.value, n
     if(!attr.name %in% colnames(x@nodes.attr)) stop("specified node attribute name not found")
 
     ## set replacement color
-    if(!is.null(x@meta$color) && attr.name %in% colnames(x@meta$color)){
-        temp <- attr.value %in% x@meta$color[attr.name]
-        if(any(temp)){ # attr.value is documented in @meta$color
+    if( (!is.null(x@meta$color)) && (attr.name %in% colnames(x@meta$color)) ){
+        temp <- which(attr.value == x@meta$color[attr.name])[1]
+        if(length(temp)>0){ # attr.value is documented in @meta$color
             newCol <- x@meta$color[temp,2]
             newCol <- newCol[1] # in case rules would attributes 2 colors to a value
         } else{ # if attr.value is not documented, we document it in @meta$color
@@ -156,6 +166,11 @@ geo.change.attr <- function(x, mode=c("points","area"), attr.name, attr.value, n
         }
     }
 
+
+    ## handle plot param
+    last.plot.param <- get("last.plot.param", envir=env)
+    if(is.null(psize)) psize <- last.plot.param$psize
+    if(is.null(pch)) pch <- last.plot.param$pch
 
     ## initialize toChange
     toChange <- integer(0)
@@ -170,7 +185,7 @@ geo.change.attr <- function(x, mode=c("points","area"), attr.name, attr.value, n
             spoint <- NULL
             spoint <- identify(lon, lat, plot=FALSE, n=1)
             if(length(spoint) > 0) {
-                points(lon[spoint], lat[spoint], cex=psize, col=newCol)
+                points(lon[spoint], lat[spoint], cex=psize, pch=pch, col=newCol)
 
                 toChange <- c(toChange, spoint)
             }
@@ -187,7 +202,7 @@ geo.change.attr <- function(x, mode=c("points","area"), attr.name, attr.value, n
 
             if(nrow(selArea) > 1) {
                 selIdx <- which(isInArea(x, reg=selArea)) # indices of selected points
-                points(lon[selIdx], lat[selIdx], cex=psize, col=newCol)
+                points(lon[selIdx], lat[selIdx], cex=psize, pch=pch, col=newCol)
 
                 toChange <- c(toChange, selIdx)
             }
