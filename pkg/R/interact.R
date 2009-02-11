@@ -110,7 +110,6 @@ geo.remove.edges <- function(x, mode=c("points","area")) {
 
     } # end mode: area
 
-    print(toRemove)
 
     ## handle toRemove ##
     ## make sure removed edges are unique
