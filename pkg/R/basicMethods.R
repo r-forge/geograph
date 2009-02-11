@@ -16,8 +16,15 @@ setMethod("[", "gGraphHistory", function(x, i, j = "missing", drop = "missing") 
 
 
 setMethod("[", "gGraph", function(x, i, j, ..., drop=TRUE) {
-    if(missing(i)) i <- TRUE
-    if(missing(j)) j <- TRUE
+    if(missing(i)) {
+        i <- TRUE
+    }
+    if(is.logical(i)){
+        i <- rep(i, length=nrow(getCoords(x)))
+    }
+    if(missing(j)) {
+        j <- TRUE
+    }
     argList <- list(...)
     if(is.null(argList$useSubGraph)){
         useSubGraph <- FALSE
@@ -25,7 +32,9 @@ setMethod("[", "gGraph", function(x, i, j, ..., drop=TRUE) {
         useSubGraph <- argList$useSubGraph
     }
 
-    ## do the subsetting
+    nodeNames <- getNodes(x)
+
+    ## do the subsetting ##
     res <- x
     res@coords <- res@coords[i, , drop=FALSE]
     if(nrow(res@nodes.attr)>0){
@@ -34,22 +43,34 @@ setMethod("[", "gGraph", function(x, i, j, ..., drop=TRUE) {
     if(useSubGraph){ # use procedure from graph package to subset graph (slow)
         myGraph <- subGraph(nodes(res@graph)[i], res@graph)
     } else { # use a customized procedure (faster)
-        myGraph <- getGraph(x)
+        myGraph <- getGraph(res)
         myGraph@nodes <- myGraph@nodes[i]
         myGraph@edgeL <- myGraph@edgeL[myGraph@nodes]
-        nodeId <- as.integer(myGraph@nodes)
+        ## special handling of i, to know which indexes are kept
+        if(is.character(i)){ # type == character
+            keptIdx <- match(i, nodeNames)
+            keptIdx <- !is.na(keptIdx)
+        }
+        if(is.logical(i)){ # type == logical
+            keptIdx <- which(i)
+        }
+        if(is.numeric(i)){ # type == numeric
+            if(i[1]>0) {
+                keptIdx <- i
+            } else{
+                keptIdx <- setdiff(1:nrow(x@coords), i)
+            }
+        }
+
         f1.noweights <- function(oneNode){ # function to subset graph without weights
-            res <- oneNode
-            res$edges <- res$edges[res$edges %in% nodeId]
-            res$edges <- match(res$edges, nodeId) # rematch with new positions
-            return(res)
+            oneNode$edges <- oneNode$edges[oneNode$edges %in% keptIdx]
+            return(oneNode)
         }
         f1.withweights <- function(oneNode){ # function to subset graph with weights
-            res <- oneNode
-            res$edges <- res$edges[res$edges %in% nodeId]
-            res$weights <- res$weights[res$edges %in% nodeId]
-            res$edges <- match(res$edges, nodeId) # rematch with new positions
-            return(res)
+            temp <- oneNode$edges %in% keptIdx
+            oneNode$edges <- oneNode$edges[temp]
+            oneNode$weights <- oneNode$weights[temp]
+            return(oneNode)
         }
 
         if(is.null(myGraph@edgeL[[1]]$weights)){

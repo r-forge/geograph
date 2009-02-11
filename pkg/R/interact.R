@@ -12,20 +12,22 @@ geo.add.edges <- function(x) {
     env <- get(".geoGraphEnv", envir=.GlobalEnv) # env is our target environnement
     psize <- get("psize", env=env)
 
+    ## initialize toAdd
     toAdd <- list(from=NULL, to=NULL)
     spoint <- 1:2
 
+    ## getting input from the user
     while (length(spoint) > 1) {
-      spoint <- NULL
-      spoint <- identify(lon, lat, plot=FALSE, n=2)
-      if(length(spoint) > 1) {
-        segments(lon[spoint[1]], lat[spoint[1]], lon[spoint[2]], lat[spoint[2]], col="green")
-        points(lon[spoint[1]],lat[spoint[1]],cex=psize)
-        points(lon[spoint[2]],lat[spoint[2]],cex=psize)
+        spoint <- NULL
+        spoint <- identify(lon, lat, plot=FALSE, n=2)
+        if(length(spoint) > 1) {
+            segments(lon[spoint[1]], lat[spoint[1]], lon[spoint[2]], lat[spoint[2]], col="green")
+            points(lon[spoint[1]],lat[spoint[1]],cex=psize)
+            points(lon[spoint[2]],lat[spoint[2]],cex=psize)
 
-        toAdd$from <- c(toAdd$from, nodes[spoint[1]])
-        toAdd$to <- c(toAdd$to, nodes[spoint[2]])
-      }
+            toAdd$from <- c(toAdd$from, nodes[spoint[1]])
+            toAdd$to <- c(toAdd$to, nodes[spoint[2]])
+        }
     }
 
     ## make sure added edges are unique
@@ -47,10 +49,10 @@ geo.add.edges <- function(x) {
 
 
 
-#################
+####################
 ## geo.remove.edges
-#################
-geo.remove.edges <- function(x) {
+####################
+geo.remove.edges <- function(x, mode=c("points","area")) {
     ## preliminary stuff
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
     temp <- isInArea(x)
@@ -60,23 +62,57 @@ geo.remove.edges <- function(x) {
     lat <- coords[,2]
     env <- get(".geoGraphEnv", envir=.GlobalEnv) # env is our target environnement
     psize <- get("psize", env=env)
+    mode <- match.arg(mode)
 
+    ## initialize toRemove
     toRemove <- list(from=NULL, to=NULL)
-    spoint <- 1:2
 
-    while (length(spoint) > 1) {
-      spoint <- NULL
-      spoint <- identify(lon, lat, plot=FALSE, n=2)
-      if(length(spoint) > 1) {
-        segments(lon[spoint[1]], lat[spoint[1]], lon[spoint[2]], lat[spoint[2]], col="red")
-        points(lon[spoint[1]],lat[spoint[1]],cex=psize)
-        points(lon[spoint[2]],lat[spoint[2]],cex=psize)
 
-        toRemove$from <- c(toRemove$from, nodes[spoint[1]])
-        toRemove$to <- c(toRemove$to, nodes[spoint[2]])
-      }
-    }
+    ## mode: points ##
 
+    if(mode=="points"){
+        spoint <- 1:2
+        ## getting input from the user
+        while(length(spoint) > 1) {
+            spoint <- NULL
+            spoint <- identify(lon, lat, plot=FALSE, n=2)
+            if(length(spoint) > 1) {
+                segments(lon[spoint[1]], lat[spoint[1]], lon[spoint[2]], lat[spoint[2]], col="red")
+                points(lon[spoint[1]],lat[spoint[1]],cex=psize)
+                points(lon[spoint[2]],lat[spoint[2]],cex=psize)
+
+                toRemove$from <- c(toRemove$from, nodes[spoint[1]])
+                toRemove$to <- c(toRemove$to, nodes[spoint[2]])
+            }
+        }
+    } # end mode: points
+
+    if(mode=="area"){
+        sarea <- data.frame(x=1:2,y=1:2)
+        edg <- getEdges(x[isInArea(x)], mode="matrix", unique=TRUE)
+
+        ## getting input from the user
+        while(nrow(sarea[[1]]) > 1) {
+            sarea <- sarea[integer(0),]
+            sarea <- locator(2)
+
+            if(nrow(sarea[[1]]) > 1) {
+                selPoints <- isInArea(x, reg=sarea)
+
+                segments(lon[selPoints[1]], lat[spoint[1]], lon[spoint[2]], lat[spoint[2]], col="red")
+                points(lon[spoint[1]],lat[spoint[1]],cex=psize)
+                points(lon[spoint[2]],lat[spoint[2]],cex=psize)
+
+                toRemove$from <- c(toRemove$from, nodes[spoint[1]])
+                toRemove$to <- c(toRemove$to, nodes[spoint[2]])
+            }
+        }
+
+    } # end mode: area
+
+
+
+    ## handle toRemove ##
     ## make sure removed edges are unique
     toRemove <- as.matrix(as.data.frame(toRemove))
     toRemove <- t(apply(toRemove,1,sort)) # sorting
@@ -91,4 +127,5 @@ geo.remove.edges <- function(x) {
 
     return(res)
 } # end geo.remove.edges
+
 
