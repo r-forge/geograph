@@ -61,8 +61,6 @@ setMethod("[", "gGraph", function(x, i, j, ..., drop=TRUE) {
 
     res@graph <- myGraph
 
-    res@history <- res@history
-
     ## remember this subsetting
     curCall <- match.call()
     newHist <- new("gGraphHistory", res@history, cmd=curCall, comments="Subsetting using [...]")
