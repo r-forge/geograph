@@ -121,7 +121,7 @@ setGeneric("getEdges", function(x, ...) {
 
 setMethod("getEdges", "gGraph", function(x, mode=c("asIs","matrix"), unique=FALSE, ...) {
     mode <- match.arg(mode)
-    if(mode=="asIs") return(x@graph)
+    if(mode=="asIs") return(x@graph@edgeL)
 
     res <- edges(x@graph)
     temp <- sapply(res, length)
