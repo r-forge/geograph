@@ -47,9 +47,9 @@ o make a worldgraph.10k dataset
 * make a worldgraph.40k dataset
 o provide plot method
 *o* provide zoom method(s)
-* provide points add/removal methods
-* provide edge add/removal methods
-* provide nodes.attr change methods
+*o* provide points add/removal methods
+*o* provide edge add/removal methods
+*o* provide nodes.attr change methods
 *o* provide revert method
 * provide a method to define connectivity from the @nodes.attr slot.
 
