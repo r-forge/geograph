@@ -23,9 +23,9 @@
 
 
 ##############
-## zoomin.geo
+## geo.zoomin
 ##############
-zoomin.geo <- function(reg=locator(2)){
+geo.zoomin <- function(reg=locator(2)){
     ## get environment
     geoEnv <- get(".geoGraphEnv", envir=.GlobalEnv)
 
@@ -59,9 +59,9 @@ zoomin.geo <- function(reg=locator(2)){
 
 
 ##############
-## zoomout.geo
+## geo.zoomout
 ##############
-zoomout.geo <- function(){
+geo.zoomout <- function(){
     ## get environment
     geoEnv <- get(".geoGraphEnv", envir=.GlobalEnv)
 
@@ -85,5 +85,5 @@ zoomout.geo <- function(){
 
     eval(newCall)
 
-} # end zoomout.geo
+} # end geo.zoomout
 
