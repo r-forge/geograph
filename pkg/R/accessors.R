@@ -157,7 +157,7 @@ setMethod("setEdges", "gGraph", function(x, add=NULL, remove=NULL, weights=NULL,
         if(ncol(add) != 2) stop("add does not have two columns")
         from <- as.character(add[[1]])
         to <- as.character(add[[2]])
-        if(!all(unique(c(from,to)) %in% getNodes(x))) stop("unknown specified nodes")
+        if(!all(unique(c(from,to)) %in% getNodes(x))) stop("unknown specified nodes") # unknown nodes
         if(is.null(weights)){
             weights <- rep(1, length(from))
         }
@@ -169,7 +169,9 @@ setMethod("setEdges", "gGraph", function(x, add=NULL, remove=NULL, weights=NULL,
         if(ncol(remove) != 2) stop("remove does not have two columns")
         from <- as.character(remove[[1]])
         to <- as.character(remove[[2]])
-        if(!all(unique(c(from,to)) %in% getNodes(x))) stop("unknown specified nodes")
+        if(!all(unique(c(from,to)) %in% getNodes(x))) stop("unknown specified nodes") # unknown nodes
+        ## avoid attempts to removing non-existing edges
+
 
         myGraph <- removeEdge(from=from, to=to, graph=x@graph)
     }

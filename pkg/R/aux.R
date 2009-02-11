@@ -42,3 +42,27 @@ isInArea <- function(x, reg="current", buffer=0){
 
 
 } # end isInArea
+
+
+
+
+
+################
+## areConnected
+################
+areConnected <- function(V1, V2, graph){
+    V1 <- as.character(V1)
+    V2 <- as.character(V2)
+    if(length(V1) != length(V2)) stop("V1 and V2 have different lengths.")
+
+    edg <- edges(graph)
+
+    ## function testing if two nodes are connected
+    f1 <- function(A,B){
+        return(any(edg[[A]]==B))
+    }
+
+    res <- mapply(function(x,y) f1(x,y), V1, V2)
+
+    return(res)
+} # end areConnected
