@@ -9,4 +9,4 @@ Depends: methods, graph, RBGL, sp
 Description: .
 License: GPL (>=2)
 LazyLoad: yes
-Collate: classes.R basicMethods.R accessors.R aux.R rebuild.R plot.R zoom.R findLand.R findCountry.R zzz.R
+Collate: classes.R basicMethods.R accessors.R aux.R rebuild.R plot.R zoom.R findLand.R findCountry.R interact.R zzz.R

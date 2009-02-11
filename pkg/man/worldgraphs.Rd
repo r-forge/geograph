@@ -42,14 +42,14 @@ plot(worldgraph.10k, reset=TRUE)
 title("Hello world")
 
 ## zooming in
-zoomin.geo(list(x=c(-12,45), y=c(33,75)))
+geo.zoomin(list(x=c(-12,45), y=c(33,75)))
 title("Europe")
-zoomin.geo(list(x=c(-12,2), y=c(50,60)))
+geo.zoomin(list(x=c(-12,2), y=c(50,60)))
 plotEdges(worldgraph.10k)
 title("United Kingdom")
 
 ## zooming out
-zoomout.geo()
+geo.zoomout()
 
 ## defining the subset of visible points
 x <- worldgraph.10k[isInArea(worldgraph.10k)] 
@@ -58,7 +58,7 @@ title("One subsetted object.")
 
 \dontrun{
 ## interactive zooming
-zoomin.geo()
+geo.zoomin()
 }
 
 }

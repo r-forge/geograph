@@ -12,19 +12,19 @@ geo.add.edges <- function(x) {
     env <- get(".geoGraphEnv", envir=.GlobalEnv) # env is our target environnement
     psize <- get("psize", env=env)
 
-    toAdd <- list(from, to)
+    toAdd <- list(from=NULL, to=NULL)
     spoint <- 1:2
 
-    while (length(spoint)>1) {
+    while (length(spoint) > 1) {
       spoint <- NULL
       spoint <- identify(lon, lat, plot=FALSE, n=2)
-      if(length(spoint)>1) {
+      if(length(spoint) > 1) {
         segments(lon[spoint[1]], lat[spoint[1]], lon[spoint[2]], lat[spoint[2]], col="red")
         points(lon[spoint[1]],lat[spoint[1]],cex=psize)
         points(lon[spoint[2]],lat[spoint[2]],cex=psize)
 
         toAdd$from <- c(toAdd$from, nodes[spoint[1]])
-        toAdd$to <- c(toAdd$from, nodes[spoint[2]])
+        toAdd$to <- c(toAdd$to, nodes[spoint[2]])
       }
     }
 
@@ -37,7 +37,7 @@ geo.add.edges <- function(x) {
     from <- sapply(toAdd, function(e) e[1])
     to <- sapply(toAdd, function(e) e[2])
 
-    ## build res
+    ## call to setEdges
     res <- setEdges(x=x, add=cbind(from, to) )
 
     return(res)

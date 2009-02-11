@@ -174,7 +174,18 @@ setMethod("setEdges", "gGraph", function(x, add=NULL, remove=NULL, weights=NULL,
         myGraph <- removeEdge(from=from, to=to, graph=x@graph)
     }
 
+    ##  subx <- deparse(substitute(x))
+    res <- x
     res@graph <- myGraph
 
+    ## remember this action
+    curCall <- match.call()
+    newHist <- new("gGraphHistory", res@history, cmd=curCall, comments="Modified edges using setEdges.")
+    res@history <- newHist
+
+    ## make assignement
+    ## parEnv <- parent.frame()
+    ## assign(subx, res, parEnv)
+
     return(res)
-})
+}) # end setEdges
