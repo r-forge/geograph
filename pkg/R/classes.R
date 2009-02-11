@@ -59,6 +59,12 @@ setClass("gGraph",
         return(FALSE)
     }
 
+    ## node labels consistency
+    if(!all(rownames(x@coords)==nodes(x@graph))){
+        cat("\n Row names of @coords do not match node names of @graph.")
+        return(FALSE)
+    }
+
 
     return(TRUE)
 } # end .gGprah.valid
