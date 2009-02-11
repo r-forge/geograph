@@ -92,6 +92,23 @@ setMethod("getCoords", "gGraph", function(x, ...) {
 
 
 
+#############
+## getNodes
+#############
+setGeneric("getNodes", function(x, ...) {
+    standardGeneric("getNodes")
+})
+
+
+
+setMethod("getNodes", "gGraph", function(x, ...) {
+    res <- rownames(x@coords)
+    return(res)
+})
+
+
+
+
 
 #############
 ## getEdges
@@ -115,5 +132,49 @@ setMethod("getEdges", "gGraph", function(x, mode=c("asIs","matrix"), unique=FALS
         toKeep <- res[,1] < res[,2]
         res <- res[toKeep,, drop=FALSE]
     }
+    return(res)
+})
+
+
+
+
+
+#############
+## setEdges
+#############
+setGeneric("setEdges", function(x, ...) {
+    standardGeneric("setEdges")
+})
+
+
+
+setMethod("setEdges", "gGraph", function(x, add=NULL, remove=NULL, weights=NULL, ...) {
+    ## some checks
+    if(is.null(add) & is.null(remove)) return(x)
+
+    if(!is.null(add)){ ## add edges ##
+        add <- as.data.frame(add)
+        if(ncol(add) != 2) stop("add does not have two columns")
+        from <- as.character(add[[1]])
+        to <- as.character(add[[2]])
+        if(!all(unique(c(from,to)) %in% getNodes(x))) stop("unknown specified nodes")
+        if(is.null(weights)){
+            weights <- rep(1, length(from))
+        }
+
+        myGraph <- addEdge(from=from, to=to, graph=x@graph, weights=weights)
+
+    } else { ## remove edges ##
+        remove <- as.data.frame(remove)
+        if(ncol(remove) != 2) stop("remove does not have two columns")
+        from <- as.character(remove[[1]])
+        to <- as.character(remove[[2]])
+        if(!all(unique(c(from,to)) %in% getNodes(x))) stop("unknown specified nodes")
+
+        myGraph <- removeEdge(from=from, to=to, graph=x@graph)
+    }
+
+    res@graph <- myGraph
+
     return(res)
 })
