@@ -68,7 +68,7 @@ geo.remove.edges <- function(x) {
       spoint <- NULL
       spoint <- identify(lon, lat, plot=FALSE, n=2)
       if(length(spoint) > 1) {
-        segments(lon[spoint[1]], lat[spoint[1]], lon[spoint[2]], lat[spoint[2]], col="red", lty=2)
+        segments(lon[spoint[1]], lat[spoint[1]], lon[spoint[2]], lat[spoint[2]], col="red")
         points(lon[spoint[1]],lat[spoint[1]],cex=psize)
         points(lon[spoint[2]],lat[spoint[2]],cex=psize)
 
@@ -77,7 +77,7 @@ geo.remove.edges <- function(x) {
       }
     }
 
-    ## make sure removeed edges are unique
+    ## make sure removed edges are unique
     toRemove <- as.matrix(as.data.frame(toRemove))
     toRemove <- t(apply(toRemove,1,sort)) # sorting
     toRemove <- paste(toRemove[,1], toRemove[,2], sep="-") # making strings

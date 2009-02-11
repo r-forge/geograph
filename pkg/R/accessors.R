@@ -170,10 +170,10 @@ setMethod("setEdges", "gGraph", function(x, add=NULL, remove=NULL, weights=NULL,
         from <- as.character(remove[[1]])
         to <- as.character(remove[[2]])
         if(!all(unique(c(from,to)) %in% getNodes(x))) stop("unknown specified nodes") # unknown nodes
+
         ## avoid attempts to removing non-existing edges
-
-
-        myGraph <- removeEdge(from=from, to=to, graph=x@graph)
+        temp <- areConnected(from, to, x@graph)
+        myGraph <- removeEdge(from=from[temp], to=to[temp], graph=x@graph)
     }
 
     ##  subx <- deparse(substitute(x))
