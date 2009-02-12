@@ -1,7 +1,7 @@
 ###############
 ## setFriction
 ###############
-friction <- function(x, attr.name=NULL, method=c("mean", "product"), drop=TRUE){
+setFriction <- function(x, attr.name=NULL, method=c("mean", "product"), drop=TRUE){
     ## some checks + argument handling
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
     method <- match.arg(method)
@@ -13,11 +13,12 @@ friction <- function(x, attr.name=NULL, method=c("mean", "product"), drop=TRUE){
         if(!any(attr.name %in% colnames(x@meta$weights))) {
             stop("attr.name is not documented in x@meta$weights.")
         }
-        nodeWeights <- nodeAttr
+        nodeWeights <- as.character(nodeAttr)
         rules <- x@meta$weights
         for(i in 1:nrow(x@meta$weights)){
             nodeWeights[nodeWeights==rules[i,attr.name]] <- rules[i,"weight"]
         }
+        nodeWeights <- as.numeric(nodeWeights)
     } else stop("x@meta does not contain a 'weights' component.")
 
     ## find weights of edges as a function of terminating vertices
@@ -38,9 +39,9 @@ friction <- function(x, attr.name=NULL, method=c("mean", "product"), drop=TRUE){
     }
 
     ## return result
-    newGraph <- new("graphNEL", nodes=nodes(x), edgeL=EL)
+    newGraph <- new("graphNEL", nodes=getNodes(x), edgeL=EL)
     res <- x
     res@graph <- newGraph
 
     return(res)
-} # end friction
+} # end setFriction
