@@ -57,7 +57,7 @@ areConnected <- function(V1, V2, graph){
 
     edg <- edges(graph)
 
-    ## function testing if two nodes are connected
+    ## function testing if two nodes are directly connected
     f1 <- function(A,B){
         return(any(edg[[A]]==B))
     }
