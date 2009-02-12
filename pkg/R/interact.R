@@ -141,9 +141,9 @@ geo.remove.edges <- function(x, mode=c("points","area")) {
 
 
 
-#################
+###################
 ## geo.change.attr
-#################
+###################
 geo.change.attr <- function(x, mode=c("points","area"), attr.name, attr.value, newCol="black") {
     ## preliminary stuff
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
@@ -214,8 +214,8 @@ geo.change.attr <- function(x, mode=c("points","area"), attr.name, attr.value, n
     toChange <- unique(toChange)
     res <- x
 
-    if(is.factor(res@nodes.attr[attr.name])){ # special handling if attr is a factor
-        temp <- as.character(res@nodes.attr[attr.name])
+    if(is.factor(res@nodes.attr[,attr.name])){ # special handling if attr is a factor
+        temp <- as.character(res@nodes.attr[, attr.name])
         temp[toChange] <- attr.value
         res@nodes.attr[,attr.name] <- factor(temp)
     } else { # in other cases...
