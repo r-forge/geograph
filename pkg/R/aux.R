@@ -107,15 +107,40 @@ dropDeadEdges <- function(x, thres=1e-10){ # x is a gGraph object
 ###############
 ## closestNode
 ###############
-closestNode <- function(x, coords){
+closestNode <- function(x, loc, zoneSize=5000){
+
     ## handle arguments
+    if(!require(fields)) stop("package fields is required.")
     if(!is.gGraph(x)) stop("x is not a valid gGraph object.")
-    coords <- as.data.frame(coords)
-    if(ncol(coords) != 2) stop("coords does not have two columns.")
+    loc <- as.data.frame(loc)
+    if(ncol(loc) != 2) stop("coords does not have two columns.")
+    coords <- getCoords(x)
+
+    ## function finding the closest node for 1 loc ##
+    closeOne <- function(oneLoc){
+        ## define area around loc
+        reg <- list()
+        reg$x <- oneLoc[1] + c(-zoneSize,zoneSize)
+        reg$y <- oneLoc[2] + c(-zoneSize,zoneSize)
+
+        ## isolate nodes in this area
+        toKeep <- isInArea(x, reg)
+        coords <- coords[toKeep,]
+
+        ## compute all great circle distances between nodes and loc
+        temp <- rdist.earth(xy, matrix(oneLoc, nrow=1))
+        closeNode <- rownames(temp)[which.min(temp)]
+        return(closeNode)
+    } # end closeOne
 
 
+    ## apply closeOne to all requested locations
+    res <- apply(loc, 1, closeOne) # these are node labels
 
-
+    ## build result: named node indices
+    temp <- res
+    res <- match(res, getNodes(x))
+    names(res) <- temp
 
     return(res)
 } # end closestNode
