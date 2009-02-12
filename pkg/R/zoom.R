@@ -92,10 +92,80 @@ geo.zoomin <- function(reg=NULL){
 
 
 
-##############
+
+###############
 ## geo.zoomout
-##############
+###############
 geo.zoomout <- function(){
+    ## get environment
+    geoEnv <- get(".geoGraphEnv", envir=.GlobalEnv)
+
+    ## loop ##
+    while(!is.null(locator(1))){
+        ## get last plot
+        last.plot.call <- get("last.plot", envir=geoEnv)
+
+        ## get former coordinates and go one step back
+        zoomLog <- get("zoom.log", env=geoEnv)
+        if(nrow(zoomLog) < 2) {
+            cat("\nNo previous zoom coordinates in zoom history.\n")
+            return(invisible())
+        }
+
+        ## find center of the current frame
+        size.x <- abs(diff(zoomLog[1,1:2]))
+        size.y <- abs(diff(zoomLog[1,3:4]))
+
+        newReg <- zoomLog[1,,drop=TRUE]
+        newReg[1:2] <- newReg[1:2] + c(-size.x*0.5, size.x*0.5) # new region
+        newReg[3:4] <- newReg[3:4] + c(-size.y*0.5, size.y*0.5) # new region
+
+        ## make sure we are not going to far
+        fullSize <- 0L
+        if(newReg[1] < -180) {
+            newReg[1] <- -180
+            fullSize <- fullSize + 1L
+        }
+        if(newReg[2] > 180){
+            newReg[2] <- 180
+            fullSize <- fullSize + 1L
+        }
+        if(newReg[3] < -90){
+            newReg[3] <- -90
+            fullSize <- fullSize + 1L
+        }
+        if(newReg[4] > 90){
+            newReg[4] <- 90
+            fullSize <- fullSize + 1L
+        }
+
+        if(fullSize==4){
+            cat("\nFull area already displayed.\n")
+            return(invisible())
+        }
+
+        ## update zoom log
+        .zoomlog.up(newReg)
+
+        ## reconstruct a valid call to plot
+        temp <- deparse(last.plot.call)
+
+        newCall <- parse(text=temp)
+
+        eval(newCall)
+    }
+
+    return(invisible())
+} # end geo.zoomout
+
+
+
+
+
+############
+## geo.back
+############
+geo.back <- function(){
     ## get environment
     geoEnv <- get(".geoGraphEnv", envir=.GlobalEnv)
 
@@ -123,5 +193,49 @@ geo.zoomout <- function(){
     }
 
     return(invisible())
-} # end geo.zoomout
+} # end geo.back
+
+
+
+
+
+#############
+## geo.slide
+#############
+geo.slide <- function(){
+    ## get environment
+    geoEnv <- get(".geoGraphEnv", envir=.GlobalEnv)
+
+    ## loop ##
+    while(!is.null(spoint <- locator(1))){
+        ## get last plot
+        last.plot.call <- get("last.plot", envir=geoEnv)
+
+        ## get former coordinates and go one step back
+        zoomLog <- get("zoom.log", env=geoEnv)
+        if(nrow(zoomLog) < 2) {
+            cat("\nNo previous zoom coordinates in zoom history.\n")
+            return(invisible())
+        }
+
+        ## find center of the current frame
+        size.x <- abs(diff(zoomLog[1,1:2]))
+        size.y <- abs(diff(zoomLog[1,3:4]))
+
+        newReg <- zoomLog[1,,drop=TRUE]
+        newReg[c(1,3)] <- c(spoint$x - size.x/2, spoint$y - size.x/2)
+        newReg[c(2,4)] <- c(spoint$x + size.x/2, spoint$y + size.x/2)
+
+        .zoomlog.up(newReg)
+
+        ## reconstruct a valid call to plot
+        temp <- deparse(last.plot.call)
+
+        newCall <- parse(text=temp)
+
+        eval(newCall)
+    }
+
+    return(invisible())
+} # end geo.slide
 
