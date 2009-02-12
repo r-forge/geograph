@@ -99,3 +99,23 @@ dropDeadEdges <- function(x, thres=1e-10){ # x is a gGraph object
 
     return(res)
 } # end dropDeadEdges
+
+
+
+
+
+###############
+## closestNode
+###############
+closestNode <- function(x, coords){
+    ## handle arguments
+    if(!is.gGraph(x)) stop("x is not a valid gGraph object.")
+    coords <- as.data.frame(coords)
+    if(ncol(coords) != 2) stop("coords does not have two columns.")
+
+
+
+
+
+    return(res)
+} # end closestNode
