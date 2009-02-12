@@ -66,3 +66,19 @@ areConnected <- function(V1, V2, graph){
 
     return(res)
 } # end areConnected
+
+
+
+
+
+
+#################
+## dropDeadEdges
+#################
+dropDeadEdges <- function(x, thres=1e-10){ # x is a graphNEL object
+    if(!inherits(x, "graphNEL")) stop("x is not a graphNEL object.")
+    
+    ## check weights under threshold
+    w <- edgeWeights(x)
+       
+} # end dropDeadEdges
