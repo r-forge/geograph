@@ -2,7 +2,8 @@
 ## plot for gGraph
 ###################
 setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", psize=NULL, pch=19, col=NULL,
-                                      edges=FALSE, reset=FALSE, bg.col="gray", border.col="dark gray", ...){
+                                      edges=FALSE, reset=FALSE, bg.col="gray", border.col="dark gray",
+                                      lwd=1, ...){
     ## some checks
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
 
@@ -71,7 +72,7 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
 
         ## add edges and points
         if(edges){
-            plotEdges(x, replot=FALSE)
+            plotEdges(x, replot=FALSE, lwd=lwd)
             points(coords, cex=psize, pch=pch, col=col, ...)
         } else points(coords, cex=psize, pch=pch, col=col, ...)
 
@@ -79,7 +80,7 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
         plot(coords, xlab="longitude", ylab="latitude", xlim=xlim, ylim=ylim,
              cex=psize, pch=pch, col=col, ...)
         if(edges){
-            plotEdges(x, replot=TRUE, psize=psize, pch=pch, pcol=col)
+            plotEdges(x, replot=TRUE, psize=psize, pch=pch, pcol=col, lwd=lwd)
         }
     }
 
@@ -106,7 +107,7 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
 ## points for gGraph
 #####################
 setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=NULL,
-                                      edges=FALSE, ...){
+                                      edges=FALSE, lwd=1, ...){
     ## some checks
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
 
@@ -160,7 +161,7 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=N
 
     ## add only points and optionally edges
      if(edges){
-            plotEdges(x, replot=FALSE)
+            plotEdges(x, replot=FALSE, lwd=lwd)
         }
     points(coords, xlab="longitude", ylab="latitude", xlim=xlim, ylim=ylim,
            cex=psize, pch=pch, col=col, ...)

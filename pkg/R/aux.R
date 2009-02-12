@@ -82,7 +82,7 @@ dropDeadEdges <- function(x, thres=1e-10){ # x is a gGraph object
     myGraph <- getGraph(x)
     edgeW <- edgeWeights(myGraph)
     edgeL <- edgeL(myGraph)
-    toKeep <- lapply(edgeW, function(v) v >thres)
+    toKeep <- lapply(edgeW, function(v) v >= thres)
 
     newEdgeL <- list()
     for(i in 1:length(edgeL)){
@@ -96,4 +96,6 @@ dropDeadEdges <- function(x, thres=1e-10){ # x is a gGraph object
     newGraph <- new("graphNEL", nodes=nodes(myGraph), edgeL=newEdgeL)
     res <- x
     res@graph <- newGraph
+
+    return(res)
 } # end dropDeadEdges
