@@ -32,16 +32,28 @@ setMethod("getGraph", "gGraph", function(x, ...) {
 
 
 
-##############
-## getAttr
-##############
-setGeneric("getAttr", function(x,...) {
-    standardGeneric("getAttr")
+################
+## getNodesAttr
+################
+setGeneric("getNodesAttr", function(x,...) {
+    standardGeneric("getNodesAttr")
 })
 
 
-setMethod("getAttr", "gGraph", function(x, ...) {
-    res <- x@nodes.attr
+setMethod("getNodesAttr", "gGraph", function(x, nodes=NULL, attr.name=NULL,...) {
+    if(is.null(nodes)){ # no node specified -> all nodes kept
+        nodes <- TRUE
+    }
+    if(is.null(attr.name)){ # no attr specified -> all attr kept
+        attr.name <- TRUE
+    }
+    if( (!is.logical(attr.name)) && length(attr.name)==1 ){ # only one attr kept
+        res <- x@nodes.attr[,attr.name]
+        names(res) <- row.names(x@nodes.attr)
+        res <- res[nodes]
+    } else { # other cases: a data.frame is returned
+        res <- x@nodes.attr[nodes,attr.name]
+    }
     return(res)
 })
 
