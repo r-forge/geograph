@@ -138,7 +138,7 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=N
 
     coords <- getCoords(x)
     toKeep <- isInArea(x)
-    coords <- coords[toKeep, ]
+    coords <- coords[toKeep, , drop=FALSE]
 
     ## adjust pcol to subset of points in area
     col <- rep(col, length=nrow(x@coords))
