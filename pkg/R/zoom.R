@@ -40,6 +40,14 @@ geo.zoomin <- function(reg=NULL){
         if(!is.list(reg) || length(reg)!=2) stop("Wrong reg specified.")
         reg <- lapply(reg, sort)
 
+        ## make it a square
+        reg.size <- max(diff(reg[[1]]), diff(reg[[2]])) # largest edge of rectangle
+        reg.cen <- unlist(lapply(reg,mean)) # center of the rectangle
+        reg[[1]][1] <- reg.cen - reg.size/2 # new x1
+        reg[[1]][2] <- reg.cen + reg.size/2 # new x2
+        reg[[2]][1] <- reg.cen - reg.size/2 # new y1
+        reg[[2]][2] <- reg.cen + reg.size/2 # new y2
+
         .zoomlog.up(c(reg$x, reg$y))
 
         ## reconstruct a valid call to plot
