@@ -49,7 +49,9 @@ plotEdges(worldgraph.10k)
 title("United Kingdom")
 
 ## zooming out
-geo.zoomout()
+# geo.zoomout() # needs clicking on device 
+geo.zoomin(list(x=c(-12,45), y=c(33,75)))
+title("Europe")
 
 ## defining the subset of visible points
 x <- worldgraph.10k[isInArea(worldgraph.10k)] 
