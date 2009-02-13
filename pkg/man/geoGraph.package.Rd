@@ -129,7 +129,7 @@ worldgraph.10k
 plot(worldgraph.10k, reset=TRUE)
 
 ## zooming in
-geo.zoomin(list(x=c(-12,45), y=c(33,75)))
+geo.zoomin(list(x=c(-6,38), y=c(35,73)))
 title("Europe")
 
 ## to play interactively with graphics, use:
@@ -146,10 +146,12 @@ title("x does just contain these visible nodes.")
 ## define weights for edges
 x <- setFriction(x, attr.name="habitat", method="prod")
 plot(x,edges=TRUE)
+title("connectivity defined by habitat (land/land=1, other=0)")
 
 ## drop 'dead edges' (i.e. with weight 0)
 x <- dropDeadEdges(x)
 plot(x,edges=TRUE)
+title("after droping edges with null weight")
 
 }
 \keyword{manip}

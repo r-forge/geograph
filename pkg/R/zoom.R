@@ -43,10 +43,10 @@ geo.zoomin <- function(reg=NULL){
         ## make it a square
         reg.size <- max(diff(reg[[1]]), diff(reg[[2]])) # largest edge of rectangle
         reg.cen <- unlist(lapply(reg,mean)) # center of the rectangle
-        reg[[1]][1] <- reg.cen - reg.size/2 # new x1
-        reg[[1]][2] <- reg.cen + reg.size/2 # new x2
-        reg[[2]][1] <- reg.cen - reg.size/2 # new y1
-        reg[[2]][2] <- reg.cen + reg.size/2 # new y2
+        reg[[1]][1] <- reg.cen[1] - reg.size/2 # new x1
+        reg[[1]][2] <- reg.cen[1] + reg.size/2 # new x2
+        reg[[2]][1] <- reg.cen[2] - reg.size/2 # new y1
+        reg[[2]][2] <- reg.cen[2] + reg.size/2 # new y2
 
         .zoomlog.up(c(reg$x, reg$y))
 
