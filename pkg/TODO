@@ -27,7 +27,7 @@ and all detected bugs
 =============
  CODE ISSUES
 =============
-* 
+* use usr rather than zoomlog where needed (isInArea, ...)
 
 ======================
  DOCUMENTATION ISSUES
@@ -38,21 +38,21 @@ and all detected bugs
 =====================
  NEW IMPLEMENTATIONS
 =====================
-*o* define classes
-*o* define basic methods
-*o* define constructor(s)
-*o* provide accessors
+o define classes
+o define basic methods
+o define constructor(s)
+o provide accessors
 o make a worldshape dataset
 o make a worldgraph.10k dataset
 * make a worldgraph.40k dataset
 o provide plot method
-*o* provide zoom method(s)
-*o* provide points add/removal methods
-*o* provide edge add/removal methods
-*o* provide nodes.attr change methods
+o provide zoom method(s)
+o provide points add/removal methods
+o provide edge add/removal methods
+o provide nodes.attr methods
 *o* provide revert method
-* provide a method to define connectivity from the @nodes.attr slot.
-
+o provide a method to define connectivity from the @nodes.attr slot.
+o provide a method to interact with layers
 
 ==========
  TESTING
