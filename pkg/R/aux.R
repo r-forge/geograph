@@ -179,3 +179,16 @@ closestNode <- function(x, loc, zoneSize=5, attr.name=NULL, attr.values=NULL){
 
     return(res)
 } # end closestNode
+
+
+
+
+
+##############
+## hasWeights
+##############
+hasWeights <- function(x){
+    w <- getWeights(x, mode="vector")
+    if(length(unique(w)) < 2) return(FALSE)
+    return(TRUE)
+}

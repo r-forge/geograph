@@ -3,7 +3,7 @@
 ###################
 setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", psize=NULL, pch=19, col=NULL,
                                       edges=FALSE, reset=FALSE, bg.col="gray", border.col="dark gray",
-                                      lwd=1, useWeights=FALSE,...){
+                                      lwd=1, useWeights=NULL, maxLwd=3,...){
     ## some checks
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
 
@@ -72,7 +72,7 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
 
         ## add edges and points
         if(edges){
-            plotEdges(x, replot=FALSE, lwd=lwd, useWeights=useWeights)
+            plotEdges(x, replot=FALSE, lwd=lwd, useWeights=useWeights, maxLwd=maxLwd)
             points(coords, cex=psize, pch=pch, col=col, ...)
         } else points(coords, cex=psize, pch=pch, col=col, ...)
 
@@ -80,7 +80,8 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
         plot(coords, xlab="longitude", ylab="latitude", xlim=xlim, ylim=ylim,
              cex=psize, pch=pch, col=col, ...)
         if(edges){
-            plotEdges(x, replot=TRUE, psize=psize, pch=pch, pcol=col, lwd=lwd, useWeights=useWeights)
+            plotEdges(x, replot=TRUE, psize=psize, pch=pch, pcol=col, lwd=lwd,
+                      useWeights=useWeights, maxLwd=maxLwd)
         }
     }
 
@@ -107,7 +108,7 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
 ## points for gGraph
 #####################
 setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=NULL,
-                                      edges=FALSE, lwd=1, useWeights=FALSE,...){
+                                      edges=FALSE, lwd=1, useWeights=NULL, maxLwd=3,...){
     ## some checks
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
 
@@ -161,7 +162,7 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=N
 
     ## add only points and optionally edges
      if(edges){
-            plotEdges(x, replot=FALSE, lwd=lwd, useWeights=useWeights)
+            plotEdges(x, replot=FALSE, lwd=lwd, useWeights=useWeights, maxLwd=maxLwd)
         }
     points(coords, xlab="longitude", ylab="latitude", xlim=xlim, ylim=ylim,
            cex=psize, pch=pch, col=col, ...)
@@ -181,16 +182,20 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=N
 ############
 ## plotEdges
 ############
-plotEdges <- function(x, replot=TRUE, useWeights=FALSE, col="black", lwd=1,
-                      pch=NULL, psize=NULL, pcol=NULL,...){
+plotEdges <- function(x, replot=TRUE, useWeights=NULL, col="black", lwd=1,
+                      lty=1, pch=NULL, psize=NULL, pcol=NULL, maxLwd=3, ...){
     ## some checks
     if(!is.gGraph(x)) stop("x is not a valid gGraph object.")
+
+    ## handle weights for edges
+    if(is.null(useWeights)){
+        useWeights <- hasWeights(x)
+    }
 
     ## get the environment
     env <- get(".geoGraphEnv", envir=.GlobalEnv)
 
     ## retrieve some general plot info
-
     curUsr <- get("usr", envir=env)
 
     ## handle plot param
@@ -211,7 +216,7 @@ plotEdges <- function(x, replot=TRUE, useWeights=FALSE, col="black", lwd=1,
     pcol <- rep(pcol, length=nrow(x@coords))
     pcol <- pcol[toKeep]
 
-    edges <- getEdges(x, mode="matNames", unique=TRUE)
+    edges <- getEdges(x, mode="matNames", unique=TRUE) # retrieve (unique) edges
     temp <- (edges[,1] %in% rownames(keptCoords)) & (edges[,2] %in% rownames(keptCoords))
     keptEdges <- edges[temp, ]
 
@@ -220,12 +225,22 @@ plotEdges <- function(x, replot=TRUE, useWeights=FALSE, col="black", lwd=1,
         return(invisible())
     }
 
+    ## handle weights
+    if(useWeights){
+        edges.w <- getWeights(x, mode="vector", unique=TRUE)
+        edges.w <- edges.w[temp]
+        lwd <- edges.w / max(edges.w) # max lwd = 1
+        lwd <- lwd * maxLwd # max lwd = maxLwd
+        lty <- rep(1, length(lwd)) # make a lty vector
+        lty[lwd < 1e-5] <- 3 # assign 3 (doted line) to dead edges.
+    }
+
     ## plot segments
     idx1 <- match(as.character(keptEdges[,1]), rownames(keptCoords))
     idx2 <- match(as.character(keptEdges[,2]), rownames(keptCoords))
 
     segments(keptCoords[idx1, 1], keptCoords[idx1, 2],
-             keptCoords[idx2, 1], keptCoords[idx2, 2], col=col, lwd=lwd, ...)
+             keptCoords[idx2, 1], keptCoords[idx2, 2], col=col, lwd=lwd, lty=lty, ...)
 
 
     ## replot points
