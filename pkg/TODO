@@ -53,6 +53,7 @@ o provide nodes.attr methods
 *o* provide revert method
 o provide a method to define connectivity from the @nodes.attr slot.
 o provide a method to interact with layers
+* use different lwd when plotting edges
 
 ==========
  TESTING
