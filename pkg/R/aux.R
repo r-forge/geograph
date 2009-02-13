@@ -115,7 +115,7 @@ dropDeadEdges <- function(x, thres=1e-10){ # x is a gGraph object
 ###############
 ## closestNode
 ###############
-closestNode <- function(x, loc, zoneSize=5){
+closestNode <- function(x, loc, zoneSize=5, attr.name=NULL, attr.values=NULL){
 
     ## handle arguments
     if(!require(fields)) stop("package fields is required.")
@@ -123,6 +123,17 @@ closestNode <- function(x, loc, zoneSize=5){
     loc <- as.data.frame(loc)
     if(ncol(loc) != 2) stop("coords does not have two columns.")
     coords <- getCoords(x)
+    nodes <- getNodes(x)
+
+    ## handle attribute specification if provided
+    if(!is.null(attr.name)){
+        temp <- getNodesAttr(x, attr.name=attr.name)
+        temp <- as.character(temp)
+        hasRightAttr <- temp %in% attr.values
+        if(!any(hasRightAttr)) stop(paste("specified values of",attr.name,"never found."))
+    } else{
+        hasRightAttr <- TRUE
+    }
 
     ## function finding the closest node for 1 loc ##
     closeOne <- function(oneLoc){
@@ -136,7 +147,13 @@ closestNode <- function(x, loc, zoneSize=5){
             reg$y <- oneLoc[2] + c(-zoneSize,zoneSize) # +- zoneZine in lat
 
             ## isolate nodes in this area
-            toKeep <- isInArea(x, reg, res.type="character")
+            toKeep <- isInArea(x, reg) # ! from now nodes indices won't match those of x and coords
+
+            ## intersect with attribute selection
+            toKeep <- toKeep & hasRightAttr
+
+            ## toKeep must be a character to insure matching
+            toKeep <- nodes[toKeep]
 
             ## increment zoneSize
             zoneSize <-  zoneSize*1.5
