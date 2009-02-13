@@ -22,6 +22,10 @@ setMethod("[", "gGraph", function(x, i, j, ..., drop=TRUE) {
     if(is.logical(i)){
         i <- rep(i, length=nrow(getCoords(x)))
     }
+    if(is.character(i)) {
+        i <- match(i, getNodes(x))
+        if(any(is.na(i))) stop("Some specified node labels were not found.")
+    }
     if(missing(j)) {
         j <- TRUE
     }
