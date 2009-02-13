@@ -49,8 +49,8 @@ plotEdges(worldgraph.10k)
 title("United Kingdom")
 
 ## zooming out
-# geo.zoomout() # needs clicking on device 
-geo.zoomin(list(x=c(-12,45), y=c(33,75)))
+# geo.zoomout() # needs clicking on device
+geo.zoomin(list(x=c(-6,38), y=c(35,73)))
 title("Europe")
 
 ## defining the subset of visible points
