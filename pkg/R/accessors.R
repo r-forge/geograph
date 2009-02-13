@@ -217,3 +217,37 @@ setMethod("setEdges", "gGraph", function(x, add=NULL, remove=NULL, weights=NULL,
 
     return(res)
 }) # end setEdges
+
+
+
+
+
+
+
+##############
+## getWeights
+##############
+setGeneric("getWeights", function(x, ...) {
+    standardGeneric("getWeights")
+})
+
+
+
+setMethod("getWeights", "gGraph", function(x, mode=c("asIs","vector"), unique=FALSE, ...) {
+    mode <- match.arg(mode)
+    if(mode=="asIs") return(edgeWeights(x@graph))
+
+    if(mode=="vector"){ # return a matrix of node names
+        res <- edgeWeights(x@graph)
+        res <- unlist(res) # res is a vector of edge weights named as Ni.Nj
+    }
+
+    if(unique){
+        nodeNames <- names(res)
+        temp <- strsplit(nodeNames, "[.]")
+        toKeep <- sapply(temp, function(v) v[1] < v[2])
+        res <- res[toKeep]
+        }
+
+    return(res)
+})
