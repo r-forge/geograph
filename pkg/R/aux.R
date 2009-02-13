@@ -1,9 +1,10 @@
 ############
 ## isInArea
 ############
-isInArea <- function(x, reg="current", buffer=0){
+isInArea <- function(x, reg="current", res.type=c("logical","character"), buffer=0){
     ## some checks
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
+    res.type <- match.arg(res.type)
 
     env <- get(".geoGraphEnv", envir=.GlobalEnv) # env is our target environnement
     coords <- getCoords(x)
@@ -38,7 +39,14 @@ isInArea <- function(x, reg="current", buffer=0){
 
     names(toKeep) <- rownames(coords)
 
-    return(toKeep)
+    if(res.type=="logical"){ # return a named vector of logicals
+        return(toKeep)
+    }
+
+    if(res.type=="character"){ # return names of nodes in the area
+        res <- names(toKeep)[toKeep]
+        return(res)
+    }
 
 
 } # end isInArea
@@ -107,7 +115,7 @@ dropDeadEdges <- function(x, thres=1e-10){ # x is a gGraph object
 ###############
 ## closestNode
 ###############
-closestNode <- function(x, loc, zoneSize=5000){
+closestNode <- function(x, loc, zoneSize=5){
 
     ## handle arguments
     if(!require(fields)) stop("package fields is required.")
@@ -120,12 +128,21 @@ closestNode <- function(x, loc, zoneSize=5000){
     closeOne <- function(oneLoc){
         ## define area around loc
         reg <- list()
-        reg$x <- oneLoc[1] + c(-zoneSize,zoneSize)
-        reg$y <- oneLoc[2] + c(-zoneSize,zoneSize)
+        toKeep <- character(0) # will contain node names
 
-        ## isolate nodes in this area
-        toKeep <- isInArea(x, reg)
-        coords <- coords[toKeep,]
+        while(length(toKeep) < 3){ # enlarge zoneSize until at least 3 candidates appear
+            ## define region
+            reg$x <- oneLoc[1] + c(-zoneSize,zoneSize) # +- zoneZine in long
+            reg$y <- oneLoc[2] + c(-zoneSize,zoneSize) # +- zoneZine in lat
+
+            ## isolate nodes in this area
+            toKeep <- isInArea(x, reg, res.type="character")
+
+            ## increment zoneSize
+            zoneSize <-  zoneSize*1.5
+        } # end while
+
+        xy <- coords[toKeep,,drop=FALSE]
 
         ## compute all great circle distances between nodes and loc
         temp <- rdist.earth(xy, matrix(oneLoc, nrow=1))
@@ -137,10 +154,11 @@ closestNode <- function(x, loc, zoneSize=5000){
     ## apply closeOne to all requested locations
     res <- apply(loc, 1, closeOne) # these are node labels
 
-    ## build result: named node indices
-    temp <- res
-    res <- match(res, getNodes(x))
-    names(res) <- temp
+    ## must not return indices, as this would not work for subsets of data
+    ## e.g. closestPoint[x[getNodesAttr(x)=="land"]] will return wrong indices
+    ## temp <- res
+    ## res <- match(res, getNodes(x))
+    ## names(res) <- temp
 
     return(res)
 } # end closestNode
