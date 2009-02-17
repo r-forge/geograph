@@ -85,6 +85,7 @@ areConnected <- function(V1, V2, graph){
 #################
 dropDeadEdges <- function(x, thres=1e-10){ # x is a gGraph object
     if(!is.gGraph(x)) stop("x is not a valid gGraph object.")
+    if(!hasWeights(x)) return(x)
 
     ## check weights under threshold
     myGraph <- getGraph(x)
@@ -188,6 +189,7 @@ closestNode <- function(x, loc, zoneSize=5, attr.name=NULL, attr.values=NULL){
 ## hasWeights
 ##############
 hasWeights <- function(x){
+    if(length(getGraph(x)@edgeData@data)==0) return(FALSE)
     w <- getWeights(x, mode="vector")
     if(length(unique(w)) < 2) return(FALSE)
     return(TRUE)
