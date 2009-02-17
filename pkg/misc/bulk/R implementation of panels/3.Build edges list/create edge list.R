@@ -1,6 +1,6 @@
 rm(list=ls())
 
-file.name<-"C10242.global"
+file.name<-"C40962.global"
 
 ##Data directory
 data.dir<-c("../0.Data/")
@@ -124,11 +124,11 @@ edgeList[[S.pole]] <- list(edges=S.id.neig, weights=S.neighbours.dist)
 
 ##To install the bioconductor library to use the BOOST graph library
 ##source("http://bioconductor.org/biocLite.R")
-##biocLite("RBGL")
-library(RBGL)
-gR <- new("graphNEL", nodes=rownames(coord.centers), edgeL=edgeList)
-shortest.distances<-dijkstra.sp(gR)
-max(shortest.distances$distances)
+##biocLite("RBGL") ## commented by Thibaut
+##library(RBGL)
+##gR <- new("graphNEL", nodes=rownames(coord.centers), edgeL=edgeList)
+##shortest.distances<-dijkstra.sp(gR)
+##max(shortest.distances$distances)
 ##max distance (above) should be a reasonable number (say less than 100000)
 
 
