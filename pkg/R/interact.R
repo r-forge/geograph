@@ -61,7 +61,8 @@ geo.remove.edges <- function(x, mode=c("points","area")) {
     ## preliminary stuff
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
     temp <- isInArea(x)
-    coords <- getCoords(x)[temp,]
+    # coords <- getCoords(x)[temp,] # not needed: can work with whole object
+    coords <- getCoords(x)
     nodeNames <- getNodes(x)
     lon <- coords[,1]
     lat <- coords[,2]
@@ -101,7 +102,7 @@ geo.remove.edges <- function(x, mode=c("points","area")) {
 
         ## getting input from the user
         while(nrow(selArea) > 1) {
-            selArea <- selArea[integer(0),]
+            ##  selArea <- selArea[integer(0),]  not needed
             selArea <- data.frame(locator(2))
 
             if(nrow(selArea) > 1) {
@@ -168,7 +169,7 @@ geo.change.attr <- function(x, mode=c("points","area"), attr.name, attr.value, n
                 x@meta$color <- rbind.data.frame(x@meta$color, c(attr.value,newCol))
             }
         }
-    } # end setting replacement color 
+    } # end setting replacement color
 
 
     ## handle plot param
