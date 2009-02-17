@@ -251,3 +251,24 @@ setMethod("getWeights", "gGraph", function(x, mode=c("asIs","vector"), unique=FA
 
     return(res)
 })
+
+
+
+
+
+###############
+## dropWeights
+###############
+setGeneric("dropWeights", function(x, ...) {
+    standardGeneric("dropWeights")
+})
+
+
+
+setMethod("dropWeights", "gGraph", function(x) {
+    myGraph <- getGraph(x)
+    myGraph@edgeData@data <- list()
+    x@graph <- myGraph
+
+    return(x)
+})
