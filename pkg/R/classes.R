@@ -27,6 +27,17 @@ setClass("gGraph",
 
 
 
+setClass("gData", representation(coords="matrix", nodes.id="character", data="ANY",
+                                 gGraph.name="character", gGraph.version="character"),
+         prototype(coords = matrix(numeric(0), ncol=2, dimnames=list(NULL, c("lon","lat"))),
+                   nodes.id = character(0),
+                   data=NULL,
+                   gGraph.name="",
+                   gGraph.version=NULL)
+         )
+
+
+
 
 
 ####################
@@ -107,8 +118,34 @@ setClass("gGraph",
 
 
 
+
+.gData.valid <- function(object){
+    x <- object
+    Ncoords <- nrow(x@coords)
+    Nnodes <- length(x@nodes.id)
+
+    ## dim matching
+    if(Ncoords != Nnodes){
+        cat("\n Number of coordinates and of nodes do not match.")
+        return(FALSE)
+    }
+
+    ## gGraph object
+    if(!exists(x@gGraph.name, env=.GlobalEnv)){
+        warning(paste("The gGraph object",x@gGraphName,"is missing."))
+    }
+
+    return(TRUE)
+} # end .gData.valid
+
+
+
+
+
 setValidity("gGraph", .gGprah.valid)
 setValidity("gGraphHistory", .gGprahHistory.valid)
+setValidity("gData", .gGprahHistory.valid)
+
 
 is.gGraphHistory <- function(x){
     res <- (is(x, "gGraphHistory") & validObject(x))
@@ -117,6 +154,11 @@ is.gGraphHistory <- function(x){
 
 is.gGraph <- function(x){
     res <- (is(x, "gGraph") & validObject(x))
+    return(res)
+}
+
+is.gData <- function(x){
+    res <- (is(x, "gData") & validObject(x))
     return(res)
 }
 
@@ -245,4 +287,76 @@ setMethod("initialize", "gGraph", function(.Object, ...) {
     ## return object
     return(x)
 }) # end gGraph constructor
+
+
+
+
+
+setMethod("initialize", "gData", function(.Object, ...) {
+    x <- .Object
+    input <- list(...)
+    inputClasses <- sapply(input, class)
+
+
+    ## handle @coords ##
+    if(!is.null(input$coords)){
+        if(is.list(input$coords) && length(input$coords)==2) {
+            input$coords <- as.data.frame(input$coords)
+        }
+
+        if(is.data.frame(input$coords)){
+            input$coords <- as.matrix(input$coords)
+        }
+
+        if(nrow(input$coords)>0 && !is.numeric(input$coords)) stop("Argument coords has to be numeric.")
+
+        ## names of the matrix
+        colnames(input$coords) <- c("lon","lat")
+        rownames(input$coords) <- as.character(1:nrow(input$coords))
+
+        ## check/rectify longitudes
+        temp <- input$coords[,"lon"]>180
+        input$coords[temp,"lon"] <- input$coords[temp,"lon"]-360
+
+        x@coords <- input$coords
+    }
+
+
+    ## handle gGraph.name and gGraph.version
+    if(!is.null(input$gGraph.name)){
+        if(!exists(input$gGraph.name, env=.GlobalEnv)){
+            warning(paste("The gGraph object",input$gGraphName,"is missing."))
+            myGraph <- NULL
+        } else {
+            myGraph <- get(input$gGraph.name, env=.GlobalEnv) # used later for node.id
+            x@gGraph.name <- input$gGraph.name
+        }
+
+        if(is.null(input$gGraph.version) & !is.null(myGraph)){
+            x@gGraph.version <- myGraph@history@dates[length(myGraph@history@dates)]
+        }
+    }
+
+
+    ## handle nodes.id ##
+    if(!is.null(input$nodes.id)){
+        x@nodes.id <- as.character(x@nodes.id)
+        if(!is.null(myGraph)){
+            if(!all(x@nodes.id %in% getNodes(myGraph))){
+                warning(paste("Some nodes were not found in the gGraph object",x@gGraphName,"."))
+            }
+        }
+    }
+
+
+    ## handle data ##
+    if(!is.null(input$data)){
+        x@data <- input$data
+    }
+
+     return(x)
+}) # end gData constructor
+
+
+
 
