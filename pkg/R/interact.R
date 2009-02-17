@@ -90,6 +90,7 @@ geo.remove.edges <- function(x, mode=c("points","area")) {
             if(length(spoint) > 1) {
                 segments(lon[spoint[1]], lat[spoint[1]], lon[spoint[2]], lat[spoint[2]], col="red")
                 points(lon[spoint[1]], lat[spoint[1]], cex=psize, col="red", pch=pch)
+                points(lon[spoint[2]], lat[spoint[2]], cex=psize, col="red", pch=pch)
 
                 toRemove$from <- c(toRemove$from, nodeNames[spoint[1]])
                 toRemove$to <- c(toRemove$to, nodeNames[spoint[2]])
