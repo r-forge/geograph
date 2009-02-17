@@ -1,39 +1,76 @@
 #################
 ## geo.add.edges
 #################
-geo.add.edges <- function(x) {
+geo.add.edges <- function(x, mode=c("points","area"), refObj="rawgraph.10k") {
     ## preliminary stuff
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
-    temp <- isInArea(x)
-    coords <- getCoords(x)[temp,]
-    nodes <- getNodes(x)[temp]
+    mode <- match.arg(mode)
+    ## temp <- isInArea(x) # not needed
+    ## coords <- getCoords(x)[temp,]
+    ## nodes <- getNodes(x)[temp]
+    coords <- getCoords(x)
+    nodes <- getNodes(x)
     lon <- coords[,1]
     lat <- coords[,2]
     env <- get(".geoGraphEnv", envir=.GlobalEnv) # env is our target environnement
+
+    ## handle refObj
+    if(refObj=="rawgraph.10k"){
+        data(rawgraph.10k)
+        refObj <- rawgraph.10k
+        rm(rawgraph.10k)
+    }
 
     ## handle plot param
     last.plot.param <- get("last.plot.param", envir=env)
     psize <- last.plot.param$psize
     pch <- last.plot.param$pch
 
-
     ## initialize toAdd
     toAdd <- list(from=NULL, to=NULL)
-    spoint <- 1:2
 
-    ## getting input from the user
-    while (length(spoint) > 1) {
-        spoint <- NULL
-        spoint <- identify(lon, lat, plot=FALSE, n=2)
-        if(length(spoint) > 1) {
-            segments(lon[spoint[1]], lat[spoint[1]], lon[spoint[2]], lat[spoint[2]], col="green")
-            points(lon[spoint[1]],lat[spoint[1]],cex=psize, col="green", pch=pch)
-            points(lon[spoint[2]],lat[spoint[2]],cex=psize, col="green", pch=pch)
+    ## "points" mode ##
+    if(mode=="points"){
+        spoint <- 1:2
+        ## getting input from the user
+        while (length(spoint) > 1) {
+            spoint <- NULL
+            spoint <- identify(lon, lat, plot=FALSE, n=2)
+            if(length(spoint) > 1) {
+                segments(lon[spoint[1]], lat[spoint[1]], lon[spoint[2]], lat[spoint[2]], col="green")
+                points(lon[spoint[1]],lat[spoint[1]],cex=psize, col="green", pch=pch)
+                points(lon[spoint[2]],lat[spoint[2]],cex=psize, col="green", pch=pch)
 
-            toAdd$from <- c(toAdd$from, nodes[spoint[1]])
-            toAdd$to <- c(toAdd$to, nodes[spoint[2]])
+                toAdd$from <- c(toAdd$from, nodes[spoint[1]])
+                toAdd$to <- c(toAdd$to, nodes[spoint[2]])
+            }
         }
-    }
+    } # end mode "points"
+
+    ## "area" mode ##
+    if(mode=="area"){
+         selArea <- data.frame(x=1:2,y=1:2)
+
+        ## getting input from the user
+        while(nrow(selArea) > 1) {
+            ##  selArea <- selArea[integer(0),]  not needed
+            selArea <- data.frame(locator(2))
+
+            if(nrow(selArea) > 1) {
+                selNodes <- isInArea(refObj, reg=selArea)) # indices of selected points
+                selEdges <- getEdges(refObj, mode="matId", unique=TRUE) # edges, nodes=numerical indices
+                temp <- (selEdges[,1] %in% selNodes) & (selEdges[,2] %in% selNodes)
+                selEdges <- selEdges[temp,] # edges of refobj wholly inside the selected area
+
+                segments(lon[selEdges[,1]], lat[selEdges[,1]], lon[selEdges[,2]], lat[selEdges[,2]], col="red")
+                points(lon[selIdx], lat[selIdx], cex=psize*1.5, col="red")
+
+                toAdd$from <- c(toAdd$from, getNodes(refObj)[selEdges[,1]]
+                toAdd$to <- c(toAdd$to, getNodes(refObj)[selEdges[,2]]
+            }
+        }
+     } # end mode "area"
+
 
     ## make sure added edges are unique
     toAdd <- as.matrix(as.data.frame(toAdd))

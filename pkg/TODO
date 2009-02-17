@@ -43,8 +43,8 @@ o define basic methods
 o define constructor(s)
 o provide accessors
 o make a worldshape dataset
-o make a worldgraph.10k dataset
-* make a worldgraph.40k dataset
+*o* make a worldgraph.10k dataset, with refined connections and attributes definitions
+* make a worldgraph.40k dataset, with refined connections and attributes definitions
 o provide plot method
 o provide zoom method(s)
 o provide points add/removal methods
@@ -53,7 +53,12 @@ o provide nodes.attr methods
 *o* provide revert method
 o provide a method to define connectivity from the @nodes.attr slot.
 o provide a method to interact with layers
-* use different lwd when plotting edges
+o use different lwd when plotting edges
+o make a rawgraph.10k dataset
+* make a rawgraph.40k dataset
+*o* have a method to readd edges, using a reference object.
+
+
 
 ==========
  TESTING
