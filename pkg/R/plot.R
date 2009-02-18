@@ -266,23 +266,6 @@ plotEdges <- function(x, replot=TRUE, useWeights=NULL, col="black", lwd=1,
 
     ## replot points
     if(replot){
-
-        ##   ## handle colors
-        ##         if( (!is.null(x@meta$color)) && nrow(x@meta$color)>0 && is.null(pcol)){
-        ##             rules <- x@meta$color
-        ##             criterion <- as.list(x@nodes.attr)[[names(rules)[1]]] # seek criterion in nodes.attr
-        ##             if(!is.null(criterion)){
-        ##                 pcol <- as.character(criterion)[toKeep]
-        ##                 for(i in 1:nrow(rules)){
-        ##                     pcol[pcol==rules[i,1]] <- rules[i,2]
-        ##                 }
-        ##             }
-        ##         } # end handle color
-
-        ##         if(is.null(pcol)) {
-        ##             pcol <- "black"
-        ##         }
-
         points(keptCoords[,1], keptCoords[,2], pch=pch, cex=psize, col=pcol)
     }
 
