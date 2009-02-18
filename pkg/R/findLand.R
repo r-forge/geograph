@@ -1,7 +1,19 @@
 ############
 ## findLand
 ############
-findLand <- function(coords, shape="world") {
+setGeneric("findLand", function(x,...) {
+    standardGeneric("findLand")
+})
+
+
+
+
+
+
+################
+## for matrices (of long/lat)
+################
+setMethod("findLand", "matrix", function(x, shape="world") {
 
     ## This functions automatically assigns to land all points overlapping the country polygons
     if(!require(maptools)) stop("maptools package is required.")
@@ -18,8 +30,8 @@ findLand <- function(coords, shape="world") {
             stop("Shape must be a SpatialPolygonsDataFrame object \n(see readShapePoly in maptools to import such data from a GIS shapefile).")
     }
 
-    long <- coords[,1]
-    lat <- coords[,2]
+    long <- x[,1]
+    lat <- x[,2]
     n.country <- length(shape@polygons)
 
     ## create land vector to score land
@@ -39,4 +51,33 @@ findLand <- function(coords, shape="world") {
     land[land==1] <- "land"
 
     return(factor(land))
-}
+})
+
+
+
+
+
+
+################
+## for data.frames (of long/lat)
+################
+setMethod("findLand", "gGraph", function(x, shape="world",...){
+    x <- as.matrix(x)
+    return(findLand(x, shape=shape, ...))
+}) # end findLand
+
+
+
+
+
+
+##############
+## for gGraph
+##############
+setMethod("findLand", "gGraph", function(x, shape="world", attr.name="habitat",...){
+    coords <- getCoords(x)
+    res <- findLand(coords, shape=shape, ...)
+    res@nodes.attr <- cbind.data.frame(x@nodes.attr, attr.name=res)
+    return(res)
+}) # end findLand
+
