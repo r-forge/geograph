@@ -35,10 +35,7 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
     }
 
 
-####buffer <- ifelse(edges, 0.1, 0)
-####toKeep <- isInArea(x, buffer=buffer)
     toKeep <- isInArea(x)
-
     coords <- coords[toKeep, ]
 
     ## handle colors
@@ -67,16 +64,39 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
         if(!inherits(shape,"SpatialPolygonsDataFrame"))
             stop("Shape must be a SpatialPolygonsDataFrame object \n(see readShapePoly in maptools to import such data from a GIS shapefile).")
 
-        ## plot background
+        ## plot background ##
         plot(shape, col=bg.col, border=border.col, xlim=xlim, ylim=ylim)
 
-        ## add edges and points
+        ## add edges and points ##
         if(edges){
             plotEdges(x, replot=FALSE, lwd=lwd, useWeights=useWeights, maxLwd=maxLwd)
+
+            ## make sure to show all points in the usr area ##
+            curUsr <- par("usr")
+            toKeep <- isInArea(x, reg=list(x=curUsr[1:2], y=curUsr[3:4]))
+
+            coords <- getCoords(x)[toKeep, ]
+
+            ## handle colors
+            if( (!is.null(x@meta$color)) && nrow(x@meta$color)>0 && is.null(col)){
+                rules <- x@meta$color
+                criterion <- as.list(x@nodes.attr)[[names(rules)[1]]] # seek criterion in nodes.attr
+                if(!is.null(criterion)){
+                    col <- as.character(criterion)[toKeep]
+                    for(i in 1:nrow(rules)){
+                        col[col==rules[i,1]] <- rules[i,2]
+                    }
+                }
+            } # end handle color
+            if(is.null(col)) {
+                col <- "black"
+            }
+
+            ## add points
             points(coords, cex=psize, pch=pch, col=col, ...)
         } else points(coords, cex=psize, pch=pch, col=col, ...)
 
-    } else{ # add only points
+    } else{ ## plot only points ##
         plot(coords, xlab="longitude", ylab="latitude", xlim=xlim, ylim=ylim,
              cex=psize, pch=pch, col=col, ...)
         if(edges){
