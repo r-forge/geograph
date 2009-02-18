@@ -139,14 +139,21 @@ setMethod("[", "gData", function(x, i, j, ..., drop=FALSE) {
 
     ## coords
     res <- x
+    N <- nrow(coords)
     res@coords <- res@coords[i, , drop=FALSE]
 
     ## nodes id
      res@nodes.id <- res@nodes.id[i]
 
     ## data
-    if(nrow(getData(x))>0){
+    if(nrow(getData(x))==N){
         res@data <- res@data[i, j, drop=FALSE]
+    } else if(length(getData)==N){
+        res@data <- res@data[i]
+    } else if(existsMethod("[",class(res@data)[1])){
+        res@data <- res@data[i,j, ..., drop=drop]
+    } else{
+        warning("Don't know what to do with @data.")
     }
 
     return(res)
