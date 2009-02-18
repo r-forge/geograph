@@ -18,7 +18,6 @@ geo.add.edges <- function(x, mode=c("points","area"), refObj="rawgraph.10k") {
     if(refObj=="rawgraph.10k"){
         data(rawgraph.10k)
         refObj <- rawgraph.10k
-        rm(rawgraph.10k)
     }
 
     ## handle plot param
@@ -49,7 +48,7 @@ geo.add.edges <- function(x, mode=c("points","area"), refObj="rawgraph.10k") {
 
     ## "area" mode ##
     if(mode=="area"){
-         selArea <- data.frame(x=1:2,y=1:2)
+        selArea <- data.frame(x=1:2,y=1:2)
 
         ## getting input from the user
         while(nrow(selArea) > 1) {
@@ -57,20 +56,19 @@ geo.add.edges <- function(x, mode=c("points","area"), refObj="rawgraph.10k") {
             selArea <- data.frame(locator(2))
 
             if(nrow(selArea) > 1) {
-                selNodes <- isInArea(refObj, reg=selArea)) # indices of selected points
+                selNodes <- isInArea(refObj, reg=selArea, res.type="integer") # indices of selected points
                 selEdges <- getEdges(refObj, mode="matId", unique=TRUE) # edges, nodes=numerical indices
                 temp <- (selEdges[,1] %in% selNodes) & (selEdges[,2] %in% selNodes)
                 selEdges <- selEdges[temp,] # edges of refobj wholly inside the selected area
 
                 segments(lon[selEdges[,1]], lat[selEdges[,1]], lon[selEdges[,2]], lat[selEdges[,2]], col="red")
-                points(lon[selIdx], lat[selIdx], cex=psize*1.5, col="red")
+                points(lon[selNodes], lat[selNodes], cex=psize, col="green", pch=pch)
 
-                toAdd$from <- c(toAdd$from, getNodes(refObj)[selEdges[,1]]
-                toAdd$to <- c(toAdd$to, getNodes(refObj)[selEdges[,2]]
+                toAdd$from <- c(toAdd$from, getNodes(refObj)[selEdges[,1]])
+                toAdd$to <- c(toAdd$to, getNodes(refObj)[selEdges[,2]])
             }
-        }
-     } # end mode "area"
-
+        } # end while
+    } # end mode "area"
 
     ## make sure added edges are unique
     toAdd <- as.matrix(as.data.frame(toAdd))
@@ -134,6 +132,9 @@ geo.remove.edges <- function(x, mode=c("points","area")) {
             }
         }
     } # end mode: points
+
+
+    ## mode: area ##
 
     if(mode=="area"){
         selArea <- data.frame(x=1:2,y=1:2)

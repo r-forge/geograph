@@ -1,7 +1,7 @@
 ############
 ## isInArea
 ############
-isInArea <- function(x, reg="current", res.type=c("logical","character"), buffer=0){
+isInArea <- function(x, reg="current", res.type=c("logical","integer","character"), buffer=0){
     ## some checks
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
     res.type <- match.arg(res.type)
@@ -41,6 +41,10 @@ isInArea <- function(x, reg="current", res.type=c("logical","character"), buffer
 
     if(res.type=="logical"){ # return a named vector of logicals
         return(toKeep)
+    }
+
+    if(res.type=="integer"){ # return a named vector of node numbers
+        return(which(toKeep))
     }
 
     if(res.type=="character"){ # return names of nodes in the area
