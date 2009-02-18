@@ -48,11 +48,11 @@ setMethod("getNodesAttr", "gGraph", function(x, nodes=NULL, attr.name=NULL,...) 
         attr.name <- TRUE
     }
     if( (!is.logical(attr.name)) && length(attr.name)==1 ){ # only one attr kept
-        res <- x@nodes.attr[,attr.name]
+        res <- x@nodes.attr[,attr.name, drop=FALSE]
         names(res) <- row.names(x@nodes.attr)
-        res <- res[nodes]
+        res <- res[nodes,,drop=FALSE]
     } else { # other cases: a data.frame is returned
-        res <- x@nodes.attr[nodes,attr.name]
+        res <- x@nodes.attr[nodes,attr.name, drop=FALSE]
     }
     return(res)
 })
@@ -297,7 +297,55 @@ setGeneric("getData", function(x, ...) {
 
 
 setMethod("getData", "gData", function(x, ...) {
-    res <- rownames(x@data)
+    res <- x@data
     return(res)
+})
+
+
+
+
+
+
+
+#############
+## getColors
+#############
+setGeneric("getColors", function(x, ...) {
+    standardGeneric("getColors")
+})
+
+
+
+setMethod("getColors", "gGraph", function(x, nodes="all", attr.name, ...) {
+    if(!attr.name %in% colnames(getNodesAttr(x))) {
+        stop("Requested attribute not found in x@nodes.attr.")
+    }
+    if(is.null(x@meta$color)){
+        stop("No rule for color defined in x (x@meta$color is NULL).")
+    }
+    if(!attr.name %in% colnames(x@meta$color)){
+        stop(paste("Nothing known about",attr.name,"in color rules (x@meta$color)."))
+    }
+
+    ## handle nodes ##
+    if(nodes=="all"){
+        toKeep <- TRUE
+    } else if(is.numeric(nodes) | is.character(nodes)){
+        toKeep <- nodes
+    } else{
+        stop("Don't know what to do with 'nodes': wrong specification.")
+    }
+
+    ## define colors ##
+    rules <- x@meta$color
+    criterion <- as.list(x@nodes.attr)[[attr.name]] # seek criterion in nodes.attr
+    if(!is.null(criterion)){
+        col <- as.character(criterion)[toKeep]
+        for(i in 1:nrow(rules)){
+            col[col==rules[i,1]] <- rules[i,2]
+        }
+    }
+
+    return(col)
 })
 
