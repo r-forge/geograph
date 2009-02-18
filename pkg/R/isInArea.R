@@ -17,7 +17,11 @@ isInArea <- function(x, reg="current", res.type=c("logical","integer","character
         xlim <- zoomlog[1:2]
         ylim <- zoomlog[3:4]
 
-    } else if(is.list(reg)){ # xlim/ylim user-provided (reg)
+    } else if(reg=="usr"){ # xlim/ylim taken from par("usr")
+        xlim <- sort(par("usr")[1:2])
+        ylim <- sort(par("usr")[3:4])
+
+    }  else if(is.list(reg)){ # xlim/ylim user-provided (reg)
         if(length(reg)!=2) stop("reg is not a list of length 2.")
         xlim <- sort(reg[[1]])[1:2]
         ylim <- sort(reg[[2]])[1:2]
@@ -51,6 +55,5 @@ isInArea <- function(x, reg="current", res.type=c("logical","integer","character
         res <- names(toKeep)[toKeep]
         return(res)
     }
-
 
 } # end isInArea
