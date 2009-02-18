@@ -102,6 +102,11 @@ setMethod("getCoords", "gGraph", function(x, ...) {
 
 
 
+setMethod("getCoords", "gData", function(x, ...) {
+    res <- x@coords
+    return(res)
+})
+
 
 
 #############
@@ -118,6 +123,12 @@ setMethod("getNodes", "gGraph", function(x, ...) {
     return(res)
 })
 
+
+
+setMethod("getNodes", "gData", function(x, ...) {
+    res <- rownames(x@nodes.id)
+    return(res)
+})
 
 
 
@@ -272,3 +283,21 @@ setMethod("dropWeights", "gGraph", function(x) {
 
     return(x)
 })
+
+
+
+
+#############
+## getData
+#############
+setGeneric("getData", function(x, ...) {
+    standardGeneric("getData")
+})
+
+
+
+setMethod("getData", "gData", function(x, ...) {
+    res <- rownames(x@data)
+    return(res)
+})
+

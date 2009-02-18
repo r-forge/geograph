@@ -104,6 +104,45 @@ setMethod("[", "gGraph", function(x, i, j, ..., drop=TRUE) {
 
 
 
+setMethod("[", "gData", function(x, i, j, ..., drop=FALSE) {
+    if(missing(i)) {
+        i <- TRUE
+    }
+    if(is.logical(i)){
+        i <- rep(i, length=nrow(getCoords(x)))
+    }
+    if(is.character(i)) {
+        i <- match(i, getNodes(x))
+        if(any(is.na(i))) stop("Some specified node labels were not found.")
+    }
+    if(missing(j)) {
+        j <- TRUE
+    }
+
+    if(is.logical(i) && is.logical(j) && all(c(i,j))) return(x) # don't loose time for silly trials
+
+
+    ## do the subsetting ##
+
+    ## coords
+    res <- x
+    res@coords <- res@coords[i, , drop=FALSE]
+
+    ## nodes id
+     res@nodes.id <- res@nodes.id[i]
+
+    ## data
+    if(nrow(getData(x))>0){
+        res@data <- res@data[i, j, drop=FALSE]
+    }
+
+    return(res)
+})
+
+
+
+
+
 ################
 ## SHOW METHODS
 ################
