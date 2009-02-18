@@ -328,23 +328,26 @@ setMethod("getColors", "gGraph", function(x, nodes="all", attr.name, ...) {
     }
 
     ## handle nodes ##
-    if(nodes=="all"){
+    if(length(nodes)==1 && nodes=="all"){
         toKeep <- TRUE
-    } else if(is.numeric(nodes) | is.character(nodes)){
+    } else if(is.numeric(nodes)){
         toKeep <- nodes
+    }
+    else if(is.character(nodes)){
+        toKeep <- match(nodes, getNodes(x))
     } else{
         stop("Don't know what to do with 'nodes': wrong specification.")
     }
 
     ## define colors ##
     rules <- x@meta$color
-    criterion <- as.list(x@nodes.attr)[[attr.name]] # seek criterion in nodes.attr
-    if(!is.null(criterion)){
-        col <- as.character(criterion)[toKeep]
-        for(i in 1:nrow(rules)){
-            col[col==rules[i,1]] <- rules[i,2]
-        }
+    criterion <- getNodesAttr(x, nodes=toKeep, attr.name=attr.name) # seek criterion in nodes.attr
+    col <- as.character(unlist(criterion))
+
+    for(i in 1:nrow(rules)){
+        col[col==rules[i,1]] <- rules[i,2]
     }
+
 
     return(col)
 })
