@@ -8,7 +8,7 @@ setFriction <- function(x, attr.name=NULL, method=c("mean", "product"), drop=TRU
 
 
     ## assign weights to vertices
-    nodeAttr <- getNodesAttr(x, attr.name=attr.name)
+    nodeAttr <- unlist(getNodesAttr(x, attr.name=attr.name))
     if(!is.null(x@meta$weights)){
         if(!any(attr.name %in% colnames(x@meta$weights))) {
             stop("attr.name is not documented in x@meta$weights.")
