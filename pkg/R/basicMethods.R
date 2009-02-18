@@ -239,13 +239,13 @@ setMethod("show", "gData", function(object){
     print(head(x@coords, nDisp))
     if(N > nDisp) cat("...\n")
 
-    cat("\n@nodes.id:",nrow(x@nodes.attr),"nodes identifiers\n")
-    print(head(x@nodes.attr, nDisp))
-    if(nrow(x@nodes.attr) > nDisp) cat("...\n")
+    cat("\n@nodes.id:",nrow(x@nodes.id),"nodes identifiers\n")
+    print(head(x@nodes.id, nDisp))
+    if(length(x@nodes.id) > nDisp) cat("...\n")
 
     cat("\n@data:",nrow(x@data),"data\n")
     print(head(x@data, nDisp))
-    if(nrow(x@data) > nDisp) cat("...\n")
+    if(N > nDisp) cat("...\n")
 
     cat("\nAssociated gGraph:",x@gGraph.name, "[",x@gGraph.version,"]\n")
 
