@@ -47,13 +47,9 @@ setMethod("getNodesAttr", "gGraph", function(x, nodes=NULL, attr.name=NULL,...) 
     if(is.null(attr.name)){ # no attr specified -> all attr kept
         attr.name <- TRUE
     }
-    if( (!is.logical(attr.name)) && length(attr.name)==1 ){ # only one attr kept
-        res <- x@nodes.attr[,attr.name, drop=FALSE]
-        names(res) <- row.names(x@nodes.attr)
-        res <- res[nodes,,drop=FALSE]
-    } else { # other cases: a data.frame is returned
-        res <- x@nodes.attr[nodes,attr.name, drop=FALSE]
-    }
+
+    res <- x@nodes.attr[nodes,attr.name, drop=FALSE]
+
     return(res)
 })
 
