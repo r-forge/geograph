@@ -89,6 +89,7 @@ geo.add.edges <- function(x, mode=c("points","area"), refObj="rawgraph.10k") {
 
 
 
+
 ####################
 ## geo.remove.edges
 ####################
@@ -181,12 +182,26 @@ geo.remove.edges <- function(x, mode=c("points","area")) {
 
 
 
+
 ###################
 ## geo.change.attr
 ###################
-geo.change.attr <- function(x, mode=c("points","area"), attr.name, attr.value, newCol="black") {
-    ## preliminary stuff
+geo.change.attr <- function(x, mode=c("points","area"), attr.name, attr.value,
+                            only.name=NULL, only.value=NULL, newCol="black") {
+
+    ## preliminary stuff ##
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
+
+    ## handle "only" ##
+    if(!is.null(only.name)){
+        temp <- getNodesAttr(x, attr.name=only.name)
+        temp <- as.character(unlist(temp))
+        hasRightAttr <- which(temp==only.value)
+        if(length(hasRightAttr)==0) stop(paste("specified values of",only.name,"never found."))
+    } else{
+        hasRightAttr <- 1:nrow(getCoords(x))
+    }
+
     coords <- getCoords(x)
     lon <- coords[,1]
     lat <- coords[,2]
@@ -229,9 +244,11 @@ geo.change.attr <- function(x, mode=c("points","area"), attr.name, attr.value, n
             spoint <- NULL
             spoint <- identify(lon, lat, plot=FALSE, n=1)
             if(length(spoint) > 0) {
+                spoint <- spoint[spoint %in% hasRightAttr] # only nodes with a given attributes will be modified
                 points(lon[spoint], lat[spoint], cex=psize, pch=pch, col=newCol)
 
                 toChange <- c(toChange, spoint)
+
             }
         }
     } # end mode: points
@@ -246,6 +263,7 @@ geo.change.attr <- function(x, mode=c("points","area"), attr.name, attr.value, n
 
             if(nrow(selArea) > 1) {
                 selIdx <- which(isInArea(x, reg=selArea)) # indices of selected points
+                selIdx <- selIdx[selIdx %in% hasRightAttr] # only nodes with replaced attribute
                 points(lon[selIdx], lat[selIdx], cex=psize, pch=pch, col=newCol)
 
                 toChange <- c(toChange, selIdx)
@@ -256,7 +274,7 @@ geo.change.attr <- function(x, mode=c("points","area"), attr.name, attr.value, n
 
 
     ## make changes ##
-    toChange <- unique(toChange)
+    toChange <- unique(toChange) # unique id
     res <- x
 
     if(is.factor(res@nodes.attr[,attr.name])){ # special handling if attr is a factor
