@@ -192,7 +192,7 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=N
 ## plotEdges
 ############
 plotEdges <- function(x, replot=TRUE, useWeights=NULL, col="black", lwd=1,
-                      lty=1, pch=NULL, psize=NULL, pcol=NULL, maxLwd=3, ...){
+                      lty=1, pch=NULL, psize=NULL, pcol=NULL, maxLwd=3, attr.col=NULL,...){
     ## some checks
     if(!is.gGraph(x)) stop("x is not a valid gGraph object.")
 
@@ -203,9 +203,6 @@ plotEdges <- function(x, replot=TRUE, useWeights=NULL, col="black", lwd=1,
 
     ## get the environment
     env <- get(".geoGraphEnv", envir=.GlobalEnv)
-
-    ## retrieve some general plot info
-    curUsr <- get("usr", envir=env)
 
     ## handle plot param
     last.plot.param <- get("last.plot.param", envir=env)
@@ -218,12 +215,27 @@ plotEdges <- function(x, replot=TRUE, useWeights=NULL, col="black", lwd=1,
     }
 
     ## retained coords (those within plotting area)
-    toKeep <- isInArea(x)
-    keptCoords <- getCoords(x)[toKeep, ]
+    coords <- getCoords(x)
+    toKeep <- isInArea(x, reg="usr", res.type="integer")
+    keptCoords <- coords[toKeep, , drop=FALSE]
 
     ## adjust pcol to subset of points in area
-    pcol <- rep(pcol, length=nrow(x@coords))
-    pcol <- pcol[toKeep]
+     if(is.null(pcol)) {
+        useAttrCol <- ( (!is.null(x@meta$color))  &&
+                       (nrow(x@meta$color)>0) &&  is.null(pcol)) # use color from node attribute?
+
+        if(useAttrCol){
+            if(is.null(attr.col)){
+                attr.col <- colnames(x@meta$color)[1] # default attribute used for colors
+            }
+
+            pcol <- getColors(x, nodes=toKeep, attr.name=attr.col)
+
+        } else {
+            pcol <- "black"
+        } # end handle pcol
+    }
+
 
     edges <- getEdges(x, mode="matNames", unique=TRUE) # retrieve (unique) edges
     temp <- (edges[,1] %in% rownames(keptCoords)) & (edges[,2] %in% rownames(keptCoords))
