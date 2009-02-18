@@ -75,9 +75,12 @@ setMethod("findCountry", "gGraph", function(x, shape="world", attr.name="country
     coords <- getCoords(x)
     res <- findLand(coords, shape=shape, ...)
     if(nrow(x@nodes.attr)>1){
-        x@nodes.attr <- cbind.data.frame(x@nodes.attr, attr.name=res)
+        x@nodes.attr <- cbind.data.frame(x@nodes.attr,res)
+        names(x@nodes.attr)[ncol(x@nodes.attr)] <- attr.name
+
     } else {
-        x@nodes.attr <- data.frame(attr.name=res)
+        x@nodes.attr <- data.frame(res)
+        names(res) <- attr.name
     }
 
     return(x)
