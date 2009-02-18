@@ -1,6 +1,10 @@
 #################
 ## BASIC METHODS
 #################
+
+###################
+## [ gGraphHistory
+###################
 setMethod("[", "gGraphHistory", function(x, i, j = "missing", drop = "missing") {
     if(missing(i)) i <- TRUE
 
@@ -15,6 +19,11 @@ setMethod("[", "gGraphHistory", function(x, i, j = "missing", drop = "missing") 
 
 
 
+
+
+############
+## [ gGraph
+############
 setMethod("[", "gGraph", function(x, i, j, ..., drop=TRUE) {
     if(missing(i)) {
         i <- TRUE
@@ -104,6 +113,10 @@ setMethod("[", "gGraph", function(x, i, j, ..., drop=TRUE) {
 
 
 
+
+###########
+## [ gData
+###########
 setMethod("[", "gData", function(x, i, j, ..., drop=FALSE) {
     if(missing(i)) {
         i <- TRUE
@@ -143,9 +156,14 @@ setMethod("[", "gData", function(x, i, j, ..., drop=FALSE) {
 
 
 
+
 ################
 ## SHOW METHODS
 ################
+
+######################
+## show gGraphHistory
+######################
 setMethod("show", "gGraphHistory", function(object){
     x <- object
     N <- length(x@cmd)
@@ -171,13 +189,17 @@ setMethod("show", "gGraphHistory", function(object){
 
 
 
+
+###############
+## show gGraph
+###############
 setMethod("show", "gGraph", function(object){
     x <- object
     N <- nrow(x@coords)
     nDisp <- 3
 
     ## printing
-    cat("\n=== gGgraph object ===\n")
+    cat("\n=== gGraph object ===\n")
     cat("\n@coords: spatial coordinates of",nrow(x@coords),"nodes\n")
     print(head(x@coords, nDisp))
     if(N > nDisp) cat("...\n")
@@ -197,4 +219,35 @@ setMethod("show", "gGraph", function(object){
     if(length(x@history@cmd) > nDisp) cat("\n...\n")
 
 }) # end show gGraph
+
+
+
+
+
+
+###############
+## show gData
+###############
+setMethod("show", "gData", function(object){
+    x <- object
+    N <- nrow(x@coords)
+    nDisp <- 3
+
+    ## printing
+    cat("\n=== gData object ===\n")
+    cat("\n@coords: spatial coordinates of",nrow(x@coords),"nodes\n")
+    print(head(x@coords, nDisp))
+    if(N > nDisp) cat("...\n")
+
+    cat("\n@nodes.id:",nrow(x@nodes.attr),"nodes identifiers\n")
+    print(head(x@nodes.attr, nDisp))
+    if(nrow(x@nodes.attr) > nDisp) cat("...\n")
+
+    cat("\n@data:",nrow(x@data),"data\n")
+    print(head(x@data, nDisp))
+    if(nrow(x@data) > nDisp) cat("...\n")
+
+    cat("\nAssociated gGraph:",x@gGraph.name, "[",x@gGraph.version,"]\n")
+
+}) # end show gData
 
