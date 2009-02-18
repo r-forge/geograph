@@ -67,12 +67,14 @@ setMethod("findCountry", "gGraph", function(x, shape="world",...){
 
 
 
+
 ##############
 ## for gGraph
 ##############
-setMethod("findCountry", "gGraph", function(x, shape="world",...){
-    x <- getCoords(x)
-    res <- findCountry(x, shape=shape, ...)
-    res@nodes.attr <- cbind.data.frame(res@nodes.attr, country=res)
+setMethod("findCountry", "gGraph", function(x, shape="world", attr.name="country",...){
+    coords <- getCoords(x)
+    res <- findLand(coords, shape=shape, ...)
+    res@nodes.attr <- cbind.data.frame(x@nodes.attr, attr.name=res)
     return(res)
-}) # end findCountry
+}) # end findLand
+
