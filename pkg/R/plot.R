@@ -114,11 +114,12 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
 
 
 
+
 #####################
 ## points for gGraph
 #####################
 setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=NULL,
-                                      edges=FALSE, lwd=1, useWeights=NULL, maxLwd=3,...){
+                                      edges=FALSE, lwd=1, useWeights=NULL, maxLwd=3, attr.col=NULL,...){
     ## some checks
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
 
@@ -136,24 +137,36 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=N
     xlim <- zoomlog[1:2]
     ylim <- zoomlog[3:4]
 
+
+    ## subset data to visible area ##
+    coords <- getCoords(x)
+    toKeep <- isInArea(x, reg="usr", res.type="integer")
+    coords <- coords[toKeep, , drop=FALSE]
+
     ## handle plot param
     last.plot.param <- get("last.plot.param", envir=env)
     if(is.null(psize)) psize <- last.plot.param$psize
     if(is.null(pch)) pch <- last.plot.param$pch
-    if(is.null(col)) col <- last.plot.param$col
+    if(is.null(col)) {
+        useAttrCol <- ( (!is.null(x@meta$color))  &&
+                       (nrow(x@meta$color)>0) &&  is.null(col)) # use color from node attribute?
+
+        if(useAttrCol){
+            if(is.null(attr.col)){
+                attr.col <- colnames(x@meta$color)[1] # default attribute used for colors
+            }
+
+            col <- getColors(x, nodes=toKeep, attr.name=attr.col)
+
+        } else {
+            col <- "black"
+        } # end handle color
+    }
 
     ## handle zoom and psize
     if(is.null(psize)){
         psize <- get("psize", env=env)
     }
-
-    coords <- getCoords(x)
-    toKeep <- isInArea(x)
-    coords <- coords[toKeep, , drop=FALSE]
-
-    ## adjust pcol to subset of points in area
-    col <- rep(col, length=nrow(x@coords))
-    col <- col[toKeep]
 
 
     ## add only points and optionally edges
