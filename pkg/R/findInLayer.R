@@ -17,7 +17,7 @@ setMethod("findInLayer", "matrix", function(x, layer="world", attr="all",...){
     if(!require(maptools)) stop("maptools package is required.")
 
     ## Load default shapefile ##
-    if(is.character(layer) && layer[1]=="world"){
+    if(layer[1]=="world"){
         if(!require(sp)) stop("sp package needed to map the world")
         data(worldshape)
         layer <- worldshape
@@ -73,7 +73,7 @@ setMethod("findInLayer", "matrix", function(x, layer="world", attr="all",...){
         } # end for j
     } # end for i
 
-    res <- dat[layerId, attr, drop=FALSE]
+    res <- dat[layerId, selAttr, drop=FALSE]
     row.names(res) <- rownames(x)
 
     return(res)
@@ -144,12 +144,11 @@ setMethod("findInLayer", "gData", function(x, layer="world", attr="all",...){
         x@data <- cbind.data.frame(x@data,res)
     } else if(is.list(x@data)){ # if data is a list
         x@data$layerInfo <- res
-    } else if(is.vector(x@data)){ # if data is a vector
+    } else if(is.vector(x@data) & length(x@data)==nrow(res)){ # if data is a 'mergeable' vector
         x@data <- cbind.data.frame(x@data, res)
     } else{ # else, build a list
         warning("x@data has been transformed into a list to include layer data.")
         x@data <- list(x@data, layerInfo=res)
-        return(res)
     }
 
     return(x)
