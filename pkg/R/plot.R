@@ -271,3 +271,39 @@ plotEdges <- function(x, replot=TRUE, useWeights=NULL, col="black", lwd=1,
 
     return(invisible())
 } # end plotEdges
+
+
+
+
+
+
+#####################
+## points for gData
+#####################
+setMethod("points", signature("gData"), function(x, ...){
+    ## some checks
+    if(!is.gData(x)) stop("x is not a valid gData object")
+
+    ## create the .geoGraphEnv if it does not exist
+    env <- get(".geoGraphEnv", envir=.GlobalEnv) # env is our target environnement
+
+    zoomlog <- get("zoom.log", envir=env)
+    zoomlog <- zoomlog[1,]
+
+    xlim <- zoomlog[1:2]
+    ylim <- zoomlog[3:4]
+
+
+    ## subset data to visible area ##
+    coords <- getCoords(x)
+    toKeep <- isInArea(coords, reg="usr", res.type="integer")
+    coords <- coords[toKeep, , drop=FALSE]
+
+    ## add points ##
+    points(coords[,1], coords[,2], ...)
+
+    return(invisible())
+}) # end points method
+
+
+
