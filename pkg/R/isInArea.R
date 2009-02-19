@@ -1,13 +1,21 @@
 ############
 ## isInArea
 ############
-isInArea <- function(x, reg="current", res.type=c("logical","integer","character"), buffer=0){
-    ## some checks
-    if(!is.gGraph(x)) stop("x is not a valid gGraph object")
-    res.type <- match.arg(res.type)
+setGeneric("isInArea", function(x, ...) {
+    standardGeneric("isInArea")
+})
 
+
+
+
+################
+## method for matrix
+################
+setMethod("isInArea", "matrix", function(x, reg="current", res.type=c("logical","integer","character"), buffer=0){
+    ## some checks / definitiona
+    res.type <- match.arg(res.type)
     env <- get(".geoGraphEnv", envir=.GlobalEnv) # env is our target environnement
-    coords <- getCoords(x)
+    coords <- x
 
     ## get xlim and ylim
     if(exists("zoom.log", envir=env) && length(reg)==1 && reg=="current"){ # xlim/ylim taken from log
@@ -56,4 +64,39 @@ isInArea <- function(x, reg="current", res.type=c("logical","integer","character
         return(res)
     }
 
-} # end isInArea
+}) # end isInArea for matrix
+
+
+
+
+
+
+################
+## method for data.frame
+################
+setMethod("isInArea", "matrix", function(x, reg="current", res.type=c("logical","integer","character"), buffer=0){
+
+    ## preliminary stuff
+    x <- as.data.frame(x)
+
+    res <- isInArea(x=x, reg=reg, res.type=res.type, buffer=buffer)
+    return(res)
+}) # end isInArea for data.frame
+
+
+
+
+
+
+################
+## method for gGraph
+################
+setMethod("isInArea", "matrix", function(x, reg="current", res.type=c("logical","integer","character"), buffer=0){
+
+    ## preliminary stuff
+    if(!is.gGraph(x)) stop("x is not a valid gGraph object")
+    coords <- getCoords(x)
+
+    res <- isInArea(x=coords, reg=reg, res.type=res.type, buffer=buffer)
+    return(res)
+}) # end isInArea for gGraph

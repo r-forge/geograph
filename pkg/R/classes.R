@@ -139,7 +139,7 @@ setClass("gData", representation(coords="matrix", nodes.id="character", data="AN
 
 setValidity("gGraph", .gGprah.valid)
 setValidity("gGraphHistory", .gGprahHistory.valid)
-setValidity("gData", .gGprahHistory.valid)
+setValidity("gData", .gData.valid)
 
 
 is.gGraphHistory <- function(x){
@@ -342,11 +342,17 @@ setMethod("initialize", "gData", function(.Object, ...) {
         if(is.null(input$gGraph.version) & !is.null(myGraph)){
             x@gGraph.version <- myGraph@history@dates[length(myGraph@history@dates)]
         }
+    } else{
+        myGraph <- NULL
     }
 
 
     ## handle nodes.id ##
-    if(!is.null(input$nodes.id)){
+    if(is.null(input$nodes.id)){ # if nodes.id is not provided...
+        if(!is.null(myGraph)){ # ... and if the gGraph is available
+            x@nodes.id <- closestNode(myGraph, loc=x@coords) # deduce nodes.id from the gGraph
+        }
+    } else {
         x@nodes.id <- as.character(x@nodes.id)
         if(!is.null(myGraph)){
             if(!all(x@nodes.id %in% getNodes(myGraph))){
