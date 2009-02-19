@@ -1,7 +1,19 @@
 ###############
 ## closestNode
 ###############
-closestNode <- function(x, loc, zoneSize=5, attr.name=NULL, attr.values=NULL){
+setGeneric("closestNode", function(x,...) {
+    standardGeneric("closestNode")
+})
+
+
+
+
+
+
+###############
+## closestNode for gGraph
+###############
+setMethod("closestNode", "gGraph", function(x, loc, zoneSize=5, attr.name=NULL, attr.values=NULL){
 
     ## handle arguments
     if(!require(fields)) stop("package fields is required.")
@@ -64,4 +76,30 @@ closestNode <- function(x, loc, zoneSize=5, attr.name=NULL, attr.values=NULL){
     ## names(res) <- temp
 
     return(res)
-} # end closestNode
+}) # end closestNode for gGraph
+
+
+
+
+
+
+###############
+## closestNode for gData
+###############
+setMethod("closestNode", "gData", function(x, zoneSize=5, attr.name=NULL, attr.values=NULL){
+
+    ## get coords ##
+    xy <- getCoords(x)
+
+    ## get gGraph object ##
+    if(!exists(x@gGraph.name, envir=.GlobalEnv)) stop(paste("gGraph object",x@gGraph.name,"does not exist."))
+    obj <- get(x@gGraph.name, envir=.GlobalEnv)
+
+    ## make a call to the gGraph method ##
+    res <- closestNode(obj, loc=xy, zoneSize=zoneSize, attr.name=attr.name, attr.values=attr.values)
+
+    ## return result ##
+    x@nodes.id <- res
+
+    return(x)
+}) # end closestNode for gData
