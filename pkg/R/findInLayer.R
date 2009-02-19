@@ -11,7 +11,7 @@ setGeneric("findInLayer", function(x, ...) {
 ################
 ## for matrices (of long/lat)
 ################
-setMethod("findInLayer", "matrix", function(x, layer="world", attr,...){
+setMethod("findInLayer", "matrix", function(x, layer="world", attr="all",...){
 
     ## This functions automatically assigns to land all points overlapping the country polygons
     if(!require(maptools)) stop("maptools package is required.")
@@ -29,12 +29,16 @@ setMethod("findInLayer", "matrix", function(x, layer="world", attr,...){
     }
 
     ## search attr in data ##
-    selAttr <- match(attr, colnames(layer@data)) # selected attributes
-    if(is.na(selAttr)){ # attribute not found in layer@data
-        cat("\nRequested attribute (attr) not found in the layer.\n")
-        cat("\nAvailable data are:\n")
-        print(head(layer@data))
-        return(NULL) # return NULL if attr not found, not generate an error
+    if(attr[1]=="all"){
+        selAttr <- 1:ncol(layer@data)
+    } else{
+        selAttr <- match(attr, colnames(layer@data)) # selected attributes
+        if(is.na(selAttr)){ # attribute not found in layer@data
+            cat("\nRequested attribute (attr) not found in the layer.\n")
+            cat("\nAvailable data are:\n")
+            print(head(layer@data))
+            return(NULL) # return NULL if attr not found, not generate an error
+        }
     }
 
     ## variables and initialization ##
@@ -43,7 +47,7 @@ setMethod("findInLayer", "matrix", function(x, layer="world", attr,...){
     n.poly.list <- length(layer@polygons) # number of lists of Polygons obj.
     res <- NULL
     dat <- layer@data
-    layerId <- integer(length(long)) # stores the id of matching polygon for each location
+    layerId <- rep(NA, length(long)) # stores the id of matching polygon for each location
 
 
     ## main computations ##
@@ -70,6 +74,7 @@ setMethod("findInLayer", "matrix", function(x, layer="world", attr,...){
     } # end for i
 
     res <- dat[layerId, attr, drop=FALSE]
+    row.names(res) <- rownames(x)
 
     return(res)
 }) # end findInLayer for matrices
@@ -82,9 +87,9 @@ setMethod("findInLayer", "matrix", function(x, layer="world", attr,...){
 ################
 ## for data.frames (of long/lat)
 ################
-setMethod("findInLayer", "gGraph", function(x, layer="world",...){
+setMethod("findInLayer", "data.frame", function(x, layer="world", attr="all",...){
     x <- as.matrix(x)
-    return(findInLayer(x, layer=layer, ...))
+    return(findInLayer(x, layer=layer, attr=attr, ...))
 }) # end findInLayer
 
 
@@ -92,20 +97,59 @@ setMethod("findInLayer", "gGraph", function(x, layer="world",...){
 
 
 
+################
+## for list (of long/lat)
+################
+setMethod("findInLayer", "list", function(x, layer="world", attr="all",...){
+    x <- data.frame(x)
+    return(findInLayer(x, layer=layer, attr=attr, ...))
+}) # end findInLayer
+
+
+
+
+
 
 ##############
-## for gGraph
+## for gGraph # should be carefully used, output is going to be heavy
 ##############
-setMethod("findInLayer", "gGraph", function(x, layer="world", attr.name,...){
+setMethod("findInLayer", "gGraph", function(x, layer="world", attr="all",...){
     coords <- getCoords(x)
-    res <- findLand(coords, layer=layer, ...)
+    res <- findInLayer(x=coords, layer=layer, attr=attr, ...)
+
     if(nrow(x@nodes.attr)>1){
         x@nodes.attr <- cbind.data.frame(x@nodes.attr,res)
-        names(x@nodes.attr)[ncol(x@nodes.attr)] <- attr.name
-
     } else {
-        x@nodes.attr <- data.frame(res)
-        names(res) <- attr.name
+        x@nodes.attr <- res
+    }
+
+    return(x)
+}) # end findLand
+
+
+
+
+
+
+##############
+## for gData
+##############
+setMethod("findInLayer", "gData", function(x, layer="world", attr="all",...){
+    coords <- getCoords(x)
+    res <- findInLayer(x=coords, layer=layer, attr=attr, ...)
+
+    if(is.null(x@data)){
+        x@data <- res
+    }else if(length(nrow(x@data))>0 && nrow(x@data)>1){ # if data are non-empty data.frame
+        x@data <- cbind.data.frame(x@data,res)
+    } else if(is.list(x@data)){ # if data is a list
+        x@data$layerInfo <- res
+    } else if(is.vector(x@data)){ # if data is a vector
+        x@data <- cbind.data.frame(x@data, res)
+    } else{ # else, build a list
+        warning("x@data has been transformed into a list to include layer data.")
+        x@data <- list(x@data, layerInfo=res)
+        return(res)
     }
 
     return(x)
