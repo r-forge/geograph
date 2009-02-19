@@ -194,7 +194,7 @@ geo.change.attr <- function(x, mode=c("points","area"), attr.name, attr.value,
 
     ## handle "only" ##
     if(!is.null(only.name)){
-        temp <- getNodesAttr(x, attr.name=only.name)
+        temp <- unlist(getNodesAttr(x, attr.name=only.name))
         temp <- as.character(unlist(temp))
         hasRightAttr <- which(temp==only.value)
         if(length(hasRightAttr)==0) stop(paste("specified values of",only.name,"never found."))
