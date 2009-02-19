@@ -74,7 +74,7 @@ setMethod("isInArea", "matrix", function(x, reg="current", res.type=c("logical",
 ################
 ## method for data.frame
 ################
-setMethod("isInArea", "matrix", function(x, reg="current", res.type=c("logical","integer","character"), buffer=0){
+setMethod("isInArea", "data.frame", function(x, reg="current", res.type=c("logical","integer","character"), buffer=0){
 
     ## preliminary stuff
     x <- as.data.frame(x)
@@ -91,7 +91,7 @@ setMethod("isInArea", "matrix", function(x, reg="current", res.type=c("logical",
 ################
 ## method for gGraph
 ################
-setMethod("isInArea", "matrix", function(x, reg="current", res.type=c("logical","integer","character"), buffer=0){
+setMethod("isInArea", "gGraph", function(x, reg="current", res.type=c("logical","integer","character"), buffer=0){
 
     ## preliminary stuff
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")

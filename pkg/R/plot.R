@@ -280,27 +280,47 @@ plotEdges <- function(x, replot=TRUE, useWeights=NULL, col="black", lwd=1,
 #####################
 ## points for gData
 #####################
-setMethod("points", signature("gData"), function(x, ...){
+setMethod("points", signature("gData"), function(x, method=c("original","nodes","both"),
+                                                 pch.ori=4, pch.nodes=1,
+                                                 col.ori="black", col.nodes="orange",...){
     ## some checks
     if(!is.gData(x)) stop("x is not a valid gData object")
-
-    ## create the .geoGraphEnv if it does not exist
-    env <- get(".geoGraphEnv", envir=.GlobalEnv) # env is our target environnement
-
-    zoomlog <- get("zoom.log", envir=env)
-    zoomlog <- zoomlog[1,]
-
-    xlim <- zoomlog[1:2]
-    ylim <- zoomlog[3:4]
+    method <- match.arg(method)
 
 
     ## subset data to visible area ##
-    coords <- getCoords(x)
-    toKeep <- isInArea(coords, reg="usr", res.type="integer")
-    coords <- coords[toKeep, , drop=FALSE]
+    coords.ori <- getCoords(x)
+    if(method %in% c("nodes","both")){ # need to get coords of nodes
+        if(!exists(x@gGraph.name, env=.GlobalEnv)){ # if the gGraph is missing, stop
+            stop(paste("The gGraph object",x@gGraph.name,"is missing."))
+        }
+
+        if(length(x@nodes.id)==0) { # if nodes have not been assigned, stop
+            stop("No nodes are assigned (@nodes.id empty); nothing to plot.")
+        }
+
+        myGraph <- get(x@gGraph.name, envir=.GlobalEnv)
+        coords.nodes <- getCoords(myGraph)[x@nodes.id,]
+        toKeep <- isInArea(coords.nodes, reg="usr", res.type="integer")
+        coords.nodes <- coords.nodes[toKeep, , drop=FALSE]
+    }
+
+    ## restrain coords to current area ##
+    toKeep <- isInArea(coords.ori, reg="usr", res.type="integer")
+    coords.ori <- coords.ori[toKeep, , drop=FALSE]
 
     ## add points ##
-    points(coords[,1], coords[,2], ...)
+    if(method=="original" | method=="both"){ # plot original coordinates
+        points(coords.ori[,1], coords.ori[,2], pch=pch.ori, col=col.ori, ...)
+    }
+
+    if(method=="nodes" | method=="both"){ # plot assigned nodes
+        points(coords.nodes[,1], coords.nodes[,2], pch=pch.nodes, col=col.nodes, ...)
+    }
+
+    if(method=="both"){ # add arrows from original location to assigned node
+        arrows(coords.ori[,1], coords.ori[,2], coords.nodes[,1], coords.nodes[,2], angle=15, length=.1)
+    }
 
     return(invisible())
 }) # end points method
