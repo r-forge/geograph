@@ -101,15 +101,10 @@ setClass("gData", representation(coords="matrix", nodes.id="character", data="AN
     }
 
     ## cmd wrong class
-    if(!all(sapply(x@cmd, class)=="call")){
+    if(!all(sapply(x@cmd, class)=="expression")){
         cat("\n Some cmd components are not calls.")
         return(FALSE)
     }
-
-    ##if(){
-    ##	cat("\n .")
-    ##	return(FALSE)
-    ##}
 
     return(TRUE)
 } # end .gGprahHistory.valid
@@ -166,9 +161,14 @@ is.gData <- function(x){
 
 
 
+
 ################
 ## CONSTRUCTORS
 ################
+
+##################
+## gGraphHistory
+##################
 setMethod("initialize", "gGraphHistory", function(.Object, ...) {
     x <- .Object
     input <- list(...)
@@ -215,6 +215,9 @@ setMethod("initialize", "gGraphHistory", function(.Object, ...) {
 
 
 
+##########
+## gGraph
+##########
 setMethod("initialize", "gGraph", function(.Object, ...) {
     x <- .Object
     input <- list(...)
@@ -292,6 +295,10 @@ setMethod("initialize", "gGraph", function(.Object, ...) {
 
 
 
+
+##########
+## gData
+##########
 setMethod("initialize", "gData", function(.Object, ...) {
     x <- .Object
     input <- list(...)
