@@ -25,7 +25,7 @@ setMethod("closestNode", "gGraph", function(x, loc, zoneSize=5, attr.name=NULL, 
 
     ## handle attribute specification if provided
     if(!is.null(attr.name)){
-        temp <- getNodesAttr(x, attr.name=attr.name)
+        temp <- unlist(getNodesAttr(x, attr.name=attr.name))
         temp <- as.character(temp)
         hasRightAttr <- temp %in% attr.values
         if(!any(hasRightAttr)) stop(paste("specified values of",attr.name,"never found."))
