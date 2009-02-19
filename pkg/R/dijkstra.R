@@ -117,13 +117,14 @@ setMethod("dijkstraFrom", "gData", function(x, start, weights="default"){
 
 
     ## build the wrapper ##
-    myGraph <- get(x@gGraph.name, envir=.GlobalEnv)
+    myGraph <- get(x@gGraph.name, envir=.GlobalEnv) # myGraph is a gGraph object
+    myGraph <- getGraph(myGraph)
 
     if(is.character(weights) && weights=="default"){
         weights <- unlist(edgeWeights(myGraph))
     }
 
     ## wrap ##
-    res <- dijkstra.sp(myGraph, start=start, finish=x@nodes.id)
+    res <- sp.between(myGraph, start=start, finish=x@nodes.id)
 
 }) # end dijkstraFrom for gData
