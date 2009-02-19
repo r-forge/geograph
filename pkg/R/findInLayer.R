@@ -38,18 +38,19 @@ setMethod("findInLayer", "matrix", function(x, layer="world", attr,...){
     }
 
     ## variables and initialization ##
-    long <- x[,1]
-    lat <- x[,2]
-    n.poly <- length(layer@polygons)
+    long <- unlist(x[,1]) # unlist needed when nrow==1
+    lat <- unlist(x[,2])
+    n.poly.list <- length(layer@polygons) # number of lists of Polygons obj.
     res <- NULL
     dat <- layer@data
+    layerId <- integer(length(long)) # stores the id of matching polygon for each location
 
 
     ## main computations ##
 
     ## browsing elements of @polygons
     ## each is a list with a @Polygons slot
-    for(i in 1:n.poly) {
+    for(i in 1:n.poly.list) {
         this.poly.list <- layer@polygons[[i]]
         n.polys <- length(this.poly.list@Polygons)
         points.in.this.poly <- rep(0, length(long))
@@ -59,11 +60,16 @@ setMethod("findInLayer", "matrix", function(x, layer="world", attr,...){
             this.poly <- this.poly.list@Polygons[[j]]
             points.in.this.poly <- points.in.this.poly +
                 point.in.polygon(long,lat, this.poly@coords[,1], this.poly@coords[,2])
-        }
 
-##        temp <- dat[points.in.this.poly>0]
-        res <- rbind.data.frame(res, dat[points.in.this.poly>0, attr, drop=FALSE])
-    }
+            points.in.this.poly <- as.logical(points.in.this.poly)
+
+            if(any(points.in.this.poly)){
+                layerId[points.in.this.poly] <- this.poly.list@ID
+            }
+        } # end for j
+    } # end for i
+
+    res <- dat[layerId, attr, drop=FALSE]
 
     return(res)
 }) # end findInLayer for matrices
