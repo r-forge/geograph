@@ -123,7 +123,7 @@ setMethod("getNodes", "gGraph", function(x, ...) {
 
 
 setMethod("getNodes", "gData", function(x, ...) {
-    res <- rownames(x@nodes.id)
+    res <- x@nodes.id
     return(res)
 })
 
