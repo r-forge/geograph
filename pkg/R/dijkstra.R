@@ -192,21 +192,31 @@ setMethod("dijkstraFrom", "gData", function(x, start, weights="default"){
 #################
 ## plot methods
 #################
-plot.gPath <- function(x, col="red",...){
+plot.gPath <- function(x, col="rainbow", lwd=2, ...){
 
     listNodes <- lapply(x[-length(x)], function(e) e$path_detail)
     xy <- x$xy
+    Npath <- length(listNodes)
+
+    ## handle color ##
+    if(is.character(col) && col[1]=="rainbow"){
+        col <- sample(rainbow(length(x)))
+    }
+    col <- rep(col, length=Npath)
+    lwd <- rep(lwd, length=Npath)
+
 
     ## function plotting one gPath
-    f1 <- function(vecNodes){
+    f1 <- function(vecNodes, col, lwd, ...){
         N <- length(vecNodes)
         from <- vecNodes[1:(N-1)]
         to <- vecNodes[2:N]
-        segments(xy[from,1], xy[from,2], xy[to,1], xy[to,2], col=col, ...)
+        segments(xy[from,1], xy[from,2], xy[to,1], xy[to,2], col=col, lwd=lwd, ...)
     }
 
+
     ## plot all gPaths
-    lapply(listNodes, f1)
+    lapply(1:length(listNodes), function(i) f1(listNodes[[i]], col=col[i], lwd=lwd[i], ...))
 
     return(invisible())
 } # end plot.gPath
