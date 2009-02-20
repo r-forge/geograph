@@ -24,6 +24,18 @@ setMethod("dijkstraBetween", "gGraph", function(x, from, to){
     ## build the wrapper ##
     myGraph <- getGraph(x)
 
+    ## build indices of all pairwise combinations ##
+    pairIdStart <- integer()
+    pairIdStop <- integer()
+
+    for(i in 1:length(x@nodes.id)){
+        for(j in i+1:length(x@nodes.id)){
+            pairIdStart <- c(pairIdStart, i)
+            pairIdStop <- c(pairIdStop, j)
+        }
+    }
+
+
     ## wrap ##
     res <- sp.between(myGraph, start=from, finish=to)
 
@@ -50,8 +62,20 @@ setMethod("dijkstraBetween", "gData", function(x){
     myGraph <- get(x@gGraph.name, envir=.GlobalEnv)
     myGraph <- getGraph(myGraph)
 
+    ## build indices of all pairwise combinations ##
+    pairIdStart <- integer()
+    pairIdStop <- integer()
+
+    for(i in 1:length(x@nodes.id)){
+        j <- i
+        while((j <- j+1) < length(x@nodes.id)){
+            pairIdStart <- c(pairIdStart, i)
+            pairIdStop <- c(pairIdStop, j)
+        }
+    }
+
     ## wrap ##
-    res <- sp.between(myGraph, start=x@nodes.id, finish=x@nodes.id)
+    res <- sp.between(myGraph, start=x@nodes.id[pairIdStart], finish=x@nodes.id[pairIdStop])
 
     return(res)
 }) # end dijkstraBetween for gData
