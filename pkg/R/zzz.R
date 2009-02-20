@@ -19,4 +19,6 @@
 
     temp <- list(psize=0.5, pch=19, col="black")
     assign("last.plot.param", temp, env=geoEnv)
+
+    assign("sticky.points", FALSE, env=geoEnv)
 }

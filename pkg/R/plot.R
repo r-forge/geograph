@@ -17,6 +17,11 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
 
     coords <- getCoords(x)
 
+    ## handle reset ##
+    if(reset){
+        assign("sticky.points",FALSE,envir=env)
+    }
+
     ## handle xlim and ylim
     if((!exists("zoom.log", envir=env)) | reset) { # if xlim absent or if reset
         temp <- c(range(coords[,1]), range(coords[,2]))
@@ -107,6 +112,13 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
     temp$col <- col
     assign("last.plot.param", temp, envir=env)
 
+
+    ## add previously added points if needed ##
+    sticky.points <- get("sticky.points", envir=env)
+    if(sticky.points){
+        eval(get("last.points", envir=env))
+    }
+
     return(invisible())
 }) # end plot method
 
@@ -119,7 +131,8 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
 ## points for gGraph
 #####################
 setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=NULL,
-                                      edges=FALSE, lwd=1, useWeights=NULL, maxLwd=3, attr.col=NULL,...){
+                                      edges=FALSE, lwd=1, useWeights=NULL, maxLwd=3, attr.col=NULL,
+                                                  sticky.points=FALSE,...){
     ## some checks
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
 
@@ -177,8 +190,10 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=N
            cex=psize, pch=pch, col=col, ...)
 
 
-    ## curCall <- sys.call(-1)
-    ## assign("last.plot", curCall, envir=env)
+    ## if sticky points are used, store info in env ##
+    curCall <- sys.call(-1)
+    assign("last.points", curCall, envir=env)
+    assign("sticky.points", TRUE, envir=env)
 
     return(invisible())
 }) # end points method
@@ -282,11 +297,14 @@ plotEdges <- function(x, replot=TRUE, useWeights=NULL, col="black", lwd=1,
 #####################
 setMethod("points", signature("gData"), function(x, method=c("original","nodes","both"),
                                                  pch.ori=4, pch.nodes=1,
-                                                 col.ori="black", col.nodes="orange",...){
+                                                 col.ori="black", col.nodes="orange",
+                                                 sticky.points=TRUE,...){
     ## some checks
     if(!is.gData(x)) stop("x is not a valid gData object")
     method <- match.arg(method)
 
+    ## get the environment
+    env <- get(".geoGraphEnv", envir=.GlobalEnv)
 
     ## subset data to visible area ##
     coords.ori <- getCoords(x)
@@ -321,6 +339,11 @@ setMethod("points", signature("gData"), function(x, method=c("original","nodes",
     if(method=="both"){ # add arrows from original location to assigned node
         arrows(coords.ori[,1], coords.ori[,2], coords.nodes[,1], coords.nodes[,2], angle=15, length=.1)
     }
+
+     ## if sticky points are used, store info in env ##
+    curCall <- sys.call(-1)
+    assign("last.points", curCall, envir=env)
+    assign("sticky.points", TRUE, envir=env)
 
     return(invisible())
 }) # end points method
