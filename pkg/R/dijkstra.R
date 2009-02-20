@@ -24,12 +24,18 @@ setMethod("dijkstraBetween", "gGraph", function(x, from, to){
     ## build the wrapper ##
     myGraph <- getGraph(x)
 
+    ## recycle from and to
+    maxLength <- max(length(from), length(to))
+    from <- rep(from, length=maxLength)
+    to <- rep(to, length=maxLength)
+
     ## build indices of all pairwise combinations ##
     pairIdStart <- integer()
     pairIdStop <- integer()
 
-    for(i in 1:length(x@nodes.id)){
-        for(j in i+1:length(x@nodes.id)){
+    for(i in 1:maxLength){
+        j <- i
+        while((j <- j+1) < length(x@nodes.id)){
             pairIdStart <- c(pairIdStart, i)
             pairIdStop <- c(pairIdStop, j)
         }
@@ -37,7 +43,7 @@ setMethod("dijkstraBetween", "gGraph", function(x, from, to){
 
 
     ## wrap ##
-    res <- sp.between(myGraph, start=from, finish=to)
+    res <- sp.between(myGraph, start=from[pairIdStart], finish=to[pairIdStop])
 
     return(res)
 }) # end dijkstraBetween for gGraph
