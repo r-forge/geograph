@@ -295,7 +295,7 @@ plotEdges <- function(x, replot=TRUE, useWeights=NULL, col="black", lwd=1,
 #####################
 ## points for gData
 #####################
-setMethod("points", signature("gData"), function(x, method=c("original","nodes","both"),
+setMethod("points", signature("gData"), function(x, method=c("nodes","original","both"),
                                                  pch.ori=4, pch.nodes=1,
                                                  col.ori="black", col.nodes="orange",
                                                  sticky.points=TRUE,...){
