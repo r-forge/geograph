@@ -143,7 +143,7 @@ setMethod("[", "gData", function(x, i, j, ..., drop=FALSE) {
     res@coords <- res@coords[i, , drop=FALSE]
 
     ## nodes id
-     res@nodes.id <- res@nodes.id[i]
+    res@nodes.id <- res@nodes.id[i]
 
     ## data
     if(nrow(getData(x))==N){
