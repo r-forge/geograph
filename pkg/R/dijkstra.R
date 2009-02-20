@@ -45,6 +45,11 @@ setMethod("dijkstraBetween", "gGraph", function(x, from, to){
     ## wrap ##
     res <- sp.between(myGraph, start=from[pairIdStart], finish=to[pairIdStop])
 
+    ## make it a class "gPath" (output + xy coords) ##
+    allNodes <- unique(unlist(lapply(res, function(e) e$path_detail)))
+    res$xy <- getCoords(x)[allNodes,]
+    class(res) <- "gPath"
+
     return(res)
 }) # end dijkstraBetween for gGraph
 
@@ -66,6 +71,7 @@ setMethod("dijkstraBetween", "gData", function(x){
 
     ## build the wrapper ##
     myGraph <- get(x@gGraph.name, envir=.GlobalEnv)
+    coords <- getCoords(myGraph) # store xy coords for later
     myGraph <- getGraph(myGraph)
 
     ## build indices of all pairwise combinations ##
@@ -82,6 +88,11 @@ setMethod("dijkstraBetween", "gData", function(x){
 
     ## wrap ##
     res <- sp.between(myGraph, start=x@nodes.id[pairIdStart], finish=x@nodes.id[pairIdStop])
+
+    ## make it a class "gPath" (output + xy coords) ##
+    allNodes <- unique(unlist(lapply(res, function(e) e$path_detail)))
+    res$xy <- coords[allNodes,]
+    class(res) <- "gPath"
 
     return(res)
 }) # end dijkstraBetween for gData
@@ -127,6 +138,11 @@ setMethod("dijkstraFrom", "gGraph", function(x, start, weights="default"){
     ## wrap ##
     res <- dijkstra.sp(myGraph, start=start)
 
+    ## make it a class "gPath" (output + xy coords) ##
+    allNodes <- unique(unlist(lapply(res, function(e) e$path_detail)))
+    res$xy <- getCoords(x)[allNodes,]
+    class(res) <- "gPath"
+
     return(res)
 }) # end dijkstraFrom for gGraph
 
@@ -149,6 +165,7 @@ setMethod("dijkstraFrom", "gData", function(x, start, weights="default"){
 
     ## build the wrapper ##
     myGraph <- get(x@gGraph.name, envir=.GlobalEnv) # myGraph is a gGraph object
+    coords <- getCoords(myGraph) # store xy for later
     myGraph <- getGraph(myGraph)
 
     if(is.character(weights) && weights=="default"){
@@ -158,4 +175,38 @@ setMethod("dijkstraFrom", "gData", function(x, start, weights="default"){
     ## wrap ##
     res <- sp.between(myGraph, start=start, finish=x@nodes.id)
 
+    ## make it a class "gPath" (output + xy coords) ##
+    allNodes <- unique(unlist(lapply(res, function(e) e$path_detail)))
+    res$xy <- coords[allNodes,]
+    class(res) <- "gPath"
+
+    return(res)
 }) # end dijkstraFrom for gData
+
+
+
+
+
+
+
+#################
+## plot methods
+#################
+plot.gPath <- function(x, col="red",...){
+
+    listNodes <- lapply(x[-length(x)], function(e) e$path_detail)
+    xy <- x$xy
+
+    ## function plotting one gPath
+    f1 <- function(vecNodes){
+        N <- length(vecNodes)
+        from <- vecNodes[1:(N-1)]
+        to <- vecNodes[2:N]
+        segments(xy[from,1], xy[from,2], xy[to,1], xy[to,2], col=col, ...)
+    }
+
+    ## plot all gPaths
+    lapply(listNodes, f1)
+
+    return(invisible())
+} # end plot.gPath
