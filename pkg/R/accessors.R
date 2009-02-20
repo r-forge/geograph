@@ -100,6 +100,7 @@ setMethod("getCoords", "gGraph", function(x, ...) {
 
 setMethod("getCoords", "gData", function(x, ...) {
     res <- x@coords
+    rownames(res) <- x@nodes.id
     return(res)
 })
 
