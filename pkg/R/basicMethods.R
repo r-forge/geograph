@@ -139,7 +139,7 @@ setMethod("[", "gData", function(x, i, j, ..., drop=FALSE) {
 
     ## coords
     res <- x
-    N <- nrow(coords)
+    N <- nrow(res@coords)
     res@coords <- res@coords[i, , drop=FALSE]
 
     ## nodes id

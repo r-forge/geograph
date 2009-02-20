@@ -100,3 +100,21 @@ setMethod("isInArea", "gGraph", function(x, reg="current", res.type=c("logical",
     res <- isInArea(x=coords, reg=reg, res.type=res.type, buffer=buffer)
     return(res)
 }) # end isInArea for gGraph
+
+
+
+
+
+
+################
+## method for gData
+################
+setMethod("isInArea", "gData", function(x, reg="current", res.type=c("logical","integer","character"), buffer=0){
+
+    ## preliminary stuff
+    if(!is.gData(x)) stop("x is not a valid gGraph object")
+    coords <- getCoords(x)
+
+    res <- isInArea(x=coords, reg=reg, res.type=res.type, buffer=buffer)
+    return(res)
+}) # end isInArea for gData
