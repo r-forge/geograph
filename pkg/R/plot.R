@@ -297,7 +297,7 @@ plotEdges <- function(x, replot=TRUE, useWeights=NULL, col="black", lwd=1,
 #####################
 setMethod("points", signature("gData"), function(x, method=c("nodes","original","both"),
                                                  pch.ori=4, pch.nodes=1,
-                                                 col.ori="black", col.nodes="orange",
+                                                 col.ori="black", col.nodes="red",
                                                  sticky.points=TRUE,...){
     ## some checks
     if(!is.gData(x)) stop("x is not a valid gData object")
