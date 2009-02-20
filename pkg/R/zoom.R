@@ -221,18 +221,14 @@ geo.slide <- function(){
 
         ## get former coordinates and go one step back
         zoomLog <- get("zoom.log", env=geoEnv)
-        if(nrow(zoomLog) < 2) {
-            cat("\nNo previous zoom coordinates in zoom history.\n")
-            return(invisible())
-        }
 
         ## find center of the current frame
         size.x <- abs(diff(zoomLog[1,1:2]))
         size.y <- abs(diff(zoomLog[1,3:4]))
 
         newReg <- zoomLog[1,,drop=TRUE]
-        newReg[c(1,3)] <- c(spoint$x - size.x/2, spoint$y - size.x/2)
-        newReg[c(2,4)] <- c(spoint$x + size.x/2, spoint$y + size.x/2)
+        newReg[c(1,3)] <- c(spoint$x - size.x/2, spoint$y - size.y/2)
+        newReg[c(2,4)] <- c(spoint$x + size.x/2, spoint$y + size.y/2)
 
         .zoomlog.up(newReg)
 
