@@ -48,6 +48,7 @@ setMethod("dijkstraBetween", "gData", function(x){
 
     ## build the wrapper ##
     myGraph <- get(x@gGraph.name, envir=.GlobalEnv)
+    myGraph <- getGraph(myGraph)
 
     ## wrap ##
     res <- sp.between(myGraph, start=x@nodes.id, finish=x@nodes.id)
