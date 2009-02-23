@@ -63,10 +63,10 @@ dropDeadNodes <- function(x){ # x is a gGraph object
     if(!is.gGraph(x)) stop("x is not a valid gGraph object.")
 
     ## get names of connected nodes
-    nodesInEdges <- unique(as.vector(getEdges(x,mode="matNames")))
+    nodes.in.edges <- unique(as.vector(getEdges(x,mode="matNames")))
 
     ## get all nodes
-    res <- x[nodesInEdges]
+    res <- x[nodes.in.edges]
 
     return(res)
 } # end dropDeadNodes
@@ -126,14 +126,15 @@ areConnected <- function(x, nodes){
 
     ## first check that all our nodes are part of an edge ##
     temp <- unique(as.vector(getEdges(x, mode="matName")))
-    if(!all(nodes %in% temp)) return(FALSE) # not a connected set if some nodes aren't connected at all
+    nodes.in.edges <- nodes %in% temp
+    if(!all(nodes.in.edges)) return(FALSE) # not a connected set if some nodes aren't connected at all
 
 
     ## cutting x ##
+    temp <- getCoords(x)[nodes,,drop=FALSE] # only nodes in area
+    reg <- as.list(as.data.frame(apply(temp,2,range)))
+    x <- x[isInArea(x, reg=reg, buffer=0.1)]
     x <- dropDeadNodes(x) # only connected nodes
-    temp <- getCoords(x)[nodes,,drop=FALSE]
-    reg <- apply(temp,2,range)
-    x <- x[isInArea(x, reg=reg)]
 
 
     ## get connected sets ##
