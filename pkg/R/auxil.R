@@ -1,7 +1,7 @@
-################
-## areConnected
-################
-areConnected <- function(V1, V2, graph){
+#################
+## areNeighbours
+#################
+areNeighbours <- function(V1, V2, graph){
     V1 <- as.character(V1)
     V2 <- as.character(V2)
     if(length(V1) != length(V2)) stop("V1 and V2 have different lengths.")
@@ -16,7 +16,7 @@ areConnected <- function(V1, V2, graph){
     res <- mapply(function(x,y) f1(x,y), V1, V2)
 
     return(res)
-} # end areConnected
+} # end areNeighbours
 
 
 
@@ -55,6 +55,7 @@ dropDeadEdges <- function(x, thres=1e-10){ # x is a gGraph object
 
 
 
+
 ##############
 ## hasWeights
 ##############
@@ -64,3 +65,12 @@ hasWeights <- function(x){
     if(length(unique(w)) < 2) return(FALSE)
     return(TRUE)
 }
+
+
+
+
+
+
+################
+## areConnected
+################
