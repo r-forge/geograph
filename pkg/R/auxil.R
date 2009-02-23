@@ -92,14 +92,15 @@ hasWeights <- function(x){
 
 
 ################
-## isConnected
+## areConnected
 ################
 ## the GENERIC of this method is given in package 'graph'
-setMethod("isConnected", "gGraph", function(object, nodes){
+areConnected <- function(x, nodes){
     ## some checks ##
     if(!require(RBGL)) stop("RBGL package is required.")
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
-    if(any(nodes %in% getNodes(object))) stop("Some specified nodes were not found in the gGraph object.")
+    if(!all(nodes %in% getNodes(x))) stop("Some specified nodes were not found in the gGraph object.")
+    nodes <- unique(nodes)
 
     ## call to RBGL ##
     ## THIS HANGS:
@@ -115,13 +116,18 @@ setMethod("isConnected", "gGraph", function(object, nodes){
     ##if(any(res[1,]==res[2,])) return(FALSE)
 
 
-    ## other approach:
+    ## OTHER APPROACH:
     ## - cut the object to the effective area
     ## - find all connected sets
     ## - search for our nodes inside each
     ## - return TRUE as soon as all are found in a set
     ## - return FALSE otherwise
     ## problem is, most of the time, we are interested into a sub-graph only
+
+    ## first check that all our nodes are part of an edge ##
+    temp <- unique(as.vector(getEdges(x, mode="matName")))
+    if(!all(nodes %in% temp)) return(FALSE) # not a connected set if some nodes aren't connected at all
+
 
     ## cutting x ##
     x <- dropDeadNodes(x) # only connected nodes
@@ -133,8 +139,17 @@ setMethod("isConnected", "gGraph", function(object, nodes){
     ## get connected sets ##
     connected.sets <- connComp(getGraph(x))
 
+    f1 <- function(oneSet){ # returns TRUE if our nodes are in a set
+        if(length(oneSet) < length(unique(nodes))) return(FALSE)
+        res <- all(nodes %in% oneSet)
+        return(res)
+    }
 
 
+    ## browse the connected sets ##
+    for(e in connected.sets){
+        if(f1(e)) return(TRUE)
+    }
 
-    return(TRUE)
-}) # end isConnectedSet
+    return(FALSE)
+} # end areConnected
