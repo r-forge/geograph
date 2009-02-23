@@ -221,7 +221,7 @@ setMethod("show", "gGraph", function(object){
     cat("\n@graph:\n")
     print(x@graph)
 
-    cat("\n@gGraphHistory: (", length(x@history@cmd)," items )\n")
+    cat("\n@history: (", length(x@history@cmd)," items )\n")
     print(x@history[1:min(nDisp,length(x@history@cmd))])
     if(length(x@history@cmd) > nDisp) cat("\n...\n")
 
