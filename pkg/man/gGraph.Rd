@@ -2,9 +2,9 @@
 \docType{class}
 \alias{gGraph-class}
 \alias{[,gGraph-method}
-% \alias{closestNode,gGraph-method}
-% \alias{dijkstraBetween,gGraph-method}
-% \alias{dijkstraFrom,gGraph-method}
+\alias{closestNode,gGraph-method}
+\alias{dijkstraBetween,gGraph-method}
+\alias{dijkstraFrom,gGraph-method}
 \alias{dropWeights,gGraph-method}
 \alias{findInLayer,gGraph-method}
 \alias{findLand,gGraph-method}
@@ -19,8 +19,8 @@
 \alias{getWeights,gGraph-method}
 \alias{initialize,gGraph-method}
 \alias{isInArea,gGraph-method}
-% \alias{plot,gGraph,missing-method}
-% \alias{points,gGraph-method}
+\alias{plot,gGraph,missing-method}
+\alias{points,gGraph-method}
 \alias{setEdges,gGraph-method}
 \alias{show,gGraph-method}
 \alias{is.gGraph}
@@ -33,7 +33,11 @@
   meta-information used when plotting the object, or when computing
   weights associated to the edges based on nodes attributes.\cr
   History associated to a \code{gGraph} object is stored in the slot
-  \code{history}, as an object of the class \linkS4class{gGraphHistory}.
+  \code{history}, as an object of the class
+  \linkS4class{gGraphHistory}.\cr
+
+  In all slots, nodes are uniquely identified by their name (reference
+  is taken from the row names of \code{@coords} slot).
 }
 \section{Objects from the class \code{gGraph}}{
   \code{gGraph} objects can be created by calls to \code{new}
@@ -92,42 +96,102 @@
   }
 }
 \section{Methods}{
+  Here is a list of methods available for \code{gGraph} objects. See
+  corresponding manpages for further documentation. 
   \describe{
-    \item{[}{\code{signature(x = "gGraph")}: ... }
-    \item{closestNode}{\code{signature(x = "gGraph")}: ... }
-    \item{dijkstraBetween}{\code{signature(x = "gGraph")}: ... }
-    \item{dijkstraFrom}{\code{signature(x = "gGraph")}: ... }
-    \item{dropWeights}{\code{signature(x = "gGraph")}: ... }
-    \item{findInLayer}{\code{signature(x = "gGraph")}: ... }
-    \item{findLand}{\code{signature(x = "gGraph")}: ... }
-    \item{getColors}{\code{signature(x = "gGraph")}: ... }
-    \item{getCoords}{\code{signature(x = "gGraph")}: ... }
-    \item{getDates}{\code{signature(x = "gGraph")}: ... }
-    \item{getEdges}{\code{signature(x = "gGraph")}: ... }
-    \item{getGraph}{\code{signature(x = "gGraph")}: ... }
-    \item{getHistory}{\code{signature(x = "gGraph")}: ... }
-    \item{getNodesAttr}{\code{signature(x = "gGraph")}: ... }
-    \item{getNodes}{\code{signature(x = "gGraph")}: ... }
-    \item{getWeights}{\code{signature(x = "gGraph")}: ... }
-    \item{initialize}{\code{signature(.Object = "gGraph")}: ... }
-    \item{isInArea}{\code{signature(x = "gGraph")}: ... }
-    \item{plot}{\code{signature(x = "gGraph", y = "missing")}: ... }
-    \item{points}{\code{signature(x = "gGraph")}: ... }
-    \item{setEdges}{\code{signature(x = "gGraph")}: ... }
-    \item{show}{\code{signature(object = "gGraph")}: ... }
-	 }
+    \item{[}{\code{signature(x = "gGraph")}: usual method to subset
+      objects in R. First indice corresponds to nodes (it can be a logical,
+      a numeric, or a character); optionnaly, a second indice can be
+      provided to subset columns of \code{nodes.attr} (i.e., variables
+      associated to nodes) as well.}
+    \item{closestNode}{\code{signature(x = "gGraph")}: find the node
+      closest to a given location.}
+    \item{dijkstraBetween}{\code{signature(x = "gGraph")}: least-cost
+      path between two sets of nodes.}
+    \item{dijkstraFrom}{\code{signature(x = "gGraph")}: least-cost
+      path between a set of nodes and a 'source node'.}
+    \item{dropWeights}{\code{signature(x = "gGraph")}: remove edges
+      whose weights are under a given threshold.}
+    \item{findInLayer}{\code{signature(x = "gGraph")}: retrieve
+      information from a shapefile and add it to \code{nodes.attr}.}
+    \item{findLand}{\code{signature(x = "gGraph")}: find which nodes are
+      on land, and which are not.}
+    \item{getColors}{\code{signature(x = "gGraph")}: get colors
+      corresponding to the nodes, as specified in the \code{@meta$color} slot.}
+    \item{getCoords}{\code{signature(x = "gGraph")}: get geographic
+      coordinates of the object.}
+    \item{getDates}{\code{signature(x = "gGraph")}: get dates of modifications of the object.}
+    \item{getEdges}{\code{signature(x = "gGraph")}: get edges of the object.}
+    \item{getGraph}{\code{signature(x = "gGraph")}: get the graph of the
+      object (as a \code{graphNEL} object).}
+    \item{getHistory}{\code{signature(x = "gGraph")}: get the history of
+      the object.}
+    \item{getNodesAttr}{\code{signature(x = "gGraph")}: get the nodes
+      attributes of the object.}
+    \item{getNodes}{\code{signature(x = "gGraph")}: get the names of the
+      nodes of the object.}
+    \item{getWeights}{\code{signature(x = "gGraph")}: get the weights of
+      the edges of the object.}
+    \item{initialize}{\code{signature(.Object = "gGraph")}: internal
+      definition of the constructor.}
+    \item{isInArea}{\code{signature(x = "gGraph")}: check which nodes
+      are in a given rectangular area.}
+    \item{plot}{\code{signature(x = "gGraph", y = "missing")}: plot the object.}
+    \item{points}{\code{signature(x = "gGraph")}: add points to an
+      existing plot.}
+    \item{setEdges}{\code{signature(x = "gGraph")}: add/remove edges
+      to/from the object.}
+    \item{show}{\code{signature(object = "gGraph")}: prints the object
+      to screen.}
+  }
+
+  Note that other functions not directly related to gGraph objects are
+  of important use in \code{\link{geoGraph}}. See package documentation
+  (\code{?geoGraph}) for a more complete list of implemented functions.
 }
-\references{ ~put references to the literature/web site here ~ }
-\author{ ~~who you are~~ }
-\note{ ~~further notes~~ }
+\references{}
+\author{Thibaut Jombart (t.jombart@imperial.ac.uk)}
+\note{}
 
- ~Make other sections like Warning with \section{Warning }{....} ~
+ % ~Make other sections like Warning with \section{Warning }{....} ~
 
-\seealso{
-	~~objects to See Also as \code{\link{~~fun~~}}, ~~~
-	or \code{\linkS4class{CLASSNAME}} for links to other classes
+ \seealso{
+   Related classes are:\cr
+   -  \code{\linkS4class{gGraphHistory}: slot \code{@history} in \code{gGraph}.\cr
+   -  \code{\linkS4class{graphNEL} (graph package): slot \code{@graph} in \code{gGraph}.\cr
 }
 \examples{
-showClass("gGraph")
+## create an empty object
+new("gGraph", comments="This is my first gGraph")
+
+
+## plotting the object
+plot(worldgraph.10k, reset=TRUE)
+
+## zooming in
+geo.zoomin(list(x=c(-6,38), y=c(35,73)))
+title("Europe")
+
+## to play interactively with graphics, use:
+# geo.zoomin()
+# geo.zoomout()
+# geo.slide()
+# geo.back()
+
+## defining a new object restrained to visible nodes
+x <- worldgraph.10k[isInArea(worldgraph.10k)]
+plot(x,reset=TRUE, edges=TRUE)
+title("x does just contain these visible nodes.")
+
+## define weights for edges
+x <- setFriction(x, attr.name="habitat", method="prod")
+plot(x,edges=TRUE)
+title("connectivity defined by habitat (land/land=1, other=0)")
+
+## drop 'dead edges' (i.e. with weight 0)
+x <- dropDeadEdges(x)
+plot(x,edges=TRUE)
+title("after droping edges with null weight")
+
 }
 \keyword{classes}
