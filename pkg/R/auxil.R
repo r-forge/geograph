@@ -133,12 +133,14 @@ areConnected <- function(x, nodes){
     ## cutting x ##
     temp <- getCoords(x)[nodes,,drop=FALSE] # only nodes in area
     reg <- as.list(as.data.frame(apply(temp,2,range)))
-    x <- x[isInArea(x, reg=reg, buffer=0.1)]
-    x <- dropDeadNodes(x) # only connected nodes
+    ## x <- x[isInArea(x, reg=reg, buffer=0.1)] # too long
+    ## x <- dropDeadNodes(x) # only connected nodes #too long
 
 
     ## get connected sets ##
-    connected.sets <- connComp(getGraph(x))
+    ## !! use connectedComp from RBGL rather than connComp from graph
+    ## 100 times faster
+    connected.sets <- connectedComp(getGraph(x))
 
     f1 <- function(oneSet){ # returns TRUE if our nodes are in a set
         if(length(oneSet) < length(unique(nodes))) return(FALSE)
