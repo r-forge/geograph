@@ -206,7 +206,7 @@ setMethod("setEdges", "gGraph", function(x, add=NULL, remove=NULL, weights=NULL,
         if(!all(unique(c(from,to)) %in% getNodes(x))) stop("unknown specified nodes") # unknown nodes
 
         ## avoid attempts to removing non-existing edges
-        temp <- areConnected(from, to, x@graph)
+        temp <- areNeighbours(from, to, x@graph)
         myGraph <- removeEdge(from=from[temp], to=to[temp], graph=x@graph)
     }
 
