@@ -112,8 +112,8 @@ areConnected <- function(x, nodes){
     ## or at least some are points
     ## ...
     ## or not. Not working.
-    ##res <- mstree.prim(x)$edgeList
-    ##if(any(res[1,]==res[2,])) return(FALSE)
+    ## res <- mstree.prim(x)$edgeList
+    ## if(any(res[1,]==res[2,])) return(FALSE)
 
 
     ## OTHER APPROACH:
