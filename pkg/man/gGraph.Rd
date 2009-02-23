@@ -68,31 +68,31 @@
   create an empty \code{gGraph} object.
 }
 \section{Slots}{
-	 \describe{
+  \describe{
     \item{\code{coords}:}{Object of class \code{"matrix"} storing
-  geographic coordinates (see above).}
+      geographic coordinates (see above).}
     \item{\code{nodes.attr}:}{A \code{"data.frame"}
-  storing nodes data (see above).}
+      storing nodes data (see above).}
     \item{\code{meta}:}{A \code{"list"} containing meta information
       about how data in the \code{nodes.attr} slot should be used in
-  different contexts. This information is to be stored as named
-  data.frames. Currently recognized meta-information are:\cr
-  - \code{$color}: a data.frame giving colors to be used when plotting
-  the object, according to a node attribute taking a finite number of
-  values (likely a factor). Each documented attribute is a column, the
-  last one being reserved to (valid) named colors. See the
-  \code{@meta$color} slot in \code{\link{worldgraph.10k}} for an
-  example.\cr
-  -  \code{$weights}: a data.frame giving weights to be used when computing
-  edge weights using \code{\link{setFriction}}. The first column is a
-  node attribute, and the second column gives corresponding weights. See the
-  \code{@meta$weights} slot in \code{\link{worldgraph.10k}} for an
-  example.}
+      different contexts. This information is to be stored as named
+      data.frames. Currently recognized meta-information are:\cr
+      - \code{$color}: a data.frame giving colors to be used when plotting
+      the object, according to a node attribute taking a finite number of
+      values (likely a factor). Each documented attribute is a column, the
+      last one being reserved to (valid) named colors. See the
+      \code{@meta$color} slot in \code{\link{worldgraph.10k}} for an
+      example.\cr
+      -  \code{$weights}: a data.frame giving weights to be used when computing
+      edge weights using \code{\link{setFriction}}. The first column is a
+      node attribute, and the second column gives corresponding weights. See the
+      \code{@meta$weights} slot in \code{\link{worldgraph.10k}} for an
+      example.}
     \item{\code{graph}:}{Object of class \linkS4class{"graphNEL"} (see
-  \code{class?graphNEL} for more information).}
+      \code{class?graphNEL} for more information).}
     \item{\code{history}:}{Object of class
-  \linkS4class{"gGraphHistory"}, recording the history associated to the
-  object.}
+      \linkS4class{"gGraphHistory"}, recording the history associated to the
+      object.}
   }
 }
 \section{Methods}{
@@ -153,14 +153,14 @@
 \author{Thibaut Jombart (t.jombart@imperial.ac.uk)}
 \note{}
 
- % ~Make other sections like Warning with \section{Warning }{....} ~
+% ~Make other sections like Warning with \section{Warning }{....} ~
 
- \seealso{
-   Related classes are:\cr
-   -  \code{\linkS4class{gGraphHistory}: slot \code{@history} in \code{gGraph}.\cr
-   -  \code{\linkS4class{graphNEL} (graph package): slot \code{@graph} in \code{gGraph}.\cr
-}
-\examples{
+\seealso{
+  Related classes are:\cr
+  -  \code{\linkS4class{gGraphHistory}}: slot \code{@history} in \code{gGraph}.\cr
+  -  \code{\linkS4class{graphNEL}} (graph package): slot \code{@graph} in \code{gGraph}.\cr
+    }
+    \examples{
 ## create an empty object
 new("gGraph", comments="This is my first gGraph")
 
