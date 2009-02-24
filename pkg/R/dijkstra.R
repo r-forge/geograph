@@ -157,7 +157,7 @@ setMethod("dijkstraFrom", "gGraph", function(x, start, weights="default"){
 ####################
 ## method for gData
 ####################
-setMethod("dijkstraFrom", "gData", function(x, start, weights="default"){
+setMethod("dijkstraFrom", "gData", function(x, start){
 
     ## some checks ##
     if(!require(RBGL)) stop("RBGL is required.")
@@ -171,12 +171,19 @@ setMethod("dijkstraFrom", "gData", function(x, start, weights="default"){
     coords <- getCoords(myGraph) # store xy for later
     myGraph <- getGraph(myGraph)
 
-    if(is.character(weights) && weights=="default"){
-        weights <- unlist(edgeWeights(myGraph))
-    }
+    ##  if(is.character(weights) && weights=="default"){ # no longer used
+    ##         weights <- unlist(edgeWeights(myGraph))
+    ##     }
+
 
     ## wrap ##
     res <- sp.between(myGraph, start=start, finish=x@nodes.id)
+
+
+    ## sp.between uses unique(x@nodes.id) ##
+    ## eventually have to duplicate paths ##
+    temp <- gsub(".*:","",names(res))
+    res <- res[match(getNodes(x), temp)]
 
     ## make it a class "gPath" (output + xy coords) ##
     allNodes <- unique(unlist(lapply(res, function(e) e$path_detail)))

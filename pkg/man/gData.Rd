@@ -3,8 +3,8 @@
 \alias{gData-class}
 \alias{[,gData-method}
 \alias{closestNode,gData-method}
-\alias{dijkstraBetween,gData-method}
-\alias{dijkstraFrom,gData-method}
+%\alias{dijkstraBetween,gData-method}
+%\alias{dijkstraFrom,gData-method}
 \alias{findInLayer,gData-method}
 \alias{getCoords,gData-method}
 \alias{getData,gData-method}

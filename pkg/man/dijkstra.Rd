@@ -70,8 +70,8 @@ myPop
 isConnected(myPop)
 
 ## remove disconnected data
-toRemove <- getNodes(myPop) %in% c("26898","26917")
-myPop <- myPop[!toRemove]
+toRemove <- match(c("26898","26917"),getNodes(myPop))
+myPop <- myPop[-toRemove]
 isConnected(myPop)
 
 ## refresh plot
