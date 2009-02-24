@@ -197,3 +197,5 @@ title("after droping edges with null weight")
 
 }
 \keyword{classes}
+\keyword{spatial}
+\keyword{graphs}

@@ -55,9 +55,10 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
     ## handle colors -- these are default, not used in some sub-plotting
     if(useAttrCol){
           col <- getColors(x, nodes=toKeep, attr.name=attr.col)
-    } else {
-        col <- "black"
-    } # end handle color
+    }
+    ##   else {
+    ##         col <- "black"
+    ##     } # end handle color
 
 
     ## handle shape
@@ -81,9 +82,10 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
         ## define colors for these points
         if(useAttrCol){
             col <- getColors(x, nodes=toKeep, attr.name=attr.col)
-        } else {
-            col <- "black"
-        } # end handle color
+        }
+        ## else {
+        ##             col <- "black"
+        ## } # end handle color
 
         ## add edges and points
         if(edges){
@@ -193,7 +195,9 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=N
     ## if sticky points are used, store info in env ##
     curCall <- sys.call(-1)
     assign("last.points", curCall, envir=env)
-    assign("sticky.points", TRUE, envir=env)
+    if(sticky.points) {
+        assign("sticky.points", TRUE, envir=env)
+    }
 
     return(invisible())
 }) # end points method
