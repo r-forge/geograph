@@ -156,3 +156,29 @@ areConnected <- function(x, nodes){
 
     return(FALSE)
 } # end areConnected
+
+
+
+
+
+
+#########################
+## isConnected for gData
+#########################
+setMethod("isConnected", "gData", function(object, ...){
+    ## checks ##
+    x <- object
+    if(!is.gData(x)) stop("'object' is not a valid gData object.")
+    if(!exists(x@gGraph.name, envir=.GlobalEnv)) stop(paste("gGraph object",x@gGraph.name,"not found."))
+
+
+    ## set args for areConnected ##
+    myGraph <- get(x@gGraph.name, env=.GlobalEnv)
+    myNodes <- getNodes(x)
+
+    ## wrapper ##
+    res <- areConnected(myGraph, myNodes)
+
+    ## return res ##
+    return(res)
+}) # end isConnected for gData
