@@ -13,7 +13,7 @@
 \alias{isInArea,gData-method}
 \alias{points,gData-method}
 \alias{show,gData-method}
-
+\alias{isConnected,gData-method}
 \title{Formal class "gData"}
 \description{The class \code{gData} is a formal (S4) class storing
   georeferenced data, consisting in a set of locations (longitude and
@@ -98,6 +98,8 @@
       existing plot.}
     \item{show}{\code{signature(object = "gData")}: prints the object
       to screen.}
+    \item{isConnected}{\code{signature(object = "gData")}: check if
+    nodes are a connected set.}
   }
 }
 \author{Thibaut Jombart (t.jombart@imperial.ac.uk)}
