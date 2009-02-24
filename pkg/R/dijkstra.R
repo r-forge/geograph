@@ -89,6 +89,7 @@ setMethod("dijkstraBetween", "gData", function(x){
     ## wrap ##
     res <- sp.between(myGraph, start=x@nodes.id[pairIdStart], finish=x@nodes.id[pairIdStop])
 
+
     ## make it a class "gPath" (output + xy coords) ##
     allNodes <- unique(unlist(lapply(res, function(e) e$path_detail)))
     res$xy <- coords[allNodes,]
@@ -141,6 +142,12 @@ setMethod("dijkstraFrom", "gGraph", function(x, start, weights="default"){
     ## wrap ##
     res <- dijkstra.sp(myGraph, start=start)
 
+    ## sp.between uses unique(x@nodes.id) ##
+    ## eventually have to duplicate paths ##
+    temp <- gsub(".*:","",names(res))
+    res <- res[match(getNodes(x), temp)]
+
+
     ## make it a class "gPath" (output + xy coords) ##
     allNodes <- unique(unlist(lapply(res, function(e) e$path_detail)))
     res$xy <- getCoords(x)[allNodes,]
@@ -184,6 +191,7 @@ setMethod("dijkstraFrom", "gData", function(x, start){
     ## eventually have to duplicate paths ##
     temp <- gsub(".*:","",names(res))
     res <- res[match(getNodes(x), temp)]
+
 
     ## make it a class "gPath" (output + xy coords) ##
     allNodes <- unique(unlist(lapply(res, function(e) e$path_detail)))
