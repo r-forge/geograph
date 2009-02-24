@@ -1,5 +1,6 @@
 \name{gGraph-class}
 \docType{class}
+\alias{gGraph}
 \alias{gGraph-class}
 \alias{[,gGraph-method}
 \alias{closestNode,gGraph-method}
@@ -188,10 +189,10 @@ title("x does just contain these visible nodes.")
 ## define weights for edges
 x <- setFriction(x, attr.name="habitat", method="prod")
 plot(x,edges=TRUE)
-title("connectivity defined by habitat (land/land=1, other=0)")
+title("costs defined by habitat (land/land=1, other=100)")
 
 ## drop 'dead edges' (i.e. with weight 0)
-x <- dropDeadEdges(x)
+x <- dropDeadEdges(x, thres=10)
 plot(x,edges=TRUE)
 title("after droping edges with null weight")
 
