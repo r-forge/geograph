@@ -125,7 +125,7 @@ setGeneric("dijkstraFrom", function(x,...) {
 #####################
 ## method for gGraph
 #####################
-setMethod("dijkstraFrom", "gGraph", function(x, start, weights="default"){
+setMethod("dijkstraFrom", "gGraph", function(x, start){
 
     ## some checks ##
     if(!require(RBGL)) stop("RBGL is required.")
@@ -135,9 +135,9 @@ setMethod("dijkstraFrom", "gGraph", function(x, start, weights="default"){
 
     ## build the wrapper ##
     myGraph <- getGraph(x)
-    if(is.character(weights) && weights=="default"){
-        weights <- unlist(edgeWeights(myGraph))
-    }
+    ##  if(is.character(costs) && costs=="default"){
+    ##         costs <- unlist(edgeWeights(myGraph))
+    ##     }
 
     ## wrap ##
     res <- dijkstra.sp(myGraph, start=start)
