@@ -25,7 +25,7 @@
    - some accessors allow to access slots of an object, sometimes with
    additional treatment of information:
    \code{\link{getHistory}}, \code{\link{getGraph}}, \code{\link{getNodesAttr}}, \code{\link{getDates}},
-   \code{\link{getCoords}}, \code{\link{getNodes}}, \code{\link{getEdges}}, \code{\link{getWeights}}.\cr
+   \code{\link{getCoords}}, \code{\link{getNodes}}, \code{\link{getEdges}}, \code{\link{getCosts}}.\cr
    
    - \code{\link{setEdges}}: add/remove edges specified edges.\cr
    

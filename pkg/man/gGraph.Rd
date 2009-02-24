@@ -16,7 +16,7 @@
 \alias{getHistory,gGraph-method}
 \alias{getNodesAttr,gGraph-method}
 \alias{getNodes,gGraph-method}
-\alias{getWeights,gGraph-method}
+\alias{getCosts,gGraph-method}
 \alias{initialize,gGraph-method}
 \alias{isInArea,gGraph-method}
 %\alias{plot,gGraph,missing-method}
@@ -87,7 +87,7 @@
       -  \code{$weights}: a data.frame giving weights to be used when computing
       edge weights using \code{\link{setFriction}}. The first column is a
       node attribute, and the second column gives corresponding weights. See the
-      \code{@meta$weights} slot in \code{\link{worldgraph.10k}} for an
+      \code{@meta$costs} slot in \code{\link{worldgraph.10k}} for an
       example.}
     \item{\code{graph}:}{Object of class \linkS4class{"graphNEL"} (see
       \code{class?graphNEL} for more information).}
@@ -131,7 +131,7 @@
       attributes of the object.}
     \item{getNodes}{\code{signature(x = "gGraph")}: get the names of the
       nodes of the object.}
-    \item{getWeights}{\code{signature(x = "gGraph")}: get the weights of
+    \item{getCosts}{\code{signature(x = "gGraph")}: get the weights of
       the edges of the object.}
     \item{initialize}{\code{signature(.Object = "gGraph")}: internal
       definition of the constructor.}
