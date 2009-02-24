@@ -1,5 +1,6 @@
 \name{gGraphHistory-class}
 \docType{class}
+\alias{gGraphHistory}
 \alias{gGraphHistory-class}
 \alias{[,gGraphHistory-method}
 \alias{getDates,gGraphHistory-method}

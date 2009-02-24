@@ -1,5 +1,6 @@
 \name{gData-class}
 \docType{class}
+\alias{gData}
 \alias{gData-class}
 \alias{[,gData-method}
 \alias{closestNode,gData-method}
