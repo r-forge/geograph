@@ -103,10 +103,9 @@
   }
 }
 \author{Thibaut Jombart (t.jombart@imperial.ac.uk)}
-\note{}
 \seealso{
  Related class:\cr
-  -  \code{\linkS4class{gGraph}}: slot \code{@history} in \code{gGraph}.\cr
+  -  \code{\linkS4class{gGraph}}\cr
 }
 \examples{
 ## load data
