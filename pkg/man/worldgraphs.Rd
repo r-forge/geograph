@@ -1,16 +1,27 @@
 \encoding{UTF-8}
 \name{worldgraph}
 \alias{worldgraph}
+\alias{rawgraph.10k}
+\alias{rawgraph.40k}
 \alias{worldgraph.10k}
 \alias{worldgraph.40k}
 \docType{data}
 \title{Worldwide geographic graphs}
 \description{
-  The datasets worldgraph.10k and worldgraph.40k are geographic graphs
-  (\linkS4class{gGraph} objects) of the world, with respective
-  resolutions of 10,242 and 40,962 vertices.
+  The datasets 'rawgraph.10k', 'rawgraph.40k', 'worldgraph.10k', and
+  'worldgraph.40k' are geographic graphs (\linkS4class{gGraph} objects) of
+  the world, with respective resolutions of 10,242 and 40,962 vertices.\cr
+
+  'rawgraph's are raw graphs as obtained directly from the method
+  provided in references.\cr
+
+  'worldgraph's are 'rawgraph's that have been modified manually to recitify
+  connectivity between edges at some places. The most noticable change
+  is that all edges oversea have been removed.
 }
 \usage{
+data(rawgraph.10k)
+data(rawgraph.40k)
 data(worldgraph.10k)
 data(worldgraph.40k)
 }
@@ -30,7 +41,7 @@ data(worldgraph.40k)
   Randall, D. A.; Ringler, T. D.; Heikes, R. P.; Jones, P. & Baumgardner, J. Climate Modeling with Spherical Geodesic Grids \emph{Computing in science & engineering}, 2002, \bold{4}: 32-41.
 }
 \source{
- Graph reconstructed in R by Andrea Manica. 
+ Graph reconstructed by Andrea Manica.
 }
 \examples{
 
