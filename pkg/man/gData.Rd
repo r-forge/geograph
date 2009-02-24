@@ -107,12 +107,21 @@
   -  \code{\linkS4class{gGraph}}: slot \code{@history} in \code{gGraph}.\cr
 }
 \examples{
+## load data
 data(worldgraph.40k)
 data(hgdp)
-
 hgdp
+
+## plot data
 plot(worldgraph.40k, pch="")
 points(hgdp)
+
+## subset and plot data
+onlyNorth <- hgdp[hgdp@data$Latitude >0] # only northern populations
+
+plot(worldgraph.40k, reset=T)
+abline(h=0) # equator
+points(onlyNorth, pch.node=20, cex=2, col.node="purple")
 
 }
 \keyword{classes}
