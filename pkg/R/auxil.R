@@ -25,7 +25,7 @@ areNeighbours <- function(V1, V2, graph){
 #################
 ## dropDeadEdges
 #################
-dropDeadEdges <- function(x, thres=1e-10){ # x is a gGraph object
+dropDeadEdges <- function(x, thres){ # x is a gGraph object
     if(!is.gGraph(x)) stop("x is not a valid gGraph object.")
     if(!hasWeights(x)) return(x)
 
@@ -33,7 +33,7 @@ dropDeadEdges <- function(x, thres=1e-10){ # x is a gGraph object
     myGraph <- getGraph(x)
     edgeW <- edgeWeights(myGraph)
     edgeL <- edgeL(myGraph)
-    toKeep <- lapply(edgeW, function(v) v >= thres)
+    toKeep <- lapply(edgeW, function(v) v <= thres)
 
     newEdgeL <- list()
     for(i in 1:length(edgeL)){

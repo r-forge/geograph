@@ -7,34 +7,34 @@ setFriction <- function(x, attr.name=NULL, method=c("mean", "product"), drop=TRU
     method <- match.arg(method)
 
 
-    ## assign weights to vertices
+    ## assign costs to vertices
     nodeAttr <- unlist(getNodesAttr(x, attr.name=attr.name))
     if(!is.null(x@meta$costs)){
         if(!any(attr.name %in% colnames(x@meta$costs))) {
             stop("attr.name is not documented in x@meta$costs.")
         }
-        nodeWeights <- as.character(nodeAttr)
+        nodeCosts <- as.character(nodeAttr)
         rules <- x@meta$costs
         for(i in 1:nrow(x@meta$costs)){
-            nodeWeights[nodeWeights==rules[i,attr.name]] <- rules[i,"weight"]
+            nodeCosts[nodeCosts==rules[i,attr.name]] <- rules[i,"weight"]
         }
-        nodeWeights <- as.numeric(nodeWeights)
-    } else stop("x@meta does not contain a 'weights' component.")
+        nodeCosts <- as.numeric(nodeCosts)
+    } else stop("x@meta does not contain a 'costs' component.")
 
-    ## find weights of edges as a function of terminating vertices
+    ## find costs of edges as a function of terminating vertices
     EL <- getGraph(x)@edgeL
 
     ## method == mean ##
     if(method=="mean"){
         for(i in 1:length(EL)){
-            EL[[i]]$weights <- (nodeWeights[i] + nodeWeights[EL[[i]]$edges]) / 2
+            EL[[i]]$weights <- (nodeCosts[i] + nodeCosts[EL[[i]]$edges]) / 2
             }
     }
 
     ## method == product ##
     if(method=="product"){
         for(i in 1:length(EL)){
-            EL[[i]]$weights <- nodeWeights[i] * nodeWeights[EL[[i]]$edges]
+            EL[[i]]$weights <- nodeCosts[i] * nodeCosts[EL[[i]]$edges]
             }
     }
 

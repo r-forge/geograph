@@ -3,7 +3,7 @@
 ###################
 setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", psize=NULL, pch=19, col=NULL,
                                       edges=FALSE, reset=FALSE, bg.col="gray", border.col="dark gray",
-                                      lwd=1, useWeights=NULL, maxLwd=3, attr.col=NULL,...){
+                                      lwd=1, useCosts=NULL, maxLwd=3, attr.col=NULL,...){
     ## some checks
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
 
@@ -89,7 +89,7 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
 
         ## add edges and points
         if(edges){
-            plotEdges(x, replot=FALSE, lwd=lwd, useWeights=useWeights, maxLwd=maxLwd)
+            plotEdges(x, replot=FALSE, lwd=lwd, useCosts=useCosts, maxLwd=maxLwd)
         }
         points(coords, cex=psize, pch=pch, col=col, ...)
 
@@ -98,7 +98,7 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
              cex=psize, pch=pch, col=col, ...)
         if(edges){
             plotEdges(x, replot=TRUE, psize=psize, pch=pch, pcol=col, lwd=lwd,
-                      useWeights=useWeights, maxLwd=maxLwd)
+                      useCosts=useCosts, maxLwd=maxLwd)
         }
     }
 
@@ -133,7 +133,7 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
 ## points for gGraph
 #####################
 setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=NULL,
-                                      edges=FALSE, lwd=1, useWeights=NULL, maxLwd=3, attr.col=NULL,
+                                      edges=FALSE, lwd=1, useCosts=NULL, maxLwd=3, attr.col=NULL,
                                                   sticky.points=FALSE,...){
     ## some checks
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
@@ -186,7 +186,7 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=N
 
     ## add only points and optionally edges
      if(edges){
-            plotEdges(x, replot=FALSE, lwd=lwd, useWeights=useWeights, maxLwd=maxLwd)
+            plotEdges(x, replot=FALSE, lwd=lwd, useCosts=useCosts, maxLwd=maxLwd)
         }
     points(coords, xlab="longitude", ylab="latitude", xlim=xlim, ylim=ylim,
            cex=psize, pch=pch, col=col, ...)
@@ -210,14 +210,14 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=N
 ############
 ## plotEdges
 ############
-plotEdges <- function(x, replot=TRUE, useWeights=NULL, col="black", lwd=1,
+plotEdges <- function(x, replot=TRUE, useCosts=NULL, col="black", lwd=1,
                       lty=1, pch=NULL, psize=NULL, pcol=NULL, maxLwd=3, attr.col=NULL,...){
     ## some checks
     if(!is.gGraph(x)) stop("x is not a valid gGraph object.")
 
     ## handle weights for edges
-    if(is.null(useWeights)){
-        useWeights <- hasWeights(x)
+    if(is.null(useCosts)){
+        useCosts <- hasWeights(x)
     }
 
     ## get the environment
@@ -265,11 +265,12 @@ plotEdges <- function(x, replot=TRUE, useWeights=NULL, col="black", lwd=1,
         return(invisible())
     }
 
-    ## handle weights
-    if(useWeights){
+    ## handle costs
+    if(useCosts){
         edges.w <- getCosts(x, mode="vector", unique=TRUE)
         edges.w <- edges.w[temp]
         lwd <- edges.w / max(edges.w) # max lwd = 1
+        lwd <- 1 - lwd # invert scale (to have thiner edges for larger costs)
         lwd <- lwd * maxLwd # max lwd = maxLwd
         lty <- rep(1, length(lwd)) # make a lty vector
         lty[lwd < 1e-5] <- 3 # assign 3 (doted line) to dead edges.
