@@ -167,8 +167,8 @@ new("gGraph", comments="This is my first gGraph")
 
 
 ## plotting the object
-data(worldgraph.10k)
-plot(worldgraph.10k, reset=TRUE)
+data(rawgraph.10k)
+plot(rawgraph.10k, reset=TRUE)
 
 ## zooming in
 geo.zoomin(list(x=c(-6,38), y=c(35,73)))
@@ -181,7 +181,7 @@ title("Europe")
 # geo.back()
 
 ## defining a new object restrained to visible nodes
-x <- worldgraph.10k[isInArea(worldgraph.10k)]
+x <- rawgraph.10k[isInArea(rawgraph.10k)]
 plot(x,reset=TRUE, edges=TRUE)
 title("x does just contain these visible nodes.")
 
