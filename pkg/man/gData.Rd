@@ -127,3 +127,4 @@ points(onlyNorth, pch.node=20, cex=2, col.node="purple")
 
 }
 \keyword{classes}
+\keyword{spatial}
