@@ -40,8 +40,9 @@
   is taken from the row names of \code{@coords} slot).
 }
 \section{Objects from the class \code{gGraph}}{
-  \code{gGraph} objects can be created by calls to \code{new}
-  \code{new("gGraph", ...)}, where '...' can be the following arguments:
+  \code{gGraph} objects can be created by calls to \code{new("gGraph",
+    ...)}, where '...' can be the following arguments:
+
   \describe{
     \item{\code{coords}}{a matrix of spatial coordinates with two columns,
       being respectively longitude (from -180 to 180) and latitude. Positive
@@ -159,13 +160,14 @@
   Related classes are:\cr
   -  \code{\linkS4class{gGraphHistory}}: slot \code{@history} in \code{gGraph}.\cr
   -  \code{\linkS4class{graphNEL}} (graph package): slot \code{@graph} in \code{gGraph}.\cr
-    }
-    \examples{
+}
+\examples{
 ## create an empty object
 new("gGraph", comments="This is my first gGraph")
 
 
 ## plotting the object
+data(worldgraph.10k)
 plot(worldgraph.10k, reset=TRUE)
 
 ## zooming in
