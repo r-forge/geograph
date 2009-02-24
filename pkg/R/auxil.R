@@ -81,7 +81,7 @@ dropDeadNodes <- function(x){ # x is a gGraph object
 ##############
 hasWeights <- function(x){
     if(length(getGraph(x)@edgeData@data)==0) return(FALSE)
-    w <- getWeights(x, mode="vector")
+    w <- getCosts(x, mode="vector")
     if(length(unique(w)) < 2) return(FALSE)
     return(TRUE)
 }

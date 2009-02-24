@@ -267,7 +267,7 @@ plotEdges <- function(x, replot=TRUE, useWeights=NULL, col="black", lwd=1,
 
     ## handle weights
     if(useWeights){
-        edges.w <- getWeights(x, mode="vector", unique=TRUE)
+        edges.w <- getCosts(x, mode="vector", unique=TRUE)
         edges.w <- edges.w[temp]
         lwd <- edges.w / max(edges.w) # max lwd = 1
         lwd <- lwd * maxLwd # max lwd = maxLwd

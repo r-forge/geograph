@@ -9,13 +9,13 @@ setFriction <- function(x, attr.name=NULL, method=c("mean", "product"), drop=TRU
 
     ## assign weights to vertices
     nodeAttr <- unlist(getNodesAttr(x, attr.name=attr.name))
-    if(!is.null(x@meta$weights)){
-        if(!any(attr.name %in% colnames(x@meta$weights))) {
-            stop("attr.name is not documented in x@meta$weights.")
+    if(!is.null(x@meta$costs)){
+        if(!any(attr.name %in% colnames(x@meta$costs))) {
+            stop("attr.name is not documented in x@meta$costs.")
         }
         nodeWeights <- as.character(nodeAttr)
-        rules <- x@meta$weights
-        for(i in 1:nrow(x@meta$weights)){
+        rules <- x@meta$costs
+        for(i in 1:nrow(x@meta$costs)){
             nodeWeights[nodeWeights==rules[i,attr.name]] <- rules[i,"weight"]
         }
         nodeWeights <- as.numeric(nodeWeights)

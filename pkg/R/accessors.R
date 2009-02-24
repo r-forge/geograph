@@ -233,15 +233,15 @@ setMethod("setEdges", "gGraph", function(x, add=NULL, remove=NULL, weights=NULL,
 
 
 ##############
-## getWeights
+## getCosts
 ##############
-setGeneric("getWeights", function(x, ...) {
-    standardGeneric("getWeights")
+setGeneric("getCosts", function(x, ...) {
+    standardGeneric("getCosts")
 })
 
 
 
-setMethod("getWeights", "gGraph", function(x, mode=c("asIs","vector"), unique=FALSE, ...) {
+setMethod("getCosts", "gGraph", function(x, mode=c("asIs","vector"), unique=FALSE, ...) {
     mode <- match.arg(mode)
     if(mode=="asIs") return(edgeWeights(x@graph))
 
@@ -265,15 +265,15 @@ setMethod("getWeights", "gGraph", function(x, mode=c("asIs","vector"), unique=FA
 
 
 ###############
-## dropWeights
+## dropCosts
 ###############
-setGeneric("dropWeights", function(x, ...) {
-    standardGeneric("dropWeights")
+setGeneric("dropCosts", function(x, ...) {
+    standardGeneric("dropCosts")
 })
 
 
 
-setMethod("dropWeights", "gGraph", function(x) {
+setMethod("dropCosts", "gGraph", function(x) {
     myGraph <- getGraph(x)
     myGraph@edgeData@data <- list()
     x@graph <- myGraph
