@@ -53,6 +53,7 @@
   attribute set to "gPath", and an additional slot 'xy' containing
   geographic coordinates of the nodes involved in the paths.\cr
 }
+\author{Thibaut Jombart (\email{t.jombart@imperial.ac.uk})}
 \examples{
 \dontrun{
 data(worldgraph.40k)

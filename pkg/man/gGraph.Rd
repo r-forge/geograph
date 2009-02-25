@@ -152,8 +152,7 @@
   (\code{?geoGraph}) for a more complete list of implemented functions.
 }
 \references{}
-\author{Thibaut Jombart (t.jombart@imperial.ac.uk)}
-\note{}
+\author{Thibaut Jombart (\email{t.jombart@imperial.ac.uk})}
 
 % ~Make other sections like Warning with \section{Warning }{....} ~
 

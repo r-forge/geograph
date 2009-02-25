@@ -89,7 +89,7 @@ attr.col=NULL,\dots)
 
   - \code{\link{isInArea}}, to retain a set of visible data.\cr
 }
-\author{Thibaut Jombart (t.jombart@imperial.ac.uk)}
+\author{Thibaut Jombart (\email{t.jombart@imperial.ac.uk})}
 \examples{
 data(worldgraph.10k)
 
