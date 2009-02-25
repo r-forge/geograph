@@ -27,7 +27,7 @@ and all detected bugs
 =============
  CODE ISSUES
 =============
-* use usr rather than zoomlog where needed (isInArea, ...)
+o use usr rather than zoomlog where needed (isInArea, ...)
 
 ======================
  DOCUMENTATION ISSUES
@@ -44,7 +44,7 @@ o define constructor(s)
 o provide accessors
 o make a worldshape dataset
 *o* make a worldgraph.10k dataset, with refined connections and attributes definitions
-* make a worldgraph.40k dataset, with refined connections and attributes definitions
+*o* make a worldgraph.40k dataset, with refined connections and attributes definitions
 o provide plot method
 o provide zoom method(s)
 o provide points add/removal methods
@@ -55,8 +55,8 @@ o provide a method to define connectivity from the @nodes.attr slot.
 o provide a method to interact with layers
 o use different lwd when plotting edges
 o make a rawgraph.10k dataset
-* make a rawgraph.40k dataset
-*o* have a method to readd edges, using a reference object.
+o make a rawgraph.40k dataset
+o have a method to re-add edges, using a reference object.
 
 
 
