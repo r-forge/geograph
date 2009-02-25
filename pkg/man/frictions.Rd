@@ -18,7 +18,7 @@
   'weights' as defined in \code{graph} and \code{RBGL} packages.
 }
 \usage{
-setFriction(x, attr.name=NULL, method=c("mean", "product"), drop=TRUE)
+setFriction(x, attr.name=NULL, method=c("mean", "product"))
 }
 \arguments{
   \item{\code{x}}{a \linkS4class{gGraph} object with a least one node
