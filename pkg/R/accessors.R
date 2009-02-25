@@ -196,7 +196,7 @@ setMethod("setEdges", "gGraph", function(x, add=NULL, remove=NULL, weights=NULL,
             weights <- rep(1, length(from))
         }
 
-        myGraph <- addEdge(from=from, to=to, graph=x@graph, weights=weights)
+        myGraph <- suppressWarnings(addEdge(from=from, to=to, graph=x@graph, weights=weights))
 
     } else { ## remove edges ##
         remove <- as.data.frame(remove)
