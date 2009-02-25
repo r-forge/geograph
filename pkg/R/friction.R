@@ -16,7 +16,7 @@ setFriction <- function(x, attr.name=NULL, method=c("mean", "product")){
         nodeCosts <- as.character(nodeAttr)
         rules <- x@meta$costs
         for(i in 1:nrow(x@meta$costs)){
-            nodeCosts[nodeCosts==rules[i,attr.name]] <- rules[i,"weight"]
+            nodeCosts[nodeCosts==rules[i,attr.name]] <- rules[i,ncol(rules)]
         }
         nodeCosts <- as.numeric(nodeCosts)
     } else stop("x@meta does not contain a 'costs' component.")
