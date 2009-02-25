@@ -68,6 +68,7 @@ setMethod("dijkstraBetween", "gData", function(x){
     if(!is.gData(x)) stop("x is not a valid gData object")
     if(!exists(x@gGraph.name, envir=.GlobalEnv)) stop(paste("gGraph object",x@gGraph.name,"not found."))
     if(length(x@nodes.id)==0) stop("No assigned nodes (x@nodes.id is empty).")
+    if(!isConnected(x)) stop("Not all locations are connected by the graph")
 
     ## build the wrapper ##
     myGraph <- get(x@gGraph.name, envir=.GlobalEnv)
