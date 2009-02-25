@@ -24,6 +24,9 @@ setMethod("dijkstraBetween", "gGraph", function(x, from, to){
     ## build the wrapper ##
     myGraph <- getGraph(x)
 
+    ## check connectivity ##
+    if(!areConnected(myGraph, unique(c(from,to)))) stop("Not all nodes are connected by the graph.")
+
     ## recycle from and to
     maxLength <- max(length(from), length(to))
     from <- rep(from, length=maxLength)
@@ -68,7 +71,7 @@ setMethod("dijkstraBetween", "gData", function(x){
     if(!is.gData(x)) stop("x is not a valid gData object")
     if(!exists(x@gGraph.name, envir=.GlobalEnv)) stop(paste("gGraph object",x@gGraph.name,"not found."))
     if(length(x@nodes.id)==0) stop("No assigned nodes (x@nodes.id is empty).")
-    if(!isConnected(x)) stop("Not all locations are connected by the graph")
+    if(!isConnected(x)) stop("Not all locations are connected by the graph.")
 
     ## build the wrapper ##
     myGraph <- get(x@gGraph.name, envir=.GlobalEnv)
@@ -123,6 +126,7 @@ setGeneric("dijkstraFrom", function(x,...) {
 
 
 
+
 #####################
 ## method for gGraph
 #####################
@@ -133,6 +137,8 @@ setMethod("dijkstraFrom", "gGraph", function(x, start){
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
     if(!all(start %in% getNodes(x))) stop("Starting node is not in x.")
 
+    ## check connectivity ##
+    if(!areConnected(myGraph, getNodes(myGraph))) stop("Not all nodes are connected by the graph.")
 
     ## build the wrapper ##
     myGraph <- getGraph(x)
@@ -172,6 +178,7 @@ setMethod("dijkstraFrom", "gData", function(x, start){
     if(!is.gData(x)) stop("x is not a valid gData object")
     if(!exists(x@gGraph.name, envir=.GlobalEnv)) stop(paste("gGraph object",x@gGraph.name,"not found."))
     if(length(x@nodes.id)==0) stop("No assigned nodes (x@nodes.id is empty).")
+    if(!isConnected(x)) stop("Not all locations are connected by the graph")
 
 
     ## build the wrapper ##
