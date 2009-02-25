@@ -1,7 +1,7 @@
 ###############
 ## setFriction
 ###############
-setFriction <- function(x, attr.name=NULL, method=c("mean", "product"), drop=TRUE){
+setFriction <- function(x, attr.name=NULL, method=c("mean", "product")){
     ## some checks + argument handling
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
     method <- match.arg(method)

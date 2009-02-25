@@ -103,7 +103,7 @@
     nodes are a connected set.}
   }
 }
-\author{Thibaut Jombart (t.jombart@imperial.ac.uk)}
+\author{Thibaut Jombart (\email{t.jombart@imperial.ac.uk})}
 \seealso{
  Related class:\cr
   -  \code{\linkS4class{gGraph}}\cr
