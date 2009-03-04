@@ -1,0 +1,48 @@
+\encoding{UTF-8}
+\name{getEdges}
+\alias{getEdges}
+\alias{getEdges-methods}
+\alias{getEdges,gGraph-method}
+\title{Get edges from a gGraph object}
+\description{
+  The function \code{getEdges} returns the edges of a
+  \linkS4class{gGraph} object using different possible outputs.
+}
+\usage{
+getEdges(x, mode=c("asIs","matNames", "matId"), unique=FALSE, ...)
+}
+\arguments{
+  \item{\code{x}}{a valid \linkS4class{gGraph}.}
+  \item{\code{mode}}{a character string indicating which kind of output
+    should be used. See value.}
+  \item{\code{unique}}{a logical indicating whether all returned edges
+    should be unique (TRUE) or if duplicated edges should be allowed
+    (TRUE, default).}
+  \item{\code{\dots}}{other arguments passed to other methods (currently
+    unused).}
+}
+\value{
+  The output depends on the value of the argument \code{mode}:\cr
+  - \code{asIs}: output is a named list of nodes, each slot containing
+  nodes forming an edge with one given node. This format is that of the
+  \code{edges} accessor for \linkS4class{graphNEL} objects.\cr
+
+  - \code{matNames}: a matrix with two columns giving couples of node
+  names forming edges.\cr
+
+  - \code{matId}: a matrix with two columns giving couples of node
+  indices forming edges.\cr
+}
+\seealso{
+ Most other accessors are documented in \linkS4class{gGraph} manpage.
+}
+\author{Thibaut Jombart (\email{t.jombart@imperial.ac.uk})}
+\examples{
+example(gGraph)
+
+getEdges(x)
+getEdges(x,mode="matNames")
+getEdges(x,mode="matId")
+}
+\keyword{utilities}
+\keyword{methods}
