@@ -182,7 +182,7 @@ setGeneric("setEdges", function(x, ...) {
 
 
 
-setMethod("setEdges", "gGraph", function(x, add=NULL, remove=NULL, weights=NULL, ...) {
+setMethod("setEdges", "gGraph", function(x, add=NULL, remove=NULL, costs=NULL, ...) {
     ## some checks
     if(is.null(add) & is.null(remove)) return(x)
 
@@ -192,11 +192,11 @@ setMethod("setEdges", "gGraph", function(x, add=NULL, remove=NULL, weights=NULL,
         from <- as.character(add[[1]])
         to <- as.character(add[[2]])
         if(!all(unique(c(from,to)) %in% getNodes(x))) stop("unknown specified nodes") # unknown nodes
-        if(is.null(weights)){
-            weights <- rep(1, length(from))
+        if(is.null(costs)){
+            costs <- rep(1, length(from))
         }
 
-        myGraph <- suppressWarnings(addEdge(from=from, to=to, graph=x@graph, weights=weights))
+        myGraph <- suppressWarnings(addEdge(from=from, to=to, graph=x@graph, weights=costs))
 
     } else { ## remove edges ##
         remove <- as.data.frame(remove)
