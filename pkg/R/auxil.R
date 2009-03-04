@@ -1,7 +1,7 @@
 ##############
-## hasWeights
+## hasCosts
 ##############
-hasWeights <- function(x){
+hasCosts <- function(x){
     if(length(getGraph(x)@edgeData@data)==0) return(FALSE)
     w <- getCosts(x, mode="vector")
     if(length(unique(w)) < 2) return(FALSE)

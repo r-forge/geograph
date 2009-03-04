@@ -3,7 +3,7 @@
 #################
 dropDeadEdges <- function(x, thres){ # x is a gGraph object
     if(!is.gGraph(x)) stop("x is not a valid gGraph object.")
-    if(!hasWeights(x)) return(x)
+    if(!hasCosts(x)) return(x)
 
     ## check weights under threshold
     myGraph <- getGraph(x)

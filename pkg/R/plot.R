@@ -217,7 +217,7 @@ plotEdges <- function(x, replot=TRUE, useCosts=NULL, col="black", lwd=1,
 
     ## handle weights for edges
     if(is.null(useCosts)){
-        useCosts <- hasWeights(x)
+        useCosts <- hasCosts(x)
     }
 
     ## get the environment
