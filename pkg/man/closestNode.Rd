@@ -41,13 +41,45 @@ closestNode(x, loc, zoneSize=5, attr.name=NULL, attr.values=NULL)
   object with matching nodes stored in the \code{@nodes.id} slot. Note
   that previous content of \code{@nodes.id} will be erased.\cr
 }
+\details{
+  When creating a \linkS4class{gData} object, if the \code{gGraph.name}
+  argument is provided, then locations are matched with the
+  \code{gGraph} object automatically, by an internal call to
+  closestNode. Note, however, that it is not possible to specify node
+  attributes (\code{attr.names} and \code{attr.values}) this way.
+}
 \seealso{
   \code{\link{geo.add.edges}} and \code{\link{geo.remove.edges}} to interactively add or remove edges in a
   \linkS4class{gGraph} object.
 }
 \author{Thibaut Jombart (\email{t.jombart@imperial.ac.uk})}
 \examples{
+\dontrun{
+data(worldgraph.10k)
+plot(worldgraph.10k, reset=TRUE)
 
+## zooming in
+geo.zoomin(list(x=c(-6,38), y=c(35,73)))
+title("Europe")
+
+## click some locations
+myNodes <- closestNode(worldgraph.10k,locator(), attr.name="habitat", attr.value="land")
+myNodes
+
+## here are the closestNodes
+points(getCoords(worldgraph.10k)[myNodes,], col="red")
+
+## example with a gData object
+myLoc <- list(x=c(3, -8, 11, 28), y=c(50, 57, 71, 67)) # some locations
+obj <- new("gData", coords=myLoc) # new gData object
+obj
+
+obj@gGraph.name <- "worldgraph.10k" # this could be done when creating obj
+obj <- closestNode(obj, attr.name="habitat", attr.value="land")
+
+## plot the result (original location -> assigned node)
+points(obj, method="both")
+}
 }
 \keyword{utilities}
 \keyword{methods}
