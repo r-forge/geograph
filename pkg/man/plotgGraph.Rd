@@ -4,6 +4,7 @@
 \alias{plot.gGraph}
 \alias{points,gGraph-method}
 \alias{points.gGraph}
+\alias{plotEdges}
 \alias{plotEdges,gGraph-method}
 \alias{plotEdges.gGraph}
 \title{ Plot a gGraph object. }
