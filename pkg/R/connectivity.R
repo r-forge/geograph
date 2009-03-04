@@ -26,7 +26,6 @@ areNeighbours <- function(V1, V2, graph){
 ################
 ## areConnected
 ################
-## the GENERIC of this method is given in package 'graph'
 areConnected <- function(x, nodes){
     ## some checks ##
     if(!require(RBGL)) stop("RBGL package is required.")
@@ -44,7 +43,7 @@ areConnected <- function(x, nodes){
     ## cutting x ##
     temp <- getCoords(x)[nodes,,drop=FALSE] # only nodes in area
     reg <- as.list(as.data.frame(apply(temp,2,range)))
- 
+
 
     ## get connected sets ##
     ## !! use connectedComp from RBGL rather than connComp from graph
@@ -74,6 +73,7 @@ areConnected <- function(x, nodes){
 #########################
 ## isConnected for gData
 #########################
+## the GENERIC of this method is given in package 'graph'
 setMethod("isConnected", "gData", function(object, ...){
     ## checks ##
     x <- object
