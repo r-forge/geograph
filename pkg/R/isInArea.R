@@ -26,8 +26,8 @@ setMethod("isInArea", "matrix", function(x, reg="current", res.type=c("logical",
         ylim <- zoomlog[3:4]
 
     } else if(length(reg)==1 && reg=="current"){ # xlim/ylim taken from par("usr")
-        xlim <- sort(par("current")[1:2])
-        ylim <- sort(par("current")[3:4])
+        xlim <- sort(par("usr")[1:2])
+        ylim <- sort(par("usr")[3:4])
 
     }  else if(is.list(reg)){ # xlim/ylim user-provided (reg)
         if(length(reg)!=2) stop("reg is not a list of length 2.")
