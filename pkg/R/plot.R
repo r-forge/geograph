@@ -76,7 +76,7 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
         plot(shape, col=bg.col, border=border.col, xlim=xlim, ylim=ylim)
 
         ## subset of points in area
-        toKeep <- isInArea(x, reg="usr", res.type="character")
+        toKeep <- isInArea(x, reg="current", res.type="character")
         coords <- getCoords(x)[toKeep, ]
 
         ## define colors for these points
@@ -155,7 +155,7 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=N
 
     ## subset data to visible area ##
     coords <- getCoords(x)
-    toKeep <- isInArea(x, reg="usr", res.type="integer")
+    toKeep <- isInArea(x, reg="current", res.type="integer")
     coords <- coords[toKeep, , drop=FALSE]
 
     ## handle plot param
@@ -235,7 +235,7 @@ plotEdges <- function(x, replot=TRUE, useCosts=NULL, col="black", lwd=1,
 
     ## retained coords (those within plotting area)
     coords <- getCoords(x)
-    toKeep <- isInArea(x, reg="usr", res.type="integer")
+    toKeep <- isInArea(x, reg="current", res.type="integer")
     keptCoords <- coords[toKeep, , drop=FALSE]
 
     ## adjust pcol to subset of points in area
@@ -329,7 +329,7 @@ setMethod("points", signature("gData"), function(x, method=c("nodes","original",
     }
 
     ## restrain coords to current area ##
-    toKeep <- isInArea(coords.ori, reg="usr", res.type="integer")
+    toKeep <- isInArea(coords.ori, reg="current", res.type="integer")
     coords.ori <- coords.ori[toKeep, , drop=FALSE]
 
     ## add points ##
