@@ -1,0 +1,57 @@
+\encoding{UTF-8}
+\name{geo.add.edges}
+\alias{geo.add.edges}
+\alias{geo.remove.edges}
+\title{Add and remove edges from a gGraph object}
+\description{
+  The functions \code{geo.add.edges} and \code{geo.remove.edges} allow
+  one to add or remove edges interactively with a \linkS4class{gGraph}
+  object. When adding edges, two approaches are possible:\cr
+  - click vertices defining new edges (mode="points")\cr 
+  - select an area in which all edges from a reference graph are added (mode="area").\cr
+
+}
+\usage{
+geo.add.edges(x, mode=c("points","area"), refObj="rawgraph.10k")
+geo.remove.edges(x, mode=c("points","area"))
+}
+\arguments{
+  \item{\code{x}}{a valid \linkS4class{gGraph} object.}
+  \item{\code{mode}}{a character string indicating the mode for addition
+    or removal of edges. 'points': user is expected to click vertices to
+    indicate edges. 'area': user is expected to click two points defining
+    a rectangular area within which all edges are selected.
+  }
+  \item{\code{refObj}}{a valid \linkS4class{gGraph} object, used as a
+    reference when adding edges. When selecting an area inside which
+    edges are added, all edges existing in this area in \code{refObj}
+    are added to \code{x}.}
+
+}
+\value{
+  A \linkS4class{gGraph} object with newly added or removed edges.
+}
+\seealso{
+  \code{\link{setEdges}} to non-interactively add or remove edges in a
+  \linkS4class{gGraph} object.
+}
+\author{Thibaut Jombart (\email{t.jombart@imperial.ac.uk})}
+\examples{
+\dontrun{
+data(worldgraph.10k)
+plot(worldgraph.10k, reset=TRUE)
+
+## zooming in
+geo.zoomin(list(x=c(-6,38), y=c(35,73)))
+title("Europe")
+
+## remove edges
+geo.remove.edges(worldgraph.10k) # points mode
+geo.remove.edges(worldgraph.10k, mode="area") # area mode
+
+## add edges
+geo.add.edges(worldgraph.10k) # points mode
+geo.add.edges(worldgraph.10k, mode="area") # area mode
+}
+}
+\keyword{utilities}
