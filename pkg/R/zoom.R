@@ -1,8 +1,8 @@
 ###############
 ## .zoomlog.up
 ###############
-.zoomlog.up <- function(vec){
-    if(!is.vector(vec) || length(vec)!=4) stop("Updating zoomlog using a wrong value.")
+.zoomlog.up <- function(vec){ # vec is xmin, xmax, ymin, ymax
+    if(!is.vector(vec) || length(vec)!=4 || !is.numeric(vec)) stop("Updating zoomlog using a wrong value.")
 
     geoEnv <- get(".geoGraphEnv", envir=.GlobalEnv)
     oldZoomLog <- get("zoom.log", env=geoEnv)

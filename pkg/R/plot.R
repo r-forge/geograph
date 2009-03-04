@@ -323,9 +323,9 @@ setMethod("points", signature("gData"), function(x, method=c("nodes","original",
         }
 
         myGraph <- get(x@gGraph.name, envir=.GlobalEnv)
-        coords.nodes <- getCoords(myGraph)[x@nodes.id,]
-        toKeep <- isInArea(coords.nodes, reg="usr", res.type="integer")
-        coords.nodes <- coords.nodes[toKeep, , drop=FALSE]
+        coords.nodes <- getCoords(myGraph)[x@nodes.id,, drop=FALSE]
+        ## toKeep <- isInArea(coords.nodes, reg="usr", res.type="integer") # useless, messy
+        ## coords.nodes <- coords.nodes[toKeep, , drop=FALSE]
     }
 
     ## restrain coords to current area ##
@@ -351,7 +351,65 @@ setMethod("points", signature("gData"), function(x, method=c("nodes","original",
     assign("sticky.points", TRUE, envir=env)
 
     return(invisible())
-}) # end points method
+}) # end points for gData
 
 
+
+
+
+
+
+
+
+
+
+#####################
+## plot for gData
+#####################
+setMethod("plot", signature("gData", "missing"), function(x, method=c("nodes","original","both"),
+                                                 pch.ori=4, pch.nodes=1,
+                                                 col.ori="black", col.nodes="red",
+                                                 sticky.points=TRUE,...){
+    ## some checks
+    if(!is.gData(x)) stop("x is not a valid gData object")
+    method <- match.arg(method)
+
+    ## get the environment
+    env <- get(".geoGraphEnv", envir=.GlobalEnv)
+
+    if(!exists(x@gGraph.name, env=.GlobalEnv)){ # if the gGraph is missing, stop
+            stop(paste("The gGraph object",x@gGraph.name,"is missing."))
+        }
+
+    myGraph <- get(x@gGraph.name, envir=.GlobalEnv) # get the gGraph object
+
+    if((method %in% c("nodes","both")) & (length(x@nodes.id)==0)){ # no nodes assigned
+        stop("Locations are not assigned to nodes (x@nodes.id is empty).")
+    }
+
+
+    ## define visible area ##
+    loc <- getCoords(x)
+    coords.nodes <- getCoords(myGraph)[x@nodes.id,, drop=FALSE]
+    temp <- rbind(loc, coords.nodes)
+    myRegion <- as.vector(apply(temp,2,range)) # return xmin, xmax, ymin, ymax
+    .zoomlog.up(myRegion) # define new window limits
+    assign("sticky.points", FALSE, envir=env) # remove possible sticky points
+
+    ## plot the gGraph object ##
+    plot(myGraph)
+
+
+    ## call to points ##
+    points(x, method=method,
+           pch.ori=pch.ori, pch.nodes=pch.nodes,col.ori=col.ori,
+           col.nodes=col.nodes,sticky.points=sticky.points,...)
+
+
+    ## some assignments
+    curCall <- sys.call(-1)
+    assign("last.plot", curCall, envir=env)
+
+    return(invisible())
+}) # end plot method
 
