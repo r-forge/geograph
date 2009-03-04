@@ -4,9 +4,6 @@
 \alias{plot.gData}
 \alias{points,gData-method}
 \alias{points.gData}
-\alias{plotEdges}
-\alias{plotEdges,gData-method}
-\alias{plotEdges.gData}
 \title{ Plot a gData object. }
 \description{
   Various functions to plot a \linkS4class{gData} object: \code{plot}
