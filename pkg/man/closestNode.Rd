@@ -55,6 +55,7 @@ closestNode(x, loc, zoneSize=5, attr.name=NULL, attr.values=NULL)
 \author{Thibaut Jombart (\email{t.jombart@imperial.ac.uk})}
 \examples{
 \dontrun{
+## interactive example ##
 data(worldgraph.10k)
 plot(worldgraph.10k, reset=TRUE)
 
@@ -68,8 +69,11 @@ myNodes
 
 ## here are the closestNodes
 points(getCoords(worldgraph.10k)[myNodes,], col="red")
+}
 
-## example with a gData object
+## example with a gData object ##
+data(worldgraph.10k)
+
 myLoc <- list(x=c(3, -8, 11, 28), y=c(50, 57, 71, 67)) # some locations
 obj <- new("gData", coords=myLoc) # new gData object
 obj
@@ -80,7 +84,7 @@ obj <- closestNode(obj, attr.name="habitat", attr.value="land")
 ## plot the result (original location -> assigned node)
 plot(obj, method="both")
 title("'x'=location, 'o'=assigned node")
-}
+
 }
 \keyword{utilities}
 \keyword{methods}
