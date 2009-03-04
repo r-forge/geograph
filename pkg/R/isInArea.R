@@ -18,16 +18,16 @@ setMethod("isInArea", "matrix", function(x, reg="current", res.type=c("logical",
     coords <- x
 
     ## get xlim and ylim
-    if(exists("zoom.log", envir=env) && length(reg)==1 && reg=="current"){ # xlim/ylim taken from log
+    if(exists("zoom.log", envir=env) && length(reg)==1 && reg=="zoom"){ # xlim/ylim taken from log
         zoomlog <- get("zoom.log", envir=env)
         zoomlog <- zoomlog[1,]
 
         xlim <- zoomlog[1:2]
         ylim <- zoomlog[3:4]
 
-    } else if(length(reg)==1 && reg=="usr"){ # xlim/ylim taken from par("usr")
-        xlim <- sort(par("usr")[1:2])
-        ylim <- sort(par("usr")[3:4])
+    } else if(length(reg)==1 && reg=="current"){ # xlim/ylim taken from par("usr")
+        xlim <- sort(par("current")[1:2])
+        ylim <- sort(par("current")[3:4])
 
     }  else if(is.list(reg)){ # xlim/ylim user-provided (reg)
         if(length(reg)!=2) stop("reg is not a list of length 2.")
