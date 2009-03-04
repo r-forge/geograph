@@ -5,12 +5,12 @@
 \alias{[,gGraph-method}
 \alias{getCoords,gGraph-method}
 \alias{getDates,gGraph-method}
-\alias{getEdges,gGraph-method}
+%\alias{getEdges,gGraph-method}
 \alias{getGraph,gGraph-method}
 \alias{getHistory,gGraph-method}
 \alias{getNodesAttr,gGraph-method}
 \alias{getNodes,gGraph-method}
-\alias{getCosts,gGraph-method}
+%\alias{getCosts,gGraph-method}
 \alias{initialize,gGraph-method}
 %\alias{closestNode,gGraph-method}
 %\alias{dijkstraBetween,gGraph-method}
@@ -18,7 +18,7 @@
 \alias{dropCosts,gGraph-method}
 \alias{findInLayer,gGraph-method}
 \alias{findLand,gGraph-method}
-\alias{getColors,gGraph-method}
+%\alias{getColors,gGraph-method}
 \alias{isInArea,gGraph-method}
 %\alias{plot,gGraph,missing-method}
 %\alias{points,gGraph-method}
@@ -98,8 +98,9 @@
   }
 }
 \section{Methods}{
-  Here is a list of methods available for \code{gGraph} objects. See
-  corresponding manpages for further documentation. 
+  Here is a list of methods available for \code{gGraph}
+  objects. Specific manpages exist for accessors with more than one
+  argument. These are indicated by a '*' symbol next to the method's name.
   \describe{
     \item{[}{\code{signature(x = "gGraph")}: usual method to subset
       objects in R. First indice corresponds to nodes (it can be a logical,
@@ -118,12 +119,12 @@
       information from a shapefile and add it to \code{nodes.attr}.}
     \item{findLand}{\code{signature(x = "gGraph")}: find which nodes are
       on land, and which are not.}
-    \item{getColors}{\code{signature(x = "gGraph")}: get colors
+    \item{getColors*}{\code{signature(x = "gGraph")}: get colors
       corresponding to the nodes, as specified in the \code{@meta$color} slot.}
     \item{getCoords}{\code{signature(x = "gGraph")}: get geographic
       coordinates of the object.}
     \item{getDates}{\code{signature(x = "gGraph")}: get dates of modifications of the object.}
-    \item{getEdges}{\code{signature(x = "gGraph")}: get edges of the object.}
+    \item{getEdges*}{\code{signature(x = "gGraph")}: get edges of the object.}
     \item{getGraph}{\code{signature(x = "gGraph")}: get the graph of the
       object (as a \code{graphNEL} object).}
     \item{getHistory}{\code{signature(x = "gGraph")}: get the history of
@@ -132,7 +133,7 @@
       attributes of the object.}
     \item{getNodes}{\code{signature(x = "gGraph")}: get the names of the
       nodes of the object.}
-    \item{getCosts}{\code{signature(x = "gGraph")}: get the weights of
+    \item{getCosts*}{\code{signature(x = "gGraph")}: get the weights of
       the edges of the object.}
     \item{initialize}{\code{signature(.Object = "gGraph")}: internal
       definition of the constructor.}
@@ -141,7 +142,7 @@
     \item{plot}{\code{signature(x = "gGraph", y = "missing")}: plot the object.}
     \item{points}{\code{signature(x = "gGraph")}: add points to an
       existing plot.}
-    \item{setEdges}{\code{signature(x = "gGraph")}: add/remove edges
+    \item{setEdges*}{\code{signature(x = "gGraph")}: add/remove edges
       to/from the object.}
     \item{show}{\code{signature(object = "gGraph")}: prints the object
       to screen.}
