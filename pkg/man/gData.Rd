@@ -6,7 +6,7 @@
 %\alias{closestNode,gData-method}
 %\alias{dijkstraBetween,gData-method}
 %\alias{dijkstraFrom,gData-method}
-\alias{findInLayer,gData-method}
+%\alias{findInLayer,gData-method}
 \alias{getCoords,gData-method}
 \alias{getData,gData-method}
 \alias{getNodes,gData-method}

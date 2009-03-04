@@ -16,7 +16,7 @@
 %\alias{dijkstraBetween,gGraph-method}
 %\alias{dijkstraFrom,gGraph-method}
 \alias{dropCosts,gGraph-method}
-\alias{findInLayer,gGraph-method}
+%\alias{findInLayer,gGraph-method}
 \alias{findLand,gGraph-method}
 %\alias{getColors,gGraph-method}
 %\alias{isInArea,gGraph-method}
