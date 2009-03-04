@@ -17,7 +17,7 @@ setMethod("findInLayer", "matrix", function(x, layer="world", attr="all",...){
     if(!require(maptools)) stop("maptools package is required.")
 
     ## Load default shapefile ##
-    if(layer[1]=="world"){
+    if(is.character(layer) && layer[1]=="world"){
         if(!require(sp)) stop("sp package needed to map the world")
         data(worldshape)
         layer <- worldshape
