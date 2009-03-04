@@ -11,7 +11,7 @@
 \alias{getData,gData-method}
 \alias{getNodes,gData-method}
 \alias{initialize,gData-method}
-\alias{isInArea,gData-method}
+%\alias{isInArea,gData-method}
 %\alias{points,gData-method}
 \alias{show,gData-method}
 %\alias{isConnected,gData-method}

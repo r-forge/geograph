@@ -19,7 +19,7 @@
 \alias{findInLayer,gGraph-method}
 \alias{findLand,gGraph-method}
 %\alias{getColors,gGraph-method}
-\alias{isInArea,gGraph-method}
+%\alias{isInArea,gGraph-method}
 %\alias{plot,gGraph,missing-method}
 %\alias{points,gGraph-method}
 %\alias{setEdges,gGraph-method}
