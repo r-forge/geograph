@@ -22,7 +22,7 @@
 \alias{isInArea,gGraph-method}
 %\alias{plot,gGraph,missing-method}
 %\alias{points,gGraph-method}
-\alias{setEdges,gGraph-method}
+%\alias{setEdges,gGraph-method}
 \alias{show,gGraph-method}
 \alias{is.gGraph}
 \title{Formal class "gGraph"}
