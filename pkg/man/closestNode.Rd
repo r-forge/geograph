@@ -3,6 +3,7 @@
 \alias{closestNode}
 \alias{closestNode-methods}
 \alias{closestNode,gGraph-method}
+\alias{closestNode,gData-method}
 \title{Find the closest node to a given location}
 \description{
   The function \code{closestNode} searches for the closest node in a

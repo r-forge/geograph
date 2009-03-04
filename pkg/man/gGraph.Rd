@@ -3,7 +3,7 @@
 \alias{gGraph}
 \alias{gGraph-class}
 \alias{[,gGraph-method}
-\alias{closestNode,gGraph-method}
+%\alias{closestNode,gGraph-method}
 %\alias{dijkstraBetween,gGraph-method}
 %\alias{dijkstraFrom,gGraph-method}
 \alias{dropWeights,gGraph-method}
