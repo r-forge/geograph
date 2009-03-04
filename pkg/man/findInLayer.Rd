@@ -51,6 +51,9 @@ findInLayer(x, layer="world", attr="all",...)
   to locations (\code{@data} slot). New information is merge to older
   information according to the type of data being stored. \cr
 }
+\seealso{
+  \code{\link}{findLand}, to find which locations are on land.
+}
 \author{Thibaut Jombart (\email{t.jombart@imperial.ac.uk})}
 \examples{
 \dontrun{
