@@ -40,7 +40,7 @@
      the closest node; specific values of node attribute can be
      provided, for instance, to find the closest node on land.\cr
    
-   - \code{\link{hasWeights}}: tests if the graph is weighted.\cr
+   - \code{\link{hasCosts}}: tests if the graph is weighted.\cr
    
    - \code{\link{show}}: printing of gGraph and gGraphHistory objects.\cr
 
