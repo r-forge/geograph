@@ -33,7 +33,7 @@ setClass("gData", representation(coords="matrix", nodes.id="character", data="AN
                    nodes.id = character(0),
                    data=NULL,
                    gGraph.name="",
-                   gGraph.version=NULL)
+                   gGraph.version="")
          )
 
 
