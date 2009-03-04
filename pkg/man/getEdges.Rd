@@ -34,7 +34,11 @@ getEdges(x, mode=c("asIs","matNames", "matId"), unique=FALSE, ...)
   indices forming edges.\cr
 }
 \seealso{
- Most other accessors are documented in \linkS4class{gGraph} manpage.
+  Most other accessors are documented in \linkS4class{gGraph} manpage.\cr
+
+  See \code{\link{setEdges}} to add/remove edges, or
+  \code{\link{geo.add.edges}} and \code{\link{geo.remove.edges}} for
+  interactive versions.
 }
 \author{Thibaut Jombart (\email{t.jombart@imperial.ac.uk})}
 \examples{

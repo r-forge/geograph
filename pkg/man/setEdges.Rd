@@ -31,7 +31,9 @@ setEdges(x, add=NULL, remove=NULL, costs=NULL, \dots)
 }
 \seealso{
   \code{\link{geo.add.edges}} and \code{\link{geo.remove.edges}} to interactively add or remove edges in a
-  \linkS4class{gGraph} object.
+  \linkS4class{gGraph} object. \cr
+
+  \code{\link{getEdges}} to retrieve edges in different formats.
 }
 \author{Thibaut Jombart (\email{t.jombart@imperial.ac.uk})}
 \keyword{utilities}
