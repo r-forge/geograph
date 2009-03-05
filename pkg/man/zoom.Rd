@@ -4,6 +4,7 @@
 \alias{geo.zoomout}
 \alias{geo.slide}
 \alias{geo.back}
+\alias{.zoomlog.up}
 \title{Navigate in the plot of a gGraph object}
 \description{
   The functions \code{geo.zoomin}, \code{geo.zoomout}, \code{geo.slide},
@@ -21,6 +22,9 @@
 
   \code{geo.back} redraws previous plots each time screen is clicked.\cr
 
+  \code{.zoomlog.up} is an auxiliary function used to update the zoom
+  log, by providing new sets of coordinates.
+
   Whenever clicking is needed, a right-click will stop the function.
 }
 \usage{
@@ -28,16 +32,14 @@ geo.zoomin(reg=NULL)
 geo.zoomout()
 geo.slide()
 geo.back()
-
+.zoomlog.up(vec)
 }
 \arguments{
   \item{\code{reg}}{a list of length 2, with its first component being
     the new x (longitude) boundaries (a vector of length 2), and its second being new y
     (latitude) boundaries (a vector of length 2).}
-}
-\value{
-  A \linkS4class{gGraph} object with the newly defined costs used as
-  weightings of edges.
+  \item{\code{vec}}{a numeric vector of length 4 giving the new
+    coordinates of the plotting window, in the order: xmin, xmax, ymin, ymax.}
 }
 \seealso{
   \code{\link{plot.gGraph}} for plotting of a \linkS4class{gGraph} object.
