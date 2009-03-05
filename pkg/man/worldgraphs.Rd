@@ -5,6 +5,8 @@
 \alias{rawgraph.40k}
 \alias{worldgraph.10k}
 \alias{worldgraph.40k}
+\alias{globalcoord.10k}
+\alias{globalcoord.40k}
 \alias{worldshape}
 \docType{data}
 \title{Worldwide geographic graphs}

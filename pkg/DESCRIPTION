@@ -2,7 +2,7 @@ Package: geoGraph
 Version: 1.0-0
 Date: 2009/02/04
 Title: geoGraph: implementing geographic graphs for large-scale spatial modelling.
-Author: Andrea Manica, Thibaut Jombart, François Balloux
+Author: Andrea Manica, Thibaut Jombart, Francois Balloux
 Maintainer: Thibaut Jombart <jombart@biomserv.univ-lyon1.fr>
 Suggests: maptools
 Depends: methods, graph, RBGL, sp
