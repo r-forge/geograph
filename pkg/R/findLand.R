@@ -82,7 +82,7 @@ setMethod("findLand", "gGraph", function(x, shape="world", attr.name="habitat",.
         names(x@nodes.attr)[ncol(x@nodes.attr)] <- attr.name
     } else {
         x@nodes.attr <- data.frame(res)
-        names(res) <- attr.name
+        names(x@nodes.attr) <- attr.name
     }
     return(x)
 }) # end findLand
