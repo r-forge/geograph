@@ -2,7 +2,7 @@
 \name{connectivity-checks}
 \alias{areNeighbours}
 \alias{areConnected}
-\alias{isConnected,gData-methods}
+\alias{isConnected,gData-method}
 \title{Check connectivity of a gGraph object}
 \description{
   The functions \code{areNeighbours}, \code{areConnected} and the method

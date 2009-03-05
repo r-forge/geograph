@@ -5,6 +5,7 @@
 \alias{rawgraph.40k}
 \alias{worldgraph.10k}
 \alias{worldgraph.40k}
+\alias{worldshape}
 \docType{data}
 \title{Worldwide geographic graphs}
 \description{
@@ -17,13 +18,21 @@
 
   'worldgraph's are 'rawgraph's that have been modified manually to recitify
   connectivity between edges at some places. The most noticable change
-  is that all edges oversea have been removed.
+  is that all edges oversea have been removed.\cr
+
+  'globalcoord.10k' and 'globalcoord.40k' are matrices of geographic
+  coordinates of nodes, used to construct 'worlgraph' objects.\cr
+  
+  'worldshape' is a shapefile of contries of the world (snapshot from 1994).
 }
 \usage{
 data(rawgraph.10k)
 data(rawgraph.40k)
 data(worldgraph.10k)
 data(worldgraph.40k)
+data(globalcoord.10k)
+data(globalcoord.40k)
+data(worldshape)
 }
 \format{
   \code{worldgraph.10k} and \code{worldgraph.40k} are

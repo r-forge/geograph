@@ -5,17 +5,26 @@
 \alias{[,gGraph-method}
 \alias{getCoords,gGraph-method}
 \alias{getDates,gGraph-method}
-%\alias{getEdges,gGraph-method}
 \alias{getGraph,gGraph-method}
 \alias{getHistory,gGraph-method}
 \alias{getNodesAttr,gGraph-method}
 \alias{getNodes,gGraph-method}
-%\alias{getCosts,gGraph-method}
 \alias{initialize,gGraph-method}
+\alias{dropCosts,gGraph-method}
+\alias{dropCosts}
+\alias{show,gGraph-method}
+\alias{is.gGraph}
+\alias{getHistory}
+\alias{getGraph}
+\alias{getNodesAttr}
+\alias{getDates}
+\alias{getCoords}
+\alias{getNodes}
+%%%%% THESE HAVE THEIR OWN MANPAGES
+%\alias{getCosts,gGraph-method}
 %\alias{closestNode,gGraph-method}
 %\alias{dijkstraBetween,gGraph-method}
 %\alias{dijkstraFrom,gGraph-method}
-\alias{dropCosts,gGraph-method}
 %\alias{findInLayer,gGraph-method}
 %\alias{findLand,gGraph-method}
 %\alias{getColors,gGraph-method}
@@ -23,8 +32,8 @@
 %\alias{plot,gGraph,missing-method}
 %\alias{points,gGraph-method}
 %\alias{setEdges,gGraph-method}
-\alias{show,gGraph-method}
-\alias{is.gGraph}
+%\alias{getEdges,gGraph-method}
+%%%%%%
 \title{Formal class "gGraph"}
 \description{The class \code{gGraph} is a formal (S4) class storing geographic
   data.\cr

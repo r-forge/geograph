@@ -1,6 +1,7 @@
 \encoding{UTF-8}
 \name{Auxiliary methods}
 \alias{hasCosts}
+\alias{rebuild}
 \title{Auxiliary methods for geoGraph}
 \description{
   These methods are low-level functions called by other procedures of
@@ -11,6 +12,8 @@
 
   - \code{hasCosts}: tests whether a \linkS4class{gGraph} has costs
   associated to its edges.
+
+  - \code{rebuild}: in development.
 }
 \usage{
 hasCosts(x)

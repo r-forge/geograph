@@ -2,9 +2,9 @@
 \name{findInLayer}
 \alias{findInLayer}
 \alias{findInLayer-methods}
-\alias{findInLayer,matrix-methods}
-\alias{findInLayer,data.frame-methods}
-\alias{findInLayer,list-methods}
+\alias{findInLayer,matrix-method}
+\alias{findInLayer,data.frame-method}
+\alias{findInLayer,list-method}
 \alias{findInLayer,gGraph-method}
 \alias{findInLayer,gData-method}
 \title{Retrieves node attributes from a layer}
