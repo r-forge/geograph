@@ -211,7 +211,7 @@ setMethod("show", "gGraph", function(object){
     print(head(x@coords, nDisp))
     if(N > nDisp) cat("...\n")
 
-    cat("\n@nodes.attr:",nrow(x@nodes.attr),"nodes attributes\n")
+    cat("\n@nodes.attr:",ncol(x@nodes.attr),"nodes attributes\n")
     print(head(x@nodes.attr, nDisp))
     if(nrow(x@nodes.attr) > nDisp) cat("...\n")
 
