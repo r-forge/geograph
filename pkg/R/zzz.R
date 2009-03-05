@@ -8,17 +8,40 @@
     cat("\n\t========================\n")
 
     ## define various items in our specific environment
-    assign(".geoGraphEnv", new.env(parent=.GlobalEnv), env=.GlobalEnv)
-    geoEnv <- get(".geoGraphEnv", envir=.GlobalEnv)
+    ## doesn't work when R CMD checking...
+    ## assign(".geoGraphEnv", new.env(parent=.GlobalEnv), env=.GlobalEnv)
+    ## geoEnv <- get(".geoGraphEnv", envir=.GlobalEnv)
 
-    zoom.log <- matrix(c(-180,180,-90,90),ncol=4)
-    colnames(zoom.log) <- c("x1","x2","y1","y2")
+    ## zoom.log <- matrix(c(-180,180,-90,90),ncol=4)
+    ## colnames(zoom.log) <- c("x1","x2","y1","y2")
 
-    assign("zoom.log", zoom.log, env=geoEnv)
-    assign("psize", 0.5, env=geoEnv)
+    ## assign("zoom.log", zoom.log, env=geoEnv)
+    ## assign("psize", 0.5, env=geoEnv)
 
-    temp <- list(psize=0.5, pch=19, col="black")
-    assign("last.plot.param", temp, env=geoEnv)
+    ## temp <- list(psize=0.5, pch=19, col="black")
+    ## assign("last.plot.param", temp, env=geoEnv)
 
-    assign("sticky.points", FALSE, env=geoEnv)
+    ## assign("sticky.points", FALSE, env=geoEnv)
 }
+
+
+## This has to be outside .Firs.lib to work when
+## R CMD checking...
+
+## new environment
+.geoGraphEnv <- new.env(parent=.GlobalEnv)
+
+## temporary variables
+zoom.log <- matrix(c(-180,180,-90,90),ncol=4)
+colnames(zoom.log) <- c("x1","x2","y1","y2")
+temp <- list(psize=0.5, pch=19, col="black")
+
+## some assignements
+assign("zoom.log", zoom.log, env=.geoGraphEnv)
+assign("psize", 0.5, env=.geoGraphEnv)
+assign("last.plot.param", temp, env=.geoGraphEnv)
+assign("sticky.points", FALSE, env=.geoGraphEnv)
+
+## remove temp variables
+rm(zoom.log)
+rm(temp)
