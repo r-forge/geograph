@@ -24,6 +24,7 @@ closestNode(x, \dots)
   \item{x}{a valid \linkS4class{gGraph} or \linkS4class{gData}
     object. In the latter case, the \linkS4class{gGraph} to which the
     \linkS4class{gData} is linked has to be in the current environment.}
+  \item{\dots}{further arguments passed to specific methods.}
   \item{loc}{locations, specified as a list with two components indicating longitude and
     latitude of locations. Alternatively, this can be a data.frame or a
     matrix with longitude and latitude in columns, in this order. Note
@@ -34,7 +35,8 @@ closestNode(x, \dots)
     node is found inside a given zone, the zone is expanded until nodes
     are found.}
   \item{attr.name}{the optional name of a node attribute. See details.}
-  \item{attr.values}{an optional vector giving values for \code{attr.names}. See details.}
+  \item{attr.values}{an optional vector giving values for
+    \code{attr.names}. See details.} 
 }
 \value{
   If \code{x} is a \linkS4class{gGraph} object: a vector of node

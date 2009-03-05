@@ -17,8 +17,9 @@ getColors(x, \dots)
   \item{nodes}{a vector of character strings or of integers
     identifying nodes by their name or their index. Can be "all", in
     which case all nodes are considered.}
-  \item{\dots}{other arguments passed to other methods (currently
-    unused).}
+  \item{attr.name}{a character string indicating the name of node
+    attribute to be used to define colors.}
+  \item{\dots}{other arguments passed to other methods.}
 }
 \value{
   A vector of characters being valid colors.\cr

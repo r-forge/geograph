@@ -25,6 +25,7 @@ isInArea(x, \dots)
     or a valid \linkS4class{gData} object. For matrix and data.frame,
     input must have two columns giving longitudes and latitudes of
     locations being considered.}
+  \item{\dots}{further arguments passed to specific methods.}
   \item{reg}{a character string or a list indicating the area
     ('reg' stands for 'region'). Character strings can be "current"
     (current user window, default) or "zoom" (current zoom). If the
