@@ -26,13 +26,13 @@ areConnected(x, nodes)
 \S4method{isConnected}{gData}(object, \dots)
 }
 \arguments{
-  \item{\code{V1}}{a vector of node names}
-  \item{\code{V2}}{a vector of node names}
-  \item{\code{graph}}{a valid \linkS4class{graphNEL} object.}
-  \item{\code{x}}{a valid \linkS4class{gGraph} object.}
-  \item{\code{nodes}}{a vector of node names}
-  \item{\code{object}}{a valid \linkS4class{gData} object.}
-  \item{\code{\dots}}{other arguments passed to other methods (currently
+  \item{V1}{a vector of node names}
+  \item{V2}{a vector of node names}
+  \item{graph}{a valid \linkS4class{graphNEL} object.}
+  \item{x}{a valid \linkS4class{gGraph} object.}
+  \item{nodes}{a vector of node names}
+  \item{object}{a valid \linkS4class{gData} object.}
+  \item{\dots}{other arguments passed to other methods (currently
     unused).}
 }
 \value{

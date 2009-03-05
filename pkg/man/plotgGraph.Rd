@@ -34,45 +34,41 @@ attr.col=NULL,\dots)
 
 }
 \arguments{
-  \item{\code{x}}{a \linkS4class{gGraph} object.}
-  \item{\code{shape}}{a shapefile used as background to the object. Must
+  \item{x}{a \linkS4class{gGraph} object.}
+  \item{shape}{a shapefile used as background to the object. Must
     be of the class \code{SpatialPolygonsDataFrame}
     (see \code{readShapePoly} in maptools package to import such data
     from a GIS shapefile). Alternatively, a character string indicating
     one shapefile released with geoGraph.}
-  \item{\code{psize}}{a numeric giving the size of points.}
-  \item{\code{pch}}{a numeric or a character indicating the type of point.}
-  \item{\code{col}}{a character string indicating the color to be used.}
-  \item{\code{edges}}{a logical indicating if edges should be plotted (TRUE) or
+  \item{psize}{a numeric giving the size of points.}
+  \item{pch}{a numeric or a character indicating the type of point.}
+  \item{col}{a character string indicating the color to be used.}
+  \item{edges}{a logical indicating if edges should be plotted (TRUE) or
     not (FALSE).}
-  \item{\code{reset}}{a logical indicating if plotting parameters should
+  \item{reset}{a logical indicating if plotting parameters should
     be reset (TRUE) or not (FALSE).}
-  \item{\code{bg.col}}{a character string indicating the color of the
+  \item{bg.col}{a character string indicating the color of the
     polygons of the shapefile used as background.}
-  \item{\code{border.col}}{a character string indicating the color of the
+  \item{border.col}{a character string indicating the color of the
     polygon borders.}
-  \item{\code{lwd}}{a numeric indicating the width of line (used for edges).}
-  \item{\code{useWeights}}{a logical indicating if edge width should be
+  \item{lwd}{a numeric indicating the width of line (used for edges).}
+  \item{useWeights}{a logical indicating if edge width should be
     proportionnal to edge weights or not.}
-  \item{\code{maxLwd}}{a numeric indicating the maximum edge width
+  \item{maxLwd}{a numeric indicating the maximum edge width
     (corresponding to the maximum weight).}
-  \item{\code{attr.col}}{a data.frame with two named columns, the first
+  \item{attr.col}{a data.frame with two named columns, the first
     one giving values of a node attribute, and the second one stating
     colors to be used for each value. If not provided, this is seeked
     from the \code{@meta$color} slot of the object.}
-  \item{\code{sticky.points}}{a logical indicating if added points should
+  \item{sticky.points}{a logical indicating if added points should
     be kept when replotting (TRUE), or not (FALSE). In any case,
     \code{reset=TRUE} will prevent points to be redrawn.}
-  \item{\code{replot}}{a logical indicating if points should be redrawn
+  \item{replot}{a logical indicating if points should be redrawn
     after plotting the edges (TRUE), or not (FALSE).}
-  \item{\code{lty}}{the type of line (for the edges).}
-  \item{\code{pcol}}{a character indicating the color to be used for points.}
-  \item{\code{\dots}}{further arguments passed to the generic methods
+  \item{lty}{the type of line (for the edges).}
+  \item{pcol}{a character indicating the color to be used for points.}
+  \item{\dots}{further arguments passed to the generic methods
     (plot, points, and segments, respectively).}
-  %  \item{\code{}}{.}
-  %   \item{\code{}}{.}
-  %   \item{\code{}}{.}
-  %   \item{\code{}}{.}
 }
 \details{
   To be able to zoom in and out, or slide the window, previous plotting

@@ -35,10 +35,10 @@ geo.back()
 .zoomlog.up(vec)
 }
 \arguments{
-  \item{\code{reg}}{a list of length 2, with its first component being
+  \item{reg}{a list of length 2, with its first component being
     the new x (longitude) boundaries (a vector of length 2), and its second being new y
     (latitude) boundaries (a vector of length 2).}
-  \item{\code{vec}}{a numeric vector of length 4 giving the new
+  \item{vec}{a numeric vector of length 4 giving the new
     coordinates of the plotting window, in the order: xmin, xmax, ymin, ymax.}
 }
 \seealso{

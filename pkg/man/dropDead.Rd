@@ -17,8 +17,8 @@
 dropDeadEdges(x, thres, ...)
 }
 \arguments{
-  \item{\code{x}}{a valid \linkS4class{gGraph}.}
-  \item{\code{thres}}{a numeric value indicating the threshold cost for
+  \item{x}{a valid \linkS4class{gGraph}.}
+  \item{thres}{a numeric value indicating the threshold cost for
   an edge to be removed. All costs strictly greater than \code{thres}
   will be removed.}
 }

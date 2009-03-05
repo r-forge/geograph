@@ -32,16 +32,16 @@
   \method{plot}{gPath}(x, col="rainbow", lwd=3, \dots)
 }
 \arguments{
-  \item{\code{x}}{a \linkS4class{gGraph} or a \linkS4class{gData}
+  \item{x}{a \linkS4class{gGraph} or a \linkS4class{gData}
     object.}
-  \item{\code{start}}{a character string naming the 'source' node.}
-  \item{\code{weights}}{an optional set of weights for the edges.}
-  \item{\code{from}}{a vector of character strings giving node names.}
-  \item{\code{to}}{a vector of character strings giving node names.}
-  \item{\code{x}}{a \code{gPath} object.}
-  \item{\code{col}}{a character string indicating a color or
+  \item{start}{a character string naming the 'source' node.}
+  \item{weights}{an optional set of weights for the edges.}
+  \item{from}{a vector of character strings giving node names.}
+  \item{to}{a vector of character strings giving node names.}
+  \item{x}{a \code{gPath} object.}
+  \item{col}{a character string indicating a color or
     a palette of colors to be used for plotting edges.}
-  \item{\code{lwd}}{a numeric value indicating the width of edges.}
+  \item{lwd}{a numeric value indicating the width of edges.}
 }
 \details{
   In 'dijkstraBetween', paths are seeked all possible pairs of

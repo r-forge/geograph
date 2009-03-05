@@ -21,21 +21,21 @@
 findInLayer(x, layer="world", attr="all",...)
 }
 \arguments{
-  \item{\code{x}}{a matrix, a data.frame, a list, a valid \linkS4class{gGraph},
+  \item{x}{a matrix, a data.frame, a list, a valid \linkS4class{gGraph},
     or a valid \linkS4class{gData} object. For matrix and data.frame,
     input must have two columns giving longitudes and latitudes of
     locations being considered. For list, input must have two components
     being vectors giving longitudes and latitudes of locations.}
-  \item{\code{layer}}{a shapefile of the class \code{SpatialPolygonsDataFrame}
+  \item{layer}{a shapefile of the class \code{SpatialPolygonsDataFrame}
     (see \code{readShapePoly} in maptools package to import such data
     from a GIS shapefile). Alternatively, a character string indicating
     one shapefile released with geoGraph; currently, only 'world' is
     available (see \code{?data(worldshape)}).}
-  \item{\code{attr}}{a character vector giving names of the variables to
+  \item{attr}{a character vector giving names of the variables to
     be extracted from the layer. If 'all', all available variables are
     extracted. In case of problem, available names are displayed with the
     error message. Available data are also stored in \code{layer@data}.}
-  \item{\code{\dots}}{further arguments to be passed to other
+  \item{\dots}{further arguments to be passed to other
   methds. Currently not used.}
 }
 \value{
