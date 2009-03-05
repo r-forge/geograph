@@ -60,6 +60,10 @@ setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", p
     ##         col <- "black"
     ##     } # end handle color
 
+    ## check for color being NULL, and default value
+    if(is.null(col)){
+        col <- "red"
+    }
 
     ## handle shape
     if(!is.null(shape) && shape=="world"){
@@ -174,7 +178,7 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=N
             col <- getColors(x, nodes=toKeep, attr.name=attr.col)
 
         } else {
-            col <- "black"
+            col <- "red"
         } # end handle color
     }
 
