@@ -99,10 +99,10 @@
       node attribute, and the second column gives corresponding weights. See the
       \code{@meta$costs} slot in \code{\link{worldgraph.10k}} for an
       example.}
-    \item{\code{graph}:}{Object of class \linkS4class{"graphNEL"} (see
+    \item{\code{graph}:}{Object of class \linkS4class{graphNEL} (see
       \code{class?graphNEL} for more information).}
     \item{\code{history}:}{Object of class
-      \linkS4class{"gGraphHistory"}, recording the history associated to the
+      \linkS4class{gGraphHistory}, recording the history associated to the
       object.}
   }
 }

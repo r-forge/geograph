@@ -3,18 +3,23 @@
 \alias{gData}
 \alias{gData-class}
 \alias{[,gData-method}
+\alias{getCoords,gData-method}
+\alias{getData-methods}
+\alias{getData,gData-method}
+\alias{getData}
+\alias{getNodes,gData-method}
+\alias{initialize,gData-method}
+\alias{show,gData-method}
+\alias{is.gData}
+%%%% THESE HAVE THEIR OWN MANPAGE
+%\alias{isInArea,gData-method}
+%\alias{points,gData-method}
+%\alias{isConnected,gData-method}
 %\alias{closestNode,gData-method}
 %\alias{dijkstraBetween,gData-method}
 %\alias{dijkstraFrom,gData-method}
 %\alias{findInLayer,gData-method}
-\alias{getCoords,gData-method}
-\alias{getData,gData-method}
-\alias{getNodes,gData-method}
-\alias{initialize,gData-method}
-%\alias{isInArea,gData-method}
-%\alias{points,gData-method}
-\alias{show,gData-method}
-%\alias{isConnected,gData-method}
+%%%%
 \title{Formal class "gData"}
 \description{The class \code{gData} is a formal (S4) class storing
   georeferenced data, consisting in a set of locations (longitude and

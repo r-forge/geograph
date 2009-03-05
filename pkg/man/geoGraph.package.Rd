@@ -44,8 +44,6 @@
    
    - \code{\link{show}}: printing of gGraph and gGraphHistory objects.\cr
 
-   - \code{\link{findCountry}}: finds the countries to which nodes belong.\cr
-   
    - \code{\link{findLand}}: checks which nodes are on land.\cr
    
    - \code{\link{setFriction}}: define edges weights accoring to rules

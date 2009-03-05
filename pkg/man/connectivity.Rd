@@ -23,7 +23,7 @@
 \usage{
 areNeighbours(V1, V2, graph)
 areConnected(x, nodes)
-isConnected(object, \dots)
+\S4method{isConnected}{gData}(object, \dots)
 }
 \arguments{
   \item{\code{V1}}{a vector of node names}
