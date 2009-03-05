@@ -11,7 +11,8 @@
   \code{\link{getEdges}} function.
 }
 \usage{
-getCosts(x, mode=c("asIs","vector"), unique=FALSE, ...)
+getCosts(x, \dots)
+\S4method{getCosts}{gGraph}(x, mode=c("asIs","vector"), unique=FALSE, \dots)
 }
 \arguments{
   \item{x}{a valid \linkS4class{gGraph}.}

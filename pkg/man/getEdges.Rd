@@ -9,7 +9,8 @@
   \linkS4class{gGraph} object using different possible outputs.
 }
 \usage{
-getEdges(x, mode=c("asIs","matNames", "matId"), unique=FALSE, ...)
+getEdges(x, \dots)
+\S4method{getEdges}{gGraph}(x, mode=c("asIs","matNames", "matId"), unique=FALSE, \dots)
 }
 \arguments{
   \item{x}{a valid \linkS4class{gGraph}.}

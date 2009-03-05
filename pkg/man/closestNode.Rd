@@ -33,7 +33,7 @@ closestNode(x, \dots)
     for. Note that this only matters for speed purpose: if no closest
     node is found inside a given zone, the zone is expanded until nodes
     are found.}
-  \item{attr.names}{the optional name of a node attribute. See details.}
+  \item{attr.name}{the optional name of a node attribute. See details.}
   \item{attr.values}{an optional vector giving values for \code{attr.names}. See details.}
 }
 \value{

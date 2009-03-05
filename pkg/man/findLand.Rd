@@ -16,6 +16,7 @@
   or as a \linkS4class{gGraph} object.
 }
 \usage{
+findLand(x, \dots)
 \S4method{findLand}{matrix}(x, shape="world", \dots)
 \S4method{findLand}{data.frame}(x, shape="world", \dots)
 \S4method{findLand}{gGraph}(x, shape="world", attr.name="habitat", \dots)
