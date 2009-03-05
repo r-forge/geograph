@@ -2,8 +2,8 @@
 \name{isInArea}
 \alias{isInArea}
 \alias{isInArea-methods}
-\alias{isInArea,matrix-methods}
-\alias{isInArea,data.frame-methods}
+\alias{isInArea,matrix-method}
+\alias{isInArea,data.frame-method}
 \alias{isInArea,gGraph-method}
 \alias{isInArea,gData-method}
 \title{Find which nodes fall in a given area}

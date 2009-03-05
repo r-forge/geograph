@@ -2,8 +2,8 @@
 \name{findLand}
 \alias{findLand}
 \alias{findLand-methods}
-\alias{findLand,matrix-methods}
-\alias{findLand,data.frame-methods}
+\alias{findLand,matrix-method}
+\alias{findLand,data.frame-method}
 \alias{findLand,gGraph-method}
 \title{Find which nodes are on land}
 \description{

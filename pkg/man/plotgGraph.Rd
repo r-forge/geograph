@@ -1,6 +1,7 @@
 \name{plot-gGraph}
 \docType{methods}
 \alias{plot,gGraph-method}
+\alias{plot,gGraph,missing-method}
 \alias{plot.gGraph}
 \alias{points,gGraph-method}
 \alias{points.gGraph}
