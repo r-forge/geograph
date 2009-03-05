@@ -11,7 +11,8 @@
   and \code{geo.remove.edges}.
 }
 \usage{
-setEdges(x, add=NULL, remove=NULL, costs=NULL, \dots)
+setEdges(x, \dots)
+\S4method{setEdges}{gGraph}(x, add=NULL, remove=NULL, costs=NULL, \dots)
 }
 \arguments{
   \item{x}{a valid \linkS4class{gGraph} object.}

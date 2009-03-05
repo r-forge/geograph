@@ -18,7 +18,12 @@
   the input formats.
 }
 \usage{
-findInLayer(x, layer="world", attr="all",...)
+findInLayer(x, \dots)
+\S4method{findInLayer}{matrix}(x, layer="world", attr="all",\dots)
+\S4method{findInLayer}{data.frame}(x, layer="world", attr="all",\dots)
+\S4method{findInLayer}{list}(x, layer="world", attr="all",\dots)
+\S4method{findInLayer}{gGraph}(x, layer="world", attr="all",\dots)
+\S4method{findInLayer}{gData}(x, layer="world", attr="all",\dots)
 }
 \arguments{
   \item{x}{a matrix, a data.frame, a list, a valid \linkS4class{gGraph},

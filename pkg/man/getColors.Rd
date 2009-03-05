@@ -9,7 +9,8 @@
   \linkS4class{gGraph} object, based on a specified node attribute.
 }
 \usage{
-getColors(x, nodes="all", attr.name, ...)
+getColors(x, \dots)
+\S4method{getColors}{gGraph}(x, nodes="all", attr.name, \dots)
 }
 \arguments{
   \item{x}{a valid \linkS4class{gGraph}.}

@@ -14,7 +14,8 @@
   not having any role in the connectivity of a graph.\cr
 }
 \usage{
-dropDeadEdges(x, thres, ...)
+dropDeadEdges(x, thres)
+dropDeadNodes(x)
 }
 \arguments{
   \item{x}{a valid \linkS4class{gGraph}.}

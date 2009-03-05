@@ -42,6 +42,7 @@
   \item{col}{a character string indicating a color or
     a palette of colors to be used for plotting edges.}
   \item{lwd}{a numeric value indicating the width of edges.}
+  \item{\dots}{further arguments passed to the \code{segments} method.}
 }
 \details{
   In 'dijkstraBetween', paths are seeked all possible pairs of

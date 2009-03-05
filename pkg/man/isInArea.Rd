@@ -14,7 +14,11 @@
   format for the output are also available.
 }
 \usage{
-isInArea(x, reg="current", res.type=c("logical","integer","character"), buffer=0)
+isInArea(x, \dots)
+\S4method{isInArea}{matrix}(x, reg="current", res.type=c("logical","integer","character"), buffer=0)
+\S4method{isInArea}{data.frame}(x, reg="current", res.type=c("logical","integer","character"), buffer=0)
+\S4method{isInArea}{gGraph}(x, reg="current", res.type=c("logical","integer","character"), buffer=0)
+\S4method{isInArea}{gData}(x, reg="current", res.type=c("logical","integer","character"), buffer=0)
 }
 \arguments{
   \item{x}{a matrix, a data.frame, a valid \linkS4class{gGraph},

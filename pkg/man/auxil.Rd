@@ -19,7 +19,7 @@
 hasCosts(x)
 }
 \arguments{
-  \item{\code{x}}{a valid \linkS4class{gGraph}.}
+  \item{x}{a valid \linkS4class{gGraph}.}
 }
 \value{
    A logical .
