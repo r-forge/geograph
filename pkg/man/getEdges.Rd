@@ -12,13 +12,13 @@
 getEdges(x, mode=c("asIs","matNames", "matId"), unique=FALSE, ...)
 }
 \arguments{
-  \item{\code{x}}{a valid \linkS4class{gGraph}.}
-  \item{\code{mode}}{a character string indicating which kind of output
+  \item{x}{a valid \linkS4class{gGraph}.}
+  \item{mode}{a character string indicating which kind of output
     should be used. See value.}
-  \item{\code{unique}}{a logical indicating whether all returned edges
+  \item{unique}{a logical indicating whether all returned edges
     should be unique (TRUE) or if duplicated edges should be allowed
     (TRUE, default).}
-  \item{\code{\dots}}{other arguments passed to other methods (currently
+  \item{\dots}{other arguments passed to other methods (currently
     unused).}
 }
 \value{

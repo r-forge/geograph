@@ -21,12 +21,12 @@
 setFriction(x, attr.name=NULL, method=c("mean", "product"))
 }
 \arguments{
-  \item{\code{x}}{a \linkS4class{gGraph} object with a least one node
+  \item{x}{a \linkS4class{gGraph} object with a least one node
     attribute, and a \code{@meta$costs} component (for an example, see
     worldgraph.10k dataset).}
-  \item{\code{attr.name}}{the name of the node attribute used to compute
+  \item{attr.name}{the name of the node attribute used to compute
     costs (i.e., of one column of \code{@nodes.attr}).}
-  \item{\code{method}}{a character string indicating which method should
+  \item{method}{a character string indicating which method should
     be used to compute edge cost from nodes costs. Currently available
     options are 'mean' and 'prod', where the cost associated to an edge
     is respectively computed as the mean, or as the product of the costs

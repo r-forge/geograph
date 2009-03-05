@@ -12,11 +12,11 @@
 getColors(x, nodes="all", attr.name, ...)
 }
 \arguments{
-  \item{\code{x}}{a valid \linkS4class{gGraph}.}
-  \item{\code{nodes}}{a vector of character strings or of integers
+  \item{x}{a valid \linkS4class{gGraph}.}
+  \item{nodes}{a vector of character strings or of integers
     identifying nodes by their name or their index. Can be "all", in
     which case all nodes are considered.}
-  \item{\code{\dots}}{other arguments passed to other methods (currently
+  \item{\dots}{other arguments passed to other methods (currently
     unused).}
 }
 \value{

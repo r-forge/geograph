@@ -21,17 +21,17 @@
 \S4method{findLand}{gGraph}(x, shape="world", attr.name="habitat", \dots)
 }
 \arguments{
-  \item{\code{x}}{a matrix, a data.frame, or a valid \linkS4class{gGraph}
+  \item{x}{a matrix, a data.frame, or a valid \linkS4class{gGraph}
     object. For matrix and data.frame, input must have two columns
     giving longitudes and latitudes of locations being considered.}
-  \item{\code{shape}}{a shapefile of the class \code{SpatialPolygonsDataFrame}
+  \item{shape}{a shapefile of the class \code{SpatialPolygonsDataFrame}
     (see \code{readShapePoly} in maptools package to import such data
     from a GIS shapefile). Alternatively, a character string indicating
     one shapefile released with geoGraph; currently, only 'world' is
     available (see \code{?data(worldshape)}).}
-  \item{\code{\dots}}{further arguments to be passed to other
+  \item{\dots}{further arguments to be passed to other
     methods. Currently not used.}
-  \item{\code{attr.name}}{a character string giving the name of the node
+  \item{attr.name}{a character string giving the name of the node
     attribute in which the output is to be stored.}
 }
 \value{

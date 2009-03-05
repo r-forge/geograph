@@ -14,16 +14,16 @@
 setEdges(x, add=NULL, remove=NULL, costs=NULL, \dots)
 }
 \arguments{
-  \item{\code{x}}{a valid \linkS4class{gGraph} object.}
-  \item{\code{add}}{a list or a dataframe containing node names of edges
+  \item{x}{a valid \linkS4class{gGraph} object.}
+  \item{add}{a list or a dataframe containing node names of edges
     to be added. The first element of the list (or column of the data.frame) gives
     starting nodes of edges; the second gives ending nodes. Hence, the
     nodes of the i-th edge are \code{add[[1]][i]} and \code{add[[2]][i]} if \code{add} is a
     list, and \code{add[i,]} if \code{add} is a data.frame.}
-  \item{\code{remove}}{same as \code{add} argument, but edges are removed.}
-  \item{\code{costs}}{a numeric vector providing costs of the edges
+  \item{remove}{same as \code{add} argument, but edges are removed.}
+  \item{costs}{a numeric vector providing costs of the edges
     to be added. \code{costs[i]} is the weight of the i-th edge.}
-  \item{\code{\dots}}{other arguments passed to other methods (currently
+  \item{\dots}{other arguments passed to other methods (currently
     unused).}
 }
 \value{

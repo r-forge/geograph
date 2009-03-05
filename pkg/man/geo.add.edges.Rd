@@ -16,13 +16,13 @@ geo.add.edges(x, mode=c("points","area"), refObj="rawgraph.10k")
 geo.remove.edges(x, mode=c("points","area"))
 }
 \arguments{
-  \item{\code{x}}{a valid \linkS4class{gGraph} object.}
-  \item{\code{mode}}{a character string indicating the mode for addition
+  \item{x}{a valid \linkS4class{gGraph} object.}
+  \item{mode}{a character string indicating the mode for addition
     or removal of edges. 'points': user is expected to click vertices to
     indicate edges. 'area': user is expected to click two points defining
     a rectangular area within which all edges are selected.
   }
-  \item{\code{refObj}}{a valid \linkS4class{gGraph} object, used as a
+  \item{refObj}{a valid \linkS4class{gGraph} object, used as a
     reference when adding edges. When selecting an area inside which
     edges are added, all edges existing in this area in \code{refObj}
     are added to \code{x}.}

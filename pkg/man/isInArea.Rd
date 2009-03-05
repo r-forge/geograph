@@ -17,20 +17,20 @@
 isInArea(x, reg="current", res.type=c("logical","integer","character"), buffer=0)
 }
 \arguments{
-  \item{\code{x}}{a matrix, a data.frame, a valid \linkS4class{gGraph},
+  \item{x}{a matrix, a data.frame, a valid \linkS4class{gGraph},
     or a valid \linkS4class{gData} object. For matrix and data.frame,
     input must have two columns giving longitudes and latitudes of
     locations being considered.}
-  \item{\code{reg}}{a character string or a list indicating the area
+  \item{reg}{a character string or a list indicating the area
     ('reg' stands for 'region'). Character strings can be "current"
     (current user window, default) or "zoom" (current zoom). If the
     argument is a list, is has to have two components, both being
     numeric vectors of length two, giving x and y limits of the
     area. Note that such list can be produced by \code{locator}, so
     \code{locator(1)} is a valid value for \code{reg}.}
-  \item{\code{res.type}}{a character string indicating what kind of
+  \item{res.type}{a character string indicating what kind of
     output should be produced. See value.}
-  \item{\code{buffer}}{a numeric value giving a buffer adding extra
+  \item{buffer}{a numeric value giving a buffer adding extra
     space aroung the area, as a proportion of current area's dimensions.}
 }
 \value{

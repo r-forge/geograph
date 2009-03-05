@@ -14,13 +14,13 @@
 getCosts(x, mode=c("asIs","vector"), unique=FALSE, ...)
 }
 \arguments{
-  \item{\code{x}}{a valid \linkS4class{gGraph}.}
-  \item{\code{mode}}{a character string indicating which kind of output
+  \item{x}{a valid \linkS4class{gGraph}.}
+  \item{mode}{a character string indicating which kind of output
     should be used. See value.}
-  \item{\code{unique}}{a logical indicating whether the costs should be
+  \item{unique}{a logical indicating whether the costs should be
     returned for unique edges (TRUE), or if duplicate edges should be
     considered as well (TRUE, default).}
-  \item{\code{\dots}}{other arguments passed to other methods (currently
+  \item{\dots}{other arguments passed to other methods (currently
     unused).}
 }
 \details{

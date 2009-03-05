@@ -26,25 +26,25 @@
                           sticky.points=TRUE,\dots)
 }
 \arguments{
-  \item{\code{x}}{a valid \linkS4class{gData} object. The
+  \item{x}{a valid \linkS4class{gData} object. The
     \linkS4class{gData} object to which it is
     linked must exist in the global environment.}
-  \item{\code{method}}{a character string indicating which information
+  \item{method}{a character string indicating which information
     should be plotted: original locations ('original'), associated nodes
     ('nodes', default), or both ('both'). In the latter case, an arrow
     goes from locations to nodes.}
-  \item{\code{pch.ori}}{a numeric or a character indicating the type of
+  \item{pch.ori}{a numeric or a character indicating the type of
     point for locations.}
-  \item{\code{pch.nodes}}{a numeric or a character indicating the type of
+  \item{pch.nodes}{a numeric or a character indicating the type of
     point for nodes.}
-  \item{\code{col.ori}}{a character string indicating the color to be
+  \item{col.ori}{a character string indicating the color to be
     used for locations.}
-  \item{\code{col.nodes}}{a character string indicating the color to be
+  \item{col.nodes}{a character string indicating the color to be
     used for nodes.}
- \item{\code{sticky.points}}{a logical indicating if added points should
+ \item{sticky.points}{a logical indicating if added points should
     be kept when replotting (TRUE, default), or not (FALSE). In any case,
     \code{reset=TRUE} will prevent points to be redrawn.}
-   \item{\code{\dots}}{further arguments passed to \code{points}.}
+   \item{\dots}{further arguments passed to \code{points}.}
 }
 \details{
   When \code{sticky.points} is set to TRUE, all operations performed on

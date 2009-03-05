@@ -12,18 +12,18 @@ geo.change.attr(x, mode=c("points","area"), attr.name, attr.value,
                 only.name=NULL, only.value=NULL, newCol="black")
 }
 \arguments{
-  \item{\code{x}}{a valid \linkS4class{gGraph} object.}
-  \item{\code{mode}}{a character string indicating whether selected nodes are
+  \item{x}{a valid \linkS4class{gGraph} object.}
+  \item{mode}{a character string indicating whether selected nodes are
     clicked one by one ('points') or by defining a rectangular area ('area').}
-  \item{\code{attr.name}}{the name of the node attribute to be modified.}
-  \item{\code{attr.value}}{the new value of attribute assigned to
+  \item{attr.name}{the name of the node attribute to be modified.}
+  \item{attr.value}{the new value of attribute assigned to
     selected nodes.}
-  \item{\code{only.name}}{(optional) in area mode, the name of a node
+  \item{only.name}{(optional) in area mode, the name of a node
     attribute to add an extra selection criterion. See details.}
-  \item{\code{only.value}}{(optional) in area mode, and if
+  \item{only.value}{(optional) in area mode, and if
     \code{only.name} is specified, the values of \code{only.name} that
     can be selected. See details.}
-  \item{\code{newCol}}{a character string giving the new color for the
+  \item{newCol}{a character string giving the new color for the
     attribute value.}
 }
 \value{
