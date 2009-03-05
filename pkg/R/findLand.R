@@ -61,7 +61,7 @@ setMethod("findLand", "matrix", function(x, shape="world") {
 ################
 ## for data.frames (of long/lat)
 ################
-setMethod("findLand", "gGraph", function(x, shape="world",...){
+setMethod("findLand", "data.frame", function(x, shape="world",...){
     x <- as.matrix(x)
     return(findLand(x, shape=shape, ...))
 }) # end findLand
