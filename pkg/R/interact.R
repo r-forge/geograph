@@ -1,7 +1,7 @@
 #################
 ## geo.add.edges
 #################
-geo.add.edges <- function(x, mode=c("points","area"), refObj="rawgraph.10k") {
+geo.add.edges <- function(x, mode=c("points","area","all"), refObj="rawgraph.10k") {
     ## preliminary stuff
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
     mode <- match.arg(mode)
@@ -15,9 +15,14 @@ geo.add.edges <- function(x, mode=c("points","area"), refObj="rawgraph.10k") {
     env <- get(".geoGraphEnv", envir=.GlobalEnv) # env is our target environnement
 
     ## handle refObj
-    if(refObj=="rawgraph.10k"){
+    if(is.character(refObj) && refObj=="rawgraph.10k"){
         data(rawgraph.10k)
         refObj <- rawgraph.10k
+    }
+
+    if(is.character(refObj) && refObj=="rawgraph.40k"){
+        data(rawgraph.40k)
+        refObj <- rawgraph.40k
     }
 
     ## handle plot param
@@ -69,6 +74,12 @@ geo.add.edges <- function(x, mode=c("points","area"), refObj="rawgraph.10k") {
             }
         } # end while
     } # end mode "area"
+
+    ## "all" mode ##
+    if(mode=="all"){
+        x@graph <- getGraph(refObj)
+        return(x)
+    }
 
     ## make sure added edges are unique
     toAdd <- as.matrix(as.data.frame(toAdd))
