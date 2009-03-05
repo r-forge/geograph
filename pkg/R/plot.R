@@ -1,7 +1,7 @@
 ###################
 ## plot for gGraph
 ###################
-setMethod("plot", signature("gGraph", y="missing"), function(x, shape="world", psize=NULL, pch=19, col=NULL,
+setMethod("plot", signature(x = "gGraph", y="missing"), function(x, y,shape="world", psize=NULL, pch=19, col=NULL,
                                       edges=FALSE, reset=FALSE, bg.col="gray", border.col="dark gray",
                                       lwd=1, useCosts=NULL, maxLwd=3, attr.col=NULL,...){
     ## some checks
@@ -304,7 +304,7 @@ plotEdges <- function(x, replot=TRUE, useCosts=NULL, col="black", lwd=1,
 #####################
 ## points for gData
 #####################
-setMethod("points", signature("gData"), function(x, method=c("nodes","original","both"),
+setMethod("points", signature(x = "gData"), function(x, method=c("nodes","original","both"),
                                                  pch.ori=4, pch.nodes=1,
                                                  col.ori="black", col.nodes="red",
                                                  sticky.points=TRUE,...){
@@ -370,7 +370,7 @@ setMethod("points", signature("gData"), function(x, method=c("nodes","original",
 #####################
 ## plot for gData
 #####################
-setMethod("plot", signature("gData", "missing"), function(x, method=c("nodes","original","both"),
+setMethod("plot", signature(x="gData", y="missing"), function(x, method=c("nodes","original","both"),
                                                  pch.ori=4, pch.nodes=1,
                                                  col.ori="black", col.nodes="red",
                                                  sticky.points=TRUE,...){

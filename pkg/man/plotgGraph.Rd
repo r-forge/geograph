@@ -6,8 +6,6 @@
 \alias{points,gGraph-method}
 \alias{points.gGraph}
 \alias{plotEdges}
-\alias{plotEdges,gGraph-method}
-\alias{plotEdges.gGraph}
 \title{ Plot a gGraph object. }
 \description{
   Various functions to plot a \linkS4class{gGraph} object: \code{plot}
@@ -22,13 +20,13 @@
 \usage{
   \S4method{plot}{gGraph}(x, shape="world", psize=NULL, pch=19,
   col=NULL, edges=FALSE, reset=FALSE, bg.col="gray", border.col="dark
-  gray", lwd=1, useWeights=NULL, maxLwd=3, attr.col=NULL, \dots)
+  gray", lwd=1, useCosts=NULL, maxLwd=3, attr.col=NULL, \dots)
 
  \S4method{points}{gGraph}(x, psize=NULL, pch=NULL, col=NULL,
- edges=FALSE, lwd=1, useWeights=NULL, maxLwd=3, attr.col=NULL,
+ edges=FALSE, lwd=1, useCosts=NULL, maxLwd=3, attr.col=NULL,
  sticky.points=FALSE,\dots)
 
-\S4method{plotEdges}{gGraph}(x, replot=TRUE, useWeights=NULL,
+plotEdges(x, replot=TRUE, useCosts=NULL,
 col="black", lwd=1, lty=1, pch=NULL, psize=NULL, pcol=NULL, maxLwd=3,
 attr.col=NULL,\dots)
 
@@ -52,8 +50,8 @@ attr.col=NULL,\dots)
   \item{border.col}{a character string indicating the color of the
     polygon borders.}
   \item{lwd}{a numeric indicating the width of line (used for edges).}
-  \item{useWeights}{a logical indicating if edge width should be
-    proportionnal to edge weights or not.}
+  \item{useCosts}{a logical indicating if edge width should be
+    inversely proportionnal to edge cost (TRUE) or not (FALSE).}
   \item{maxLwd}{a numeric indicating the maximum edge width
     (corresponding to the maximum weight).}
   \item{attr.col}{a data.frame with two named columns, the first

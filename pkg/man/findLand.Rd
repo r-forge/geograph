@@ -45,7 +45,7 @@ findLand(x, \dots)
     (\code{@nodes.attr} slot).\cr
 }
 \seealso{
-  \code{\link{findLand}}, to find which locations are on land.
+  \code{\link{findInLayer}}, to retrieve any information from a GIS shapefile.
 }
 \author{Thibaut Jombart (\email{t.jombart@imperial.ac.uk})}
 \examples{
