@@ -33,12 +33,11 @@
 }
 \arguments{
   \item{x}{a \linkS4class{gGraph} or a \linkS4class{gData}
-    object.}
+    object. For plotting method of \code{gPath} objects, a \code{gPath} object.}
   \item{start}{a character string naming the 'source' node.}
   \item{weights}{an optional set of weights for the edges.}
   \item{from}{a vector of character strings giving node names.}
   \item{to}{a vector of character strings giving node names.}
-  \item{x}{a \code{gPath} object.}
   \item{col}{a character string indicating a color or
     a palette of colors to be used for plotting edges.}
   \item{lwd}{a numeric value indicating the width of edges.}
