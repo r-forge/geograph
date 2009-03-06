@@ -405,6 +405,13 @@ setMethod("plot", signature(x="gData", y="missing"), function(x, method=c("nodes
 
 
     ## call to points ##
+    ## store previous last.points in envir (is erased by points)
+    if(exists("last.points", env=.geoGraphEnv)){
+        last.points <- get("last.points", env=.geoGraphEnv)
+    } else {
+        last.points <- expression()
+    }
+
     points(x, method=method,
            pch.ori=pch.ori, pch.nodes=pch.nodes,col.ori=col.ori,
            col.nodes=col.nodes,sticky.points=sticky.points,...)
@@ -413,6 +420,8 @@ setMethod("plot", signature(x="gData", y="missing"), function(x, method=c("nodes
     ## some assignments
     curCall <- sys.call(-1)
     assign("last.plot", curCall, envir=env)
+    ## must re-assign the last call to points in envir.
+    assign("last.points", last.points, envir=env)
 
     return(invisible())
 }) # end plot method
