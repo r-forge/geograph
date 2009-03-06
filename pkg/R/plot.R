@@ -216,7 +216,7 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=N
             temp <- list(temp) # make sure it is a list
         }
         ## do not add an existing expression ##
-        existExp <- sapply(temp, identical, curCall)
+        existExp <- any(sapply(temp, identical, curCall))
         if(!existExp){
             temp[[length(temp)+1]] <- curCall
             assign("last.points", temp, envir=env)
