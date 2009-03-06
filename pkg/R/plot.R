@@ -304,20 +304,20 @@ plotEdges <- function(x, replot=TRUE, useCosts=NULL, col="black", lwd=1,
 #####################
 ## points for gData
 #####################
-setMethod("points", signature(x = "gData"), function(x, method=c("nodes","original","both"),
+setMethod("points", signature(x = "gData"), function(x, type=c("nodes","original","both"),
                                                  pch.ori=4, pch.nodes=1,
                                                  col.ori="black", col.nodes="red",
                                                  sticky.points=TRUE,...){
     ## some checks
     if(!is.gData(x)) stop("x is not a valid gData object")
-    method <- match.arg(method)
+    type <- match.arg(type)
 
     ## get the environment
     env <- get(".geoGraphEnv", envir=.GlobalEnv)
 
     ## subset data to visible area ##
     coords.ori <- getCoords(x)
-    if(method %in% c("nodes","both")){ # need to get coords of nodes
+    if(type %in% c("nodes","both")){ # need to get coords of nodes
         if(!exists(x@gGraph.name, env=.GlobalEnv)){ # if the gGraph is missing, stop
             stop(paste("The gGraph object",x@gGraph.name,"is missing."))
         }
@@ -332,20 +332,20 @@ setMethod("points", signature(x = "gData"), function(x, method=c("nodes","origin
         ## coords.nodes <- coords.nodes[toKeep, , drop=FALSE]
     }
 
-    ## restrain coords to current area ##
-    toKeep <- isInArea(coords.ori, reg="current", res.type="integer")
-    coords.ori <- coords.ori[toKeep, , drop=FALSE]
+    ## restrain coords to current area ## # no need for this
+    ## toKeep <- isInArea(coords.ori, reg="current", res.type="integer")
+    ## coords.ori <- coords.ori[toKeep, , drop=FALSE]
 
     ## add points ##
-    if(method=="original" | method=="both"){ # plot original coordinates
+    if(type=="original" | type=="both"){ # plot original coordinates
         points(coords.ori[,1], coords.ori[,2], pch=pch.ori, col=col.ori, ...)
     }
 
-    if(method=="nodes" | method=="both"){ # plot assigned nodes
+    if(type=="nodes" | type=="both"){ # plot assigned nodes
         points(coords.nodes[,1], coords.nodes[,2], pch=pch.nodes, col=col.nodes, ...)
     }
 
-    if(method=="both"){ # add arrows from original location to assigned node
+    if(type=="both"){ # add arrows from original location to assigned node
         arrows(coords.ori[,1], coords.ori[,2], coords.nodes[,1], coords.nodes[,2], angle=15, length=.1)
     }
 
@@ -370,13 +370,13 @@ setMethod("points", signature(x = "gData"), function(x, method=c("nodes","origin
 #####################
 ## plot for gData
 #####################
-setMethod("plot", signature(x="gData", y="missing"), function(x, method=c("nodes","original","both"),
+setMethod("plot", signature(x="gData", y="missing"), function(x, type=c("nodes","original","both"),
                                                  pch.ori=4, pch.nodes=1,
                                                  col.ori="black", col.nodes="red",
                                                  reset=FALSE, sticky.points=TRUE,...){
     ## some checks
     if(!is.gData(x)) stop("x is not a valid gData object")
-    method <- match.arg(method)
+    type <- match.arg(type)
 
     ## get the environment
     env <- get(".geoGraphEnv", envir=.GlobalEnv)
@@ -387,7 +387,7 @@ setMethod("plot", signature(x="gData", y="missing"), function(x, method=c("nodes
 
     myGraph <- get(x@gGraph.name, envir=.GlobalEnv) # get the gGraph object
 
-    if((method %in% c("nodes","both")) & (length(x@nodes.id)==0)){ # no nodes assigned
+    if((type %in% c("nodes","both")) & (length(x@nodes.id)==0)){ # no nodes assigned
         stop("Locations are not assigned to nodes (x@nodes.id is empty).")
     }
 
@@ -421,7 +421,7 @@ setMethod("plot", signature(x="gData", y="missing"), function(x, method=c("nodes
         last.points <- expression()
     }
 
-    points(x, method=method,
+    points(x, type=type,
            pch.ori=pch.ori, pch.nodes=pch.nodes,col.ori=col.ori,
            col.nodes=col.nodes,sticky.points=sticky.points,...)
 
