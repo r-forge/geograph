@@ -18,11 +18,11 @@ geo.add.edges <- function(x, mode=c("points","area","all"), refObj="rawgraph.10k
     if(is.character(refObj) && refObj=="rawgraph.10k"){
         data(rawgraph.10k)
         refObj <- rawgraph.10k
-    }
-
-    if(is.character(refObj) && refObj=="rawgraph.40k"){
+    } else if(is.character(refObj) && refObj=="rawgraph.40k"){
         data(rawgraph.40k)
         refObj <- rawgraph.40k
+    } else if(!is.gGraph(refObj)){
+        stop("refObj is not a valid gGraph object.")
     }
 
     ## handle plot param
