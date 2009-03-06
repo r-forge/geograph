@@ -198,7 +198,8 @@ geo.remove.edges <- function(x, mode=c("points","area")) {
 ## geo.change.attr
 ###################
 geo.change.attr <- function(x, mode=c("points","area"), attr.name, attr.value,
-                            only.name=NULL, only.value=NULL, newCol="black") {
+                            only.name=NULL, only.value=NULL, newCol="black",
+                            restoreEdges=TRUE, refObj="rawgraph.10k") {
 
     ## preliminary stuff ##
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
@@ -212,6 +213,20 @@ geo.change.attr <- function(x, mode=c("points","area"), attr.name, attr.value,
     } else{
         hasRightAttr <- 1:nrow(getCoords(x))
     }
+
+    ## handle refObj ##
+    if(restoreEdges){
+        if(is.character(refObj) && refObj=="rawgraph.10k"){
+            data(rawgraph.10k)
+            refObj <- rawgraph.10k
+        } else if(is.character(refObj) && refObj=="rawgraph.40k"){
+            data(rawgraph.40k)
+            refObj <- rawgraph.40k
+        } else if(!is.gGraph(refObj)){
+            stop("refObj is not a valid gGraph object.")
+        }
+    } # end handle refObj
+
 
     coords <- getCoords(x)
     lon <- coords[,1]
@@ -295,6 +310,14 @@ geo.change.attr <- function(x, mode=c("points","area"), attr.name, attr.value,
     } else { # in other cases...
         res@nodes.attr[toChange,attr.name] <- attr.value
     }
+
+    ## readd some edges if restoreEdges is TRUE ##
+    nodeLab <- getNodes(res)[toChange] # label of changed nodes
+    temp <- adj(getGraph(refObj), nodeLab)
+    toAdd1 <- rep(names(temp),sapply(temp,length))
+    toAdd2 <- unlist(temp)
+    toAdd <- list(toAdd1,toAdd2)
+    res <- setEdges(res, add=toAdd)
 
     ## need to save the call here ! ##
 
