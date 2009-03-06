@@ -373,7 +373,7 @@ setMethod("points", signature(x = "gData"), function(x, method=c("nodes","origin
 setMethod("plot", signature(x="gData", y="missing"), function(x, method=c("nodes","original","both"),
                                                  pch.ori=4, pch.nodes=1,
                                                  col.ori="black", col.nodes="red",
-                                                 sticky.points=TRUE,...){
+                                                 reset=FALSE, sticky.points=TRUE,...){
     ## some checks
     if(!is.gData(x)) stop("x is not a valid gData object")
     method <- match.arg(method)
@@ -392,13 +392,22 @@ setMethod("plot", signature(x="gData", y="missing"), function(x, method=c("nodes
     }
 
 
-    ## define visible area ##
-    loc <- getCoords(x)
-    coords.nodes <- getCoords(myGraph)[x@nodes.id,, drop=FALSE]
-    temp <- rbind(loc, coords.nodes)
-    myRegion <- as.vector(apply(temp,2,range)) # return xmin, xmax, ymin, ymax
-    .zoomlog.up(myRegion) # define new window limits
-    assign("sticky.points", FALSE, envir=env) # remove possible sticky points
+    ## define visible area if reset ##
+    if((!exists("zoom.log", envir=env)) | reset){
+        loc <- getCoords(x)
+        coords.nodes <- getCoords(myGraph)[x@nodes.id,, drop=FALSE]
+        temp <- rbind(loc, coords.nodes)
+        myRegion <- as.vector(apply(temp,2,range)) # return xmin, xmax, ymin, ymax
+        .zoomlog.up(myRegion) # define new window limits
+        assign("sticky.points", FALSE, envir=env) # remove possible sticky points
+    }
+
+    zoomlog <- get("zoom.log", envir=env)
+    zoomlog <- zoomlog[1,]
+
+    xlim <- zoomlog[1:2]
+    ylim <- zoomlog[3:4]
+
 
     ## plot the gGraph object ##
     plot(myGraph)
