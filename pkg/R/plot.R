@@ -323,8 +323,12 @@ plotEdges <- function(x, replot=TRUE, useCosts=NULL, col="black", lwd=1,
         if(!is.list(temp)){
             temp <- list(temp) # make sure it is a list
         }
-        temp[[length(temp)+1]] <- curCall
-        assign("last.points", temp, envir=env)
+         ## do not add an existing expression ##
+        existExp <- any(sapply(temp, identical, curCall))
+        if(!existExp){
+            temp[[length(temp)+1]] <- curCall
+            assign("last.points", temp, envir=env)
+        }
         assign("sticky.points", TRUE, envir=env)
     }
 
@@ -391,8 +395,12 @@ setMethod("points", signature(x = "gData"), function(x, type=c("nodes","original
         if(!is.list(temp)){
             temp <- list(temp) # make sure it is a list
         }
-        temp[[length(temp)+1]] <- curCall
-        assign("last.points", temp, envir=env)
+         ## do not add an existing expression ##
+        existExp <- any(sapply(temp, identical, curCall))
+        if(!existExp){
+            temp[[length(temp)+1]] <- curCall
+            assign("last.points", temp, envir=env)
+        }
         assign("sticky.points", TRUE, envir=env)
     }
 

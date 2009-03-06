@@ -68,7 +68,7 @@ obj@gGraph.name <- "worldgraph.10k"
 obj <- closestNode(obj, attr.name="habitat", attr.value="land")
 
 ## plot the result (original location -> assigned node)
-plot(obj, type="both")
+plot(obj, type="both",reset=TRUE)
 title("'x'=location, 'o'=assigned node")
 
 ## using different parameters
