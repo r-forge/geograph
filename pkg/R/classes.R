@@ -127,7 +127,7 @@ setClass("gData", representation(coords="matrix", nodes.id="character", data="AN
 
     ## gGraph object
     if(!exists(x@gGraph.name, env=.GlobalEnv)){
-        warning(paste("The gGraph object",x@gGraphName,"is missing."))
+        warning(paste("The gGraph object",x@gGraph.name,"is missing."))
     }
 
     return(TRUE)
