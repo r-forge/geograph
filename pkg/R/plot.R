@@ -53,6 +53,14 @@ setMethod("plot", signature(x = "gGraph", y="missing"), function(x, y,shape="wor
     toKeep <- isInArea(x, res.type="integer")
     coords <- coords[toKeep, ]
 
+
+    ## store previous last.points in envir (is erased by plotEdges)
+    if(exists("last.points", env=env)){
+        last.points <- get("last.points", env=env)
+    } else {
+        last.points <- expression()
+    }
+
     ## handle colors -- these are default, not used in some sub-plotting
     if(useAttrCol){
           col <- getColors(x, nodes=toKeep, attr.name=attr.col)
@@ -119,6 +127,8 @@ setMethod("plot", signature(x = "gGraph", y="missing"), function(x, y,shape="wor
     temp$col <- col
     assign("last.plot.param", temp, envir=env)
 
+    ## must re-assign the last call to points in envir.
+    assign("last.points", last.points, envir=env)
 
     ## add previously added points if needed ##
     sticky.points <- get("sticky.points", envir=env)
@@ -211,7 +221,7 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=N
     }
 
     return(invisible())
-}) # end points method
+}) # end points method gGraph
 
 
 
@@ -447,8 +457,8 @@ setMethod("plot", signature(x="gData", y="missing"), function(x, type=c("nodes",
 
     ## call to points ##
     ## store previous last.points in envir (is erased by points)
-    if(exists("last.points", env=.geoGraphEnv)){
-        last.points <- get("last.points", env=.geoGraphEnv)
+    if(exists("last.points", env=env)){
+        last.points <- get("last.points", env=env)
     } else {
         last.points <- expression()
     }
