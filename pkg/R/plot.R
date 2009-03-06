@@ -20,6 +20,7 @@ setMethod("plot", signature(x = "gGraph", y="missing"), function(x, y,shape="wor
     ## handle reset ##
     if(reset){
         assign("sticky.points",FALSE,envir=env)
+        assign("last.points",expression(),envir=env)
     }
 
     ## handle xlim and ylim
@@ -122,7 +123,8 @@ setMethod("plot", signature(x = "gGraph", y="missing"), function(x, y,shape="wor
     ## add previously added points if needed ##
     sticky.points <- get("sticky.points", envir=env)
     if(sticky.points){
-        eval(get("last.points", envir=env))
+        temp <- get("last.points", envir=env) # this may be a list of calls
+        invisible(lapply(temp, eval))
     }
 
     return(invisible())
@@ -198,7 +200,12 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=N
 
     ## if sticky points are used, store info in env ##
     curCall <- sys.call(-1)
-    assign("last.points", curCall, envir=env)
+    temp <- get("last.points", envir=env) # might be a single expression or a list of expressions
+    if(!is.list(temp)){
+        temp <- list(temp) # make sure it is a list
+    }
+    temp[[length(temp)+1]] <- curCall
+    assign("last.points", temp, envir=env)
     if(sticky.points) {
         assign("sticky.points", TRUE, envir=env)
     }
@@ -351,8 +358,15 @@ setMethod("points", signature(x = "gData"), function(x, type=c("nodes","original
 
      ## if sticky points are used, store info in env ##
     curCall <- sys.call(-1)
-    assign("last.points", curCall, envir=env)
-    assign("sticky.points", TRUE, envir=env)
+    temp <- get("last.points", envir=env) # might be a single expression or a list of expressions
+    if(!is.list(temp)){
+        temp <- list(temp) # make sure it is a list
+    }
+    temp[[length(temp)+1]] <- curCall
+    assign("last.points", temp, envir=env)
+    if(sticky.points){
+        assign("sticky.points", TRUE, envir=env)
+    }
 
     return(invisible())
 }) # end points for gData
@@ -400,6 +414,7 @@ setMethod("plot", signature(x="gData", y="missing"), function(x, type=c("nodes",
         myRegion <- as.vector(apply(temp,2,range)) # return xmin, xmax, ymin, ymax
         .zoomlog.up(myRegion) # define new window limits
         assign("sticky.points", FALSE, envir=env) # remove possible sticky points
+        assign("last.points", expression(), envir=env) # remove possible sticky points
     }
 
     zoomlog <- get("zoom.log", envir=env)
