@@ -140,7 +140,7 @@ setMethod("plot", signature(x = "gGraph", y="missing"), function(x, y,shape="wor
 #####################
 setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=NULL,
                                       edges=FALSE, lwd=1, useCosts=NULL, maxLwd=3, attr.col=NULL,
-                                                  sticky.points=FALSE,...){
+                                                  sticky.points=TRUE,...){
     ## some checks
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
 
@@ -199,14 +199,14 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=N
 
 
     ## if sticky points are used, store info in env ##
-    curCall <- sys.call(-1)
-    temp <- get("last.points", envir=env) # might be a single expression or a list of expressions
-    if(!is.list(temp)){
-        temp <- list(temp) # make sure it is a list
-    }
-    temp[[length(temp)+1]] <- curCall
-    assign("last.points", temp, envir=env)
     if(sticky.points) {
+        curCall <- sys.call(-1)
+        temp <- get("last.points", envir=env) # might be a single expression or a list of expressions
+        if(!is.list(temp)){
+            temp <- list(temp) # make sure it is a list
+        }
+        temp[[length(temp)+1]] <- curCall
+        assign("last.points", temp, envir=env)
         assign("sticky.points", TRUE, envir=env)
     }
 
@@ -222,7 +222,8 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=N
 ## plotEdges
 ############
 plotEdges <- function(x, replot=TRUE, useCosts=NULL, col="black", lwd=1,
-                      lty=1, pch=NULL, psize=NULL, pcol=NULL, maxLwd=3, attr.col=NULL,...){
+                      lty=1, pch=NULL, psize=NULL, pcol=NULL, maxLwd=3, attr.col=NULL,
+                      sticky.edges=TRUE,...){
     ## some checks
     if(!is.gGraph(x)) stop("x is not a valid gGraph object.")
 
@@ -300,6 +301,18 @@ plotEdges <- function(x, replot=TRUE, useCosts=NULL, col="black", lwd=1,
         points(keptCoords[,1], keptCoords[,2], pch=pch, cex=psize, col=pcol)
     }
 
+    ## if sticky edges are used, store info in env ##
+    if(sticky.edges) {
+        curCall <- sys.call(-1)
+        temp <- get("last.points", envir=env) # might be a single expression or a list of expressions
+        if(!is.list(temp)){
+            temp <- list(temp) # make sure it is a list
+        }
+        temp[[length(temp)+1]] <- curCall
+        assign("last.points", temp, envir=env)
+        assign("sticky.points", TRUE, envir=env)
+    }
+
     return(invisible())
 } # end plotEdges
 
@@ -357,14 +370,14 @@ setMethod("points", signature(x = "gData"), function(x, type=c("nodes","original
     }
 
      ## if sticky points are used, store info in env ##
-    curCall <- sys.call(-1)
-    temp <- get("last.points", envir=env) # might be a single expression or a list of expressions
-    if(!is.list(temp)){
-        temp <- list(temp) # make sure it is a list
-    }
-    temp[[length(temp)+1]] <- curCall
-    assign("last.points", temp, envir=env)
     if(sticky.points){
+        curCall <- sys.call(-1)
+        temp <- get("last.points", envir=env) # might be a single expression or a list of expressions
+        if(!is.list(temp)){
+            temp <- list(temp) # make sure it is a list
+        }
+        temp[[length(temp)+1]] <- curCall
+        assign("last.points", temp, envir=env)
         assign("sticky.points", TRUE, envir=env)
     }
 
@@ -406,6 +419,12 @@ setMethod("plot", signature(x="gData", y="missing"), function(x, type=c("nodes",
     }
 
 
+    ## cleaning if required ##
+    if(reset){
+        assign("sticky.points", FALSE, envir=env) # remove possible sticky points
+        assign("last.points", expression(), envir=env) # remove possible sticky points
+    }
+
     ## define visible area if reset ##
     if((!exists("zoom.log", envir=env)) | reset){
         loc <- getCoords(x)
@@ -413,8 +432,6 @@ setMethod("plot", signature(x="gData", y="missing"), function(x, type=c("nodes",
         temp <- rbind(loc, coords.nodes)
         myRegion <- as.vector(apply(temp,2,range)) # return xmin, xmax, ymin, ymax
         .zoomlog.up(myRegion) # define new window limits
-        assign("sticky.points", FALSE, envir=env) # remove possible sticky points
-        assign("last.points", expression(), envir=env) # remove possible sticky points
     }
 
     zoomlog <- get("zoom.log", envir=env)
@@ -446,6 +463,13 @@ setMethod("plot", signature(x="gData", y="missing"), function(x, type=c("nodes",
     assign("last.plot", curCall, envir=env)
     ## must re-assign the last call to points in envir.
     assign("last.points", last.points, envir=env)
+
+    ## add previously added points if needed ##
+    sticky.points <- get("sticky.points", envir=env)
+    if(sticky.points){
+        temp <- get("last.points", envir=env) # this may be a list of calls
+        invisible(lapply(temp, eval))
+    }
 
     return(invisible())
 }) # end plot method
