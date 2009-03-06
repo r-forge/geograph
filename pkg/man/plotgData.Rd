@@ -15,12 +15,12 @@
   associated nodes.
 }
 \usage{
- \S4method{plot}{gData}(x, method=c("nodes","original","both"),
+ \S4method{plot}{gData}(x, type=c("nodes","original","both"),
                         pch.ori=4, pch.nodes=1,
                         col.ori="black", col.nodes="red",
                         sticky.points=TRUE,\dots)
 
- \S4method{points}{gData}(x, method=c("nodes","original","both"),
+ \S4method{points}{gData}(x, type=c("nodes","original","both"),
                           pch.ori=4, pch.nodes=1,
                           col.ori="black", col.nodes="red",
                           sticky.points=TRUE,\dots)
@@ -29,7 +29,7 @@
   \item{x}{a valid \linkS4class{gData} object. The
     \linkS4class{gData} object to which it is
     linked must exist in the global environment.}
-  \item{method}{a character string indicating which information
+  \item{type}{a character string indicating which information
     should be plotted: original locations ('original'), associated nodes
     ('nodes', default), or both ('both'). In the latter case, an arrow
     goes from locations to nodes.}
@@ -68,11 +68,11 @@ obj@gGraph.name <- "worldgraph.10k"
 obj <- closestNode(obj, attr.name="habitat", attr.value="land")
 
 ## plot the result (original location -> assigned node)
-plot(obj, method="both")
+plot(obj, type="both")
 title("'x'=location, 'o'=assigned node")
 
 ## using different parameters
-points(obj, method="both", pch.ori=2, col.ori="red", pch.nodes=20, col.nodes="pink")
+points(obj, type="both", pch.ori=2, col.ori="red", pch.nodes=20, col.nodes="pink")
 
 ## only nodes, fancy plot
 plot(obj, col.nodes="red", cex=1, pch.node=20)
