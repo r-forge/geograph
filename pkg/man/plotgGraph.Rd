@@ -114,7 +114,7 @@ points(worldgraph.10k[inSea], col="white", sticky=TRUE) # this will stay
 
 ## but better, only draw those on land, and use a fancy setup
 par(bg="blue")
-plot(worldgraph.10k[!inSea], bg.col="darkgreen", col="white", edges=TRUE)
+plot(worldgraph.10k[!inSea], bg.col="darkgreen", col="purple", edges=TRUE)
 
 }
 
