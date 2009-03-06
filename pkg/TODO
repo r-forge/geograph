@@ -43,7 +43,7 @@ o define basic methods
 o define constructor(s)
 o provide accessors
 o make a worldshape dataset
-*o* make a worldgraph.10k dataset, with refined connections and attributes definitions
+o make a worldgraph.10k dataset, with refined connections and attributes definitions
 *o* make a worldgraph.40k dataset, with refined connections and attributes definitions
 o provide plot method
 o provide zoom method(s)
