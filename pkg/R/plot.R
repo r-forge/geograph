@@ -150,7 +150,7 @@ setMethod("plot", signature(x = "gGraph", y="missing"), function(x, y,shape="wor
 #####################
 setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=NULL,
                                       edges=FALSE, lwd=1, useCosts=NULL, maxLwd=3, attr.col=NULL,
-                                                  sticky.points=TRUE,...){
+                                                  sticky.points=FALSE,...){
     ## some checks
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
 
@@ -215,8 +215,12 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=N
         if(!is.list(temp)){
             temp <- list(temp) # make sure it is a list
         }
-        temp[[length(temp)+1]] <- curCall
-        assign("last.points", temp, envir=env)
+        ## do not add an existing expression ##
+        existExp <- sapply(temp, identical, curCall)
+        if(!existExp){
+            temp[[length(temp)+1]] <- curCall
+            assign("last.points", temp, envir=env)
+        }
         assign("sticky.points", TRUE, envir=env)
     }
 
@@ -233,7 +237,7 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=N
 ############
 plotEdges <- function(x, replot=TRUE, useCosts=NULL, col="black", lwd=1,
                       lty=1, pch=NULL, psize=NULL, pcol=NULL, maxLwd=3, attr.col=NULL,
-                      sticky.edges=TRUE,...){
+                      sticky.edges=FALSE,...){
     ## some checks
     if(!is.gGraph(x)) stop("x is not a valid gGraph object.")
 
@@ -313,7 +317,8 @@ plotEdges <- function(x, replot=TRUE, useCosts=NULL, col="black", lwd=1,
 
     ## if sticky edges are used, store info in env ##
     if(sticky.edges) {
-        curCall <- sys.call(-1)
+        ## curCall <- sys.call(-1) # does not work as plotEdges is not a S4 method
+        curCall <- match.call()
         temp <- get("last.points", envir=env) # might be a single expression or a list of expressions
         if(!is.list(temp)){
             temp <- list(temp) # make sure it is a list
