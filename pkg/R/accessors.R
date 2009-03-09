@@ -141,7 +141,8 @@ setGeneric("getEdges", function(x, ...) {
 
 setMethod("getEdges", "gGraph", function(x, res.type=c("asIs","matNames", "matId"), unique=FALSE, ...) {
     res.type <- match.arg(res.type)
-    if(res.type=="asIs") return(x@graph@edgeL)
+##    if(res.type=="asIs") return(x@graph@edgeL)
+    if(res.type=="asIs") return(edges(x@graph))
 
     if(res.type=="matNames"){ # return matrix of node names
         res <- edges(x@graph)
