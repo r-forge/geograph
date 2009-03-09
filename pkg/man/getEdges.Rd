@@ -10,11 +10,11 @@
 }
 \usage{
 getEdges(x, \dots)
-\S4method{getEdges}{gGraph}(x, mode=c("asIs","matNames", "matId"), unique=FALSE, \dots)
+\S4method{getEdges}{gGraph}(x, res.type=c("asIs","matNames", "matId"), unique=FALSE, \dots)
 }
 \arguments{
   \item{x}{a valid \linkS4class{gGraph}.}
-  \item{mode}{a character string indicating which kind of output
+  \item{res.type}{a character string indicating which kind of output
     should be used. See value.}
   \item{unique}{a logical indicating whether all returned edges
     should be unique (TRUE) or if duplicated edges should be allowed
@@ -23,7 +23,7 @@ getEdges(x, \dots)
     unused).}
 }
 \value{
-  The output depends on the value of the argument \code{mode}:\cr
+  The output depends on the value of the argument \code{res.type}:\cr
   - \code{asIs}: output is a named list of nodes, each slot containing
   nodes forming an edge with one given node. This format is that of the
   \code{edges} accessor for \linkS4class{graphNEL} objects.\cr
@@ -46,8 +46,8 @@ getEdges(x, \dots)
 example(gGraph)
 
 getEdges(x)
-getEdges(x,mode="matNames")
-getEdges(x,mode="matId")
+getEdges(x,res.type="matNames")
+getEdges(x,res.type="matId")
 }
 \keyword{utilities}
 \keyword{methods}
