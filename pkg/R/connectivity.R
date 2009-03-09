@@ -164,6 +164,65 @@ setMethod("connectivityPlot", "gGraph", function(x,...){
     ## some checks ##
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
 
+    ## create the .geoGraphEnv if it does not exist
+    if(!exists(".geoGraphEnv", envir=.GlobalEnv)) {
+        assign(".geoGraphEnv",  new.env(parent=.GlobalEnv), envir=.GlobalEnv)
+        warning(".geoGraphEnv was not present, which may indicate a problem in loading geoGraph.")
+    }
+
+    env <- get(".geoGraphEnv", envir=.GlobalEnv) # env is our target environnement
+   
+    ## get connected sets ##
+    connected.sets <- connectedComp(getGraph(x))
+
+    ## just keep sets > 1 node
+    temp <- sapply(connected.sets, length)
+    reOrd <- order(temp,decreasing=TRUE) # sets ordered in decreasing size
+    temp <- temp[reOrd]
+    if(min(temp)==1){
+        connected.sets <- connected.sets[reOrd][1:(which.min(temp)-1)]
+    }
+
+    names(connected.sets) <- paste("set",1:length(connected.sets))
+
+
+    ## define colors ##
+    nbSets <- length(connected.sets)
+    colSets <- sample(rainbow(nbSets))
+
+    myNodes <- getNodes(x)
+    col <- rep("black", length(myNodes))
+    names(col) <- myNodes
+
+    for(i in 1:nbSets){
+        e <- connected.sets[[i]] # 'e' is a vector of connected nodes
+        col[e] <- colSets[i]
+    }
+
+
+    ## call to plot ##
+    plot(x, col=col, ...)
+
+
+    ## fix last call ##
+    curCall <- sys.call(-1)
+    assign("last.plot", curCall, envir=env)
+
+    return(invisible(col))
+}) # end connectivityPlot gGraph
+
+
+
+
+
+
+##################
+## gData method
+##################
+setMethod("connectivityPlot", "gData", function(x,...){
+    ## some checks ##
+    if(!is.gData(x)) stop("x is not a valid gData object")
+
 
     ## get connected sets ##
     connected.sets <- connectedComp(getGraph(x))
@@ -195,5 +254,10 @@ setMethod("connectivityPlot", "gGraph", function(x,...){
     ## call to plot ##
     plot(x, col=col, ...)
 
+
+    ## fix last call ##
+    curCall <- sys.call(-1)
+    assign("last.plot", curCall, envir=env)
+
     return(invisible(col))
-}) # end connectivityPlot gGraph
+}) # end connectivityPlot gData
