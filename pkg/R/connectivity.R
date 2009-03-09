@@ -28,7 +28,7 @@ areNeighbours <- function(V1, V2, graph){
 ################
 areConnected <- function(x, nodes){ # x is a gGraph
     ## some checks ##
-    if(!require(RBGL)) stop("RBGL package is required.")
+    ##if(!require(RBGL)) stop("RBGL package is required.") not needed
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
     if(!all(nodes %in% getNodes(x))) stop("Some specified nodes were not found in the gGraph object.")
     nodes <- unique(nodes)
@@ -147,9 +147,53 @@ isReachable <- function(x, loc){ # x is a gData object
 
 
 
-##   f1 <- function(oneNode){ # finds the set in which a node is
-##         temp <- sapply(connected.sets, function(e) oneNode %in% e)
-##         if(!any(temp)) return(NA)
-##         return(which(temp))
-##     }
 
+#####################
+## connectivityPlot
+#####################
+setGeneric("connectivityPlot", function(x,...) {
+    standardGeneric("connectivityPlot")
+})
+
+
+
+##################
+## gGraph method
+##################
+setMethod("connectivityPlot", "gGraph", function(x,...){
+    ## some checks ##
+    if(!is.gGraph(x)) stop("x is not a valid gGraph object")
+
+
+    ## get connected sets ##
+    connected.sets <- connectedComp(getGraph(x))
+
+    ## just keep sets > 1 node
+    temp <- sapply(connected.sets, length)
+    reOrd <- order(temp,decreasing=TRUE) # sets ordered in decreasing size
+    temp <- temp[reOrd]
+    if(min(temp)==1){
+        connected.sets <- connected.sets[reOrd][1:(which.min(temp)-1)]
+    }
+
+    names(connected.sets) <- paste("set",1:length(connected.sets))
+
+
+    ## define colors ##
+    nbSets <- length(connected.sets)
+    colSets <- sample(rainbow(nbSets))
+
+    col <- rep("black", length(getNodes(x)))
+    names(col) <- getNodes(x)
+
+    for(i in 1:nbSets){
+        e <- connected.sets[[i]] # 'e' is a vector of connected nodes
+        col[e] <- colSets[i]
+    }
+
+
+    ## call to plot ##
+    plot(x, col=col, ...)
+
+    return(invisible(col))
+}) # end connectivityPlot gGraph

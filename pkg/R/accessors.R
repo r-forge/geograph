@@ -352,7 +352,7 @@ setMethod("getColors", "gGraph", function(x, nodes="all", attr.name, ...) {
         col[col==rules[i,1]] <- rules[i,2]
     }
 
-
+    names(col) <- getNodes(x)
     return(col)
 })
 
