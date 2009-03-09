@@ -39,7 +39,7 @@ dropDeadNodes <- function(x){ # x is a gGraph object
     if(!is.gGraph(x)) stop("x is not a valid gGraph object.")
 
     ## get names of connected nodes
-    nodes.in.edges <- unique(as.vector(getEdges(x,mode="matNames")))
+    nodes.in.edges <- unique(as.vector(getEdges(x,res.type="matNames")))
 
     ## get all nodes
     res <- x[nodes.in.edges]
