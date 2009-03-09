@@ -91,3 +91,53 @@ setMethod("isConnected", "gData", function(object, ...){
     ## return res ##
     return(res)
 }) # end isConnected for gData
+
+
+
+
+
+
+#################
+## isReachable
+#################
+isReachable <- function(x, loc){ # x is a gData object
+    ## checks ##
+    if(!is.gData(x)) stop("x is not a valid gData object.")
+    if(!exists(x@gGraph.name, envir=.GlobalEnv)) stop(paste("gGraph object",x@gGraph.name,"not found."))
+
+
+    ## get connected sets ##
+    connected.sets <- connectedComp(getGraph(x))
+
+
+    ## just keep sets > 1 node
+    temp <- sapply(connected.sets, length)
+    reOrd <- order(temp,decreasing=TRUE)
+    temp <- temp[reOrd]
+    if(min(temp)==1){
+        connected.sets <- connected.sets[reOrd][1:(which.min(temp)-1)]
+    }
+
+
+    ## check which set contains loc ##
+    refNode <- closestNode(x,loc)
+    temp <- sapply(connected.sets, function(e) refNode %in% e)
+    if(!any(temp)) {
+        warning("The reference node is not connected to any node.")
+        return(FALSE)
+    }
+
+    ## check reachability for each node ##
+    myNodes <- getNodes(x)
+
+    f1 <- function(oneNode){ # finds the set in which a node is
+        temp <- sapply(connected.sets, function(e) oneNode %in% e)
+        if(!any(temp)) return(NA)
+        return(which(temp))
+    }
+
+    res <- sapply(myNodes, f1)
+
+   ## return res ##
+    return(res)
+}

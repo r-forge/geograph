@@ -29,6 +29,12 @@ setMethod("getGraph", "gGraph", function(x, ...) {
 })
 
 
+setMethod("getGraph", "gData", function(x, ...) {
+    if(!exists(x@gGraph.name, envir=.GlobalEnv)) stop(paste("gGraph object",x@gGraph.name,"not found."))
+    res <- getGraph(get(x@gGraph.name, envir=.GlobalEnv))
+    return(res)
+})
+
 
 
 
