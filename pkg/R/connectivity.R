@@ -26,7 +26,7 @@ areNeighbours <- function(V1, V2, graph){
 ################
 ## areConnected
 ################
-areConnected <- function(x, nodes){
+areConnected <- function(x, nodes){ # x is a gGraph
     ## some checks ##
     if(!require(RBGL)) stop("RBGL package is required.")
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
@@ -49,6 +49,17 @@ areConnected <- function(x, nodes){
     ## !! use connectedComp from RBGL rather than connComp from graph
     ## 100 times faster
     connected.sets <- connectedComp(getGraph(x))
+
+    ## just keep sets > 1 node
+    temp <- sapply(connected.sets, length)
+    reOrd <- order(temp,decreasing=TRUE) # sets ordered in decreasing size
+    temp <- temp[reOrd]
+    if(min(temp)==1){
+        connected.sets <- connected.sets[reOrd][1:(which.min(temp)-1)]
+    }
+
+    names(connected.sets) <- paste("set",1:length(connected.sets))
+
 
     f1 <- function(oneSet){ # returns TRUE if our nodes are in a set
         if(length(oneSet) < length(unique(nodes))) return(FALSE)
@@ -104,6 +115,7 @@ isReachable <- function(x, loc){ # x is a gData object
     ## checks ##
     if(!is.gData(x)) stop("x is not a valid gData object.")
     if(!exists(x@gGraph.name, envir=.GlobalEnv)) stop(paste("gGraph object",x@gGraph.name,"not found."))
+    mygGraph <- get(x@gGraph.name, envir=.GlobalEnv)
 
 
     ## get connected sets ##
@@ -112,15 +124,17 @@ isReachable <- function(x, loc){ # x is a gData object
 
     ## just keep sets > 1 node
     temp <- sapply(connected.sets, length)
-    reOrd <- order(temp,decreasing=TRUE)
+    reOrd <- order(temp,decreasing=TRUE) # sets ordered in decreasing size
     temp <- temp[reOrd]
     if(min(temp)==1){
         connected.sets <- connected.sets[reOrd][1:(which.min(temp)-1)]
     }
 
+    names(connected.sets) <- paste("set",1:length(connected.sets))
+
 
     ## check which set contains loc ##
-    refNode <- closestNode(x,loc)
+    refNode <- closestNode(mygGraph,loc)
     temp <- sapply(connected.sets, function(e) refNode %in% e)
     if(!any(temp)) {
         warning("The reference node is not connected to any node.")
@@ -132,12 +146,22 @@ isReachable <- function(x, loc){ # x is a gData object
 
     f1 <- function(oneNode){ # finds the set in which a node is
         temp <- sapply(connected.sets, function(e) oneNode %in% e)
-        if(!any(temp)) return(NA)
-        return(which(temp))
+        return(any(temp))
     }
 
     res <- sapply(myNodes, f1)
+    names(res) <- myNodes
 
    ## return res ##
     return(res)
-}
+} # end isReachable
+
+
+
+
+
+  f1 <- function(oneNode){ # finds the set in which a node is
+        temp <- sapply(connected.sets, function(e) oneNode %in% e)
+        if(!any(temp)) return(NA)
+        return(which(temp))
+    }
