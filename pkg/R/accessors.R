@@ -139,11 +139,11 @@ setGeneric("getEdges", function(x, ...) {
 
 
 
-setMethod("getEdges", "gGraph", function(x, mode=c("asIs","matNames", "matId"), unique=FALSE, ...) {
-    mode <- match.arg(mode)
-    if(mode=="asIs") return(x@graph@edgeL)
+setMethod("getEdges", "gGraph", function(x, res.type=c("asIs","matNames", "matId"), unique=FALSE, ...) {
+    res.type <- match.arg(res.type)
+    if(res.type=="asIs") return(x@graph@edgeL)
 
-    if(mode=="matNames"){ # return matrix of node names
+    if(res.type=="matNames"){ # return matrix of node names
         res <- edges(x@graph)
         temp <- sapply(res, length)
         col1 <- rep(names(res), temp)
@@ -152,7 +152,7 @@ setMethod("getEdges", "gGraph", function(x, mode=c("asIs","matNames", "matId"), 
         res <- cbind(Vi=col1, Vj=col2)
     }
 
-    if(mode=="matId"){ # return matrix of node numbers
+    if(res.type=="matId"){ # return matrix of node numbers
         res <- edgeL(x@graph)
         temp <- sapply(res, function(e) length(e$edges))
         col1 <- rep(1:length(res), temp)
@@ -241,11 +241,11 @@ setGeneric("getCosts", function(x, ...) {
 
 
 
-setMethod("getCosts", "gGraph", function(x, mode=c("asIs","vector"), unique=FALSE, ...) {
-    mode <- match.arg(mode)
-    if(mode=="asIs") return(edgeWeights(x@graph))
+setMethod("getCosts", "gGraph", function(x, res.type=c("asIs","vector"), unique=FALSE, ...) {
+    res.type <- match.arg(res.type)
+    if(res.type=="asIs") return(edgeWeights(x@graph))
 
-    if(mode=="vector"){ # return a matrix of node names
+    if(res.type=="vector"){ # return a matrix of node names
         res <- edgeWeights(x@graph)
         res <- unlist(res) # res is a vector of edge weights named as Ni.Nj
     }

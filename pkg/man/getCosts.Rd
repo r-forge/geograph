@@ -12,11 +12,11 @@
 }
 \usage{
 getCosts(x, \dots)
-\S4method{getCosts}{gGraph}(x, mode=c("asIs","vector"), unique=FALSE, \dots)
+\S4method{getCosts}{gGraph}(x, res.type=c("asIs","vector"), unique=FALSE, \dots)
 }
 \arguments{
   \item{x}{a valid \linkS4class{gGraph}.}
-  \item{mode}{a character string indicating which kind of output
+  \item{res.type}{a character string indicating which kind of output
     should be used. See value.}
   \item{unique}{a logical indicating whether the costs should be
     returned for unique edges (TRUE), or if duplicate edges should be
@@ -31,7 +31,7 @@ getCosts(x, \dots)
   less connectivity there is between the couple of concerned nodes.
 }
 \value{
-  The output depends on the value of the argument \code{mode}:\cr
+  The output depends on the value of the argument \code{res.type}:\cr
   - \code{asIs}: output is a named list of weights, each slot containing
   weights associated to the edges stemming from one given node. This format is that of the
   \code{weights} accessor for \linkS4class{graphNEL} objects.\cr
@@ -46,8 +46,8 @@ getCosts(x, \dots)
 \examples{
 data(worldgraph.10k)
 
-head(getEdges(worldgraph.10k, mode="matNames",unique=TRUE))
-head(getCosts(worldgraph.10k,mode="vector",unique=TRUE))
+head(getEdges(worldgraph.10k, res.type="matNames",unique=TRUE))
+head(getCosts(worldgraph.10k,res.type="vector",unique=TRUE))
 
 }
 \keyword{utilities}
