@@ -126,7 +126,7 @@ isReachable <- function(x, loc){ # x is a gData object
         warning("The reference node is not connected to any node.")
         return(FALSE)
     }
-    refSet <- which(temp)
+    refSet <- connected.sets[[which(temp)]]
 
     ## check reachability for each node ##
     myNodes <- getNodes(x)
