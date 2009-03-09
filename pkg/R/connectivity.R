@@ -41,11 +41,6 @@ areConnected <- function(x, nodes){ # x is a gGraph
     ##     if(!all(nodes.in.edges)) return(FALSE) # not a connected set if some nodes aren't connected at all
 
 
-    ## cutting x ##
-    temp <- getCoords(x)[nodes,,drop=FALSE] # only nodes in area
-    reg <- as.list(as.data.frame(apply(temp,2,range)))
-
-
     ## get connected sets ##
     ## !! use connectedComp from RBGL rather than connComp from graph
     ## 100 times faster
@@ -61,20 +56,10 @@ areConnected <- function(x, nodes){ # x is a gGraph
 
     names(connected.sets) <- paste("set",1:length(connected.sets))
 
+    res <- sapply(connected.sets, function(e) all(nodes %in% e))
+    res <- any(res)
 
-    f1 <- function(oneSet){ # returns TRUE if our nodes are in a set
-        if(length(oneSet) < length(unique(nodes))) return(FALSE)
-        res <- all(nodes %in% oneSet)
-        return(res)
-    }
-
-
-    ## browse the connected sets ##
-    for(e in connected.sets){
-        if(f1(e)) return(TRUE)
-    }
-
-    return(FALSE)
+    return(res)
 } # end areConnected
 
 
@@ -141,12 +126,13 @@ isReachable <- function(x, loc){ # x is a gData object
         warning("The reference node is not connected to any node.")
         return(FALSE)
     }
+    refSet <- which(temp)
 
     ## check reachability for each node ##
     myNodes <- getNodes(x)
 
     f1 <- function(oneNode){ # finds the set in which a node is
-        temp <- sapply(connected.sets, function(e) oneNode %in% e)
+        temp <- sapply(connected.sets, function(e) oneNode %in% refSet)
         return(any(temp))
     }
 
