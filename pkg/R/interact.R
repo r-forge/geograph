@@ -62,7 +62,7 @@ geo.add.edges <- function(x, mode=c("points","area","all"), refObj="rawgraph.10k
 
             if(nrow(selArea) > 1) {
                 selNodes <- isInArea(refObj, reg=selArea, res.type="integer") # indices of selected points
-                selEdges <- getEdges(refObj, mode="matId", unique=TRUE) # edges, nodes=numerical indices
+                selEdges <- getEdges(refObj, res.type="matId", unique=TRUE) # edges, nodes=numerical indices
                 temp <- (selEdges[,1] %in% selNodes) & (selEdges[,2] %in% selNodes)
                 selEdges <- selEdges[temp,] # edges of refobj wholly inside the selected area
 
