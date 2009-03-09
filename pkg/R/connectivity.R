@@ -34,10 +34,11 @@ areConnected <- function(x, nodes){ # x is a gGraph
     nodes <- unique(nodes)
 
 
-    ## first check that all our nodes are part of an edge ##
-    temp <- unique(as.vector(getEdges(x, mode="matName")))
-    nodes.in.edges <- nodes %in% temp
-    if(!all(nodes.in.edges)) return(FALSE) # not a connected set if some nodes aren't connected at all
+    ## This is now pointless, function is already fast ##
+    ##   ## first check that all our nodes are part of an edge ##
+    ##     temp <- unique(as.vector(getEdges(x, res.type="matName")))
+    ##     nodes.in.edges <- nodes %in% temp
+    ##     if(!all(nodes.in.edges)) return(FALSE) # not a connected set if some nodes aren't connected at all
 
 
     ## cutting x ##
@@ -133,7 +134,7 @@ isReachable <- function(x, loc){ # x is a gData object
     names(connected.sets) <- paste("set",1:length(connected.sets))
 
 
-    ## check which set contains loc ##
+    ## check which set contains refNode ##
     refNode <- closestNode(mygGraph,loc)
     temp <- sapply(connected.sets, function(e) refNode %in% e)
     if(!any(temp)) {
@@ -160,8 +161,9 @@ isReachable <- function(x, loc){ # x is a gData object
 
 
 
-  f1 <- function(oneNode){ # finds the set in which a node is
-        temp <- sapply(connected.sets, function(e) oneNode %in% e)
-        if(!any(temp)) return(NA)
-        return(which(temp))
-    }
+##   f1 <- function(oneNode){ # finds the set in which a node is
+##         temp <- sapply(connected.sets, function(e) oneNode %in% e)
+##         if(!any(temp)) return(NA)
+##         return(which(temp))
+##     }
+

@@ -282,7 +282,7 @@ plotEdges <- function(x, replot=TRUE, useCosts=NULL, col="black", lwd=1,
     }
 
 
-    edges <- getEdges(x, mode="matNames", unique=TRUE) # retrieve (unique) edges
+    edges <- getEdges(x, res.type="matNames", unique=TRUE) # retrieve (unique) edges
     temp <- (edges[,1] %in% rownames(keptCoords)) & (edges[,2] %in% rownames(keptCoords))
     keptEdges <- edges[temp, ]
 
@@ -293,7 +293,7 @@ plotEdges <- function(x, replot=TRUE, useCosts=NULL, col="black", lwd=1,
 
     ## handle costs
     if(useCosts){
-        edges.w <- getCosts(x, mode="vector", unique=TRUE)
+        edges.w <- getCosts(x, res.type="vector", unique=TRUE)
         edges.w <- edges.w[temp]
         lwd <- edges.w / max(edges.w) # max lwd = 1
         lwd <- 1 - lwd # invert scale (to have thiner edges for larger costs)

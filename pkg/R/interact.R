@@ -158,7 +158,7 @@ geo.remove.edges <- function(x, mode=c("points","area")) {
 
             if(nrow(selArea) > 1) {
                 selIdx <- which(isInArea(x, reg=selArea)) # indices of selected points
-                selEdges <- getEdges(x, mode="matId", unique=TRUE) # edges, nodes=numerical indices
+                selEdges <- getEdges(x, res.type="matId", unique=TRUE) # edges, nodes=numerical indices
                 temp <- (selEdges[,1] %in% selIdx) & (selEdges[,2] %in% selIdx)
                 selEdges <- selEdges[temp,] # edges wholly inside the selected area
 
