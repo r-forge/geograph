@@ -171,7 +171,7 @@ setMethod("connectivityPlot", "gGraph", function(x,...){
     }
 
     env <- get(".geoGraphEnv", envir=.GlobalEnv) # env is our target environnement
-   
+
     ## get connected sets ##
     connected.sets <- connectedComp(getGraph(x))
 
@@ -191,7 +191,7 @@ setMethod("connectivityPlot", "gGraph", function(x,...){
     colSets <- sample(rainbow(nbSets))
 
     myNodes <- getNodes(x)
-    col <- rep("black", length(myNodes))
+    col <- rep("lightgray", length(myNodes))
     names(col) <- myNodes
 
     for(i in 1:nbSets){
@@ -242,7 +242,7 @@ setMethod("connectivityPlot", "gData", function(x,...){
     nbSets <- length(connected.sets)
     colSets <- sample(rainbow(nbSets))
 
-    col <- rep("black", length(getNodes(x)))
+    col <- rep("lightgray", length(getNodes(x)))
     names(col) <- getNodes(x)
 
     for(i in 1:nbSets){
