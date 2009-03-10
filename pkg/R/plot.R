@@ -352,9 +352,9 @@ plotEdges <- function(x, replot=TRUE, useCosts=NULL, col="black", lwd=1,
 ## points for gData
 #####################
 setMethod("points", signature(x = "gData"), function(x, type=c("nodes","original","both"),
-                                                 pch.ori=4, pch.nodes=1,
-                                                 col.ori="black", col.nodes="red",
-                                                 sticky.points=TRUE,...){
+                                                     pch.ori=4, pch.nodes=1,
+                                                     col.ori="black", col.nodes="red",
+                                                     sticky.points=TRUE,...){
     ## some checks
     if(!is.gData(x)) stop("x is not a valid gData object")
     type <- match.arg(type)
@@ -431,6 +431,7 @@ setMethod("points", signature(x = "gData"), function(x, type=c("nodes","original
 setMethod("plot", signature(x="gData", y="missing"), function(x, type=c("nodes","original","both"),
                                                  pch.ori=4, pch.nodes=1,
                                                  col.ori="black", col.nodes="red",
+                                                 col.gGraph=NULL,
                                                  reset=FALSE, sticky.points=TRUE,...){
     ## some checks
     if(!is.gData(x)) stop("x is not a valid gData object")
@@ -473,7 +474,7 @@ setMethod("plot", signature(x="gData", y="missing"), function(x, type=c("nodes",
 
 
     ## plot the gGraph object ##
-    plot(myGraph)
+    plot(myGraph, col=col.gGraph)
 
 
     ## call to points ##
