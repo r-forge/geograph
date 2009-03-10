@@ -224,7 +224,7 @@ setMethod("connectivityPlot", "gGraph", function(x, ..., seed=NULL){
 #################
 ## gData method
 #################
-setMethod("connectivityPlot", "gData", function(x, col.gGraph="gray", ...,seed=NULL){
+setMethod("connectivityPlot", "gData", function(x, col.gGraph=0, ...,seed=NULL){
     ## some checks ##
     if(!is.gData(x)) stop("x is not a valid gData object")
 
@@ -246,17 +246,27 @@ setMethod("connectivityPlot", "gData", function(x, col.gGraph="gray", ...,seed=N
 
     ## define colors ##
     nbSets <- length(connected.sets)
+    ## find the number of relevant sets
+    nbRelSets <- 0
+    myNodes <- getNodes(x)
+
+    for(i in 1:nbSets){
+        if(any(myNodes %in% connected.sets[[i]])){
+            nbRelSets <- nbRelSets + 1
+        }
+    }
+
     if(!is.null(seed) && is.numeric(seed)) {
         set.seed(seed)
     }
-    colSets <- sample(rainbow(nbSets))
+    colSets <- sample(rainbow(nbRelSets))
 
-    col <- rep("lightgray", length(getNodes(x)))
-    names(col) <- getNodes(x)
+    col <- rep("lightgray", length(myNodes))
+    names(col) <- myNodes
 
     for(i in 1:nbSets){
         e <- connected.sets[[i]] # 'e' is a vector of connected nodes
-        col[e] <- colSets[i]
+        col[names(col) %in% e] <- colSets[i]
     }
 
 
