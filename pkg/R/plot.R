@@ -52,7 +52,7 @@ setMethod("plot", signature(x = "gGraph", y="missing"), function(x, y,shape="wor
 
     toKeep <- isInArea(x, res.type="integer")
     coords <- coords[toKeep, ]
-    
+
 
     ## store previous last.points in envir (is erased by plotEdges)
     if(exists("last.points", env=env)){
@@ -63,15 +63,14 @@ setMethod("plot", signature(x = "gGraph", y="missing"), function(x, y,shape="wor
 
     ## handle colors -- these are default, not used in some sub-plotting
     if(useAttrCol){
-          col <- getColors(x, nodes=toKeep, attr.name=attr.col)
-    }
-    else if(is.null(col)){
+        col <- getColors(x, nodes=toKeep, attr.name=attr.col)
+    } else if(is.null(col)){
         col <- "red"
+    } else{
+        col <- rep(col, length=nrow(coords))
+        col <- col[toKeep]
     }
 
-    ######### HAVE TO SUBSET COL HERE TO VISIBLE AREA #######
-    ## subset colors to kept points
-    ##    col <- rep(col, length=nrow(coords))
 
     ## handle shape
     if(!is.null(shape) && shape=="world"){
