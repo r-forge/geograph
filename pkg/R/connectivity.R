@@ -160,7 +160,7 @@ setGeneric("connectivityPlot", function(x,...) {
 ##################
 ## gGraph method
 ##################
-setMethod("connectivityPlot", "gGraph", function(x,...){
+setMethod("connectivityPlot", "gGraph", function(x, ..., seed=NULL){
     ## some checks ##
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
 
@@ -171,6 +171,7 @@ setMethod("connectivityPlot", "gGraph", function(x,...){
     }
 
     env <- get(".geoGraphEnv", envir=.GlobalEnv) # env is our target environnement
+
 
     ## get connected sets ##
     connected.sets <- connectedComp(getGraph(x))
@@ -188,7 +189,10 @@ setMethod("connectivityPlot", "gGraph", function(x,...){
 
     ## define colors ##
     nbSets <- length(connected.sets)
-    set.seed(123)
+    if(!is.null(seed) && is.numeric(seed)) {
+        set.seed(seed)
+    }
+
     colSets <- sample(rainbow(nbSets))
 
     myNodes <- getNodes(x)
