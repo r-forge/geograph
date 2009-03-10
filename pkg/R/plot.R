@@ -67,7 +67,8 @@ setMethod("plot", signature(x = "gGraph", y="missing"), function(x, y,shape="wor
     } else if(is.null(col)){
         col <- "red"
     } else{
-        col <- rep(col, length=nrow(coords))
+        col <- rep(col, length=length(getNodes(x)))
+        names(col) <- getNodes(x)
         col <- col[toKeep]
     }
 
@@ -93,12 +94,15 @@ setMethod("plot", signature(x = "gGraph", y="missing"), function(x, y,shape="wor
         ## define colors for these points
         if(useAttrCol){
             col <- getColors(x, nodes=toKeep, attr.name=attr.col)
+        } else if(is.null(col)){
+            col <- "red"
+        } else{
+            col <- rep(col, length=length(getNodes(x)))
+            names(col) <- getNodes(x)
+            col <- col[toKeep]
         }
-        ## else {
-        ##             col <- "black"
-        ## } # end handle color
 
-        ## add edges and points
+
         if(edges){
             plotEdges(x, replot=FALSE, lwd=lwd, useCosts=useCosts, maxLwd=maxLwd)
         }
@@ -176,21 +180,21 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=N
     last.plot.param <- get("last.plot.param", envir=env)
     if(is.null(psize)) psize <- last.plot.param$psize
     if(is.null(pch)) pch <- last.plot.param$pch
-    if(is.null(col)) {
-        useAttrCol <- ( (!is.null(x@meta$color))  &&
+
+    useAttrCol <- ( (!is.null(x@meta$color))  &&
                        (nrow(x@meta$color)>0) &&  is.null(col)) # use color from node attribute?
 
-        if(useAttrCol){
-            if(is.null(attr.col)){
-                attr.col <- colnames(x@meta$color)[1] # default attribute used for colors
-            }
 
-            col <- getColors(x, nodes=toKeep, attr.name=attr.col)
+    ## define colors for these points
+    if(useAttrCol){
+        col <- getColors(x, nodes=toKeep, attr.name=attr.col)
+    } else if(is.null(col)){
+        col <- "red"
+    } else{
+        col <- rep(col, length=length(getNodes(x)))
+        col <- col[toKeep]
+    } # end handle color
 
-        } else {
-            col <- "red"
-        } # end handle color
-    }
 
     ## handle zoom and psize
     if(is.null(psize)){
