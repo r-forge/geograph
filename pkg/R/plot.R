@@ -192,6 +192,7 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=N
         col <- "red"
     } else{
         col <- rep(col, length=length(getNodes(x)))
+        names(col) <- getNodes(x)
         col <- col[toKeep]
     } # end handle color
 
