@@ -17,6 +17,11 @@ setMethod("plot", signature(x = "gGraph", y="missing"), function(x, y,shape="wor
 
     coords <- getCoords(x)
 
+
+    ## store original parameters to be passed to last.plot.param ##
+    pch.ori <- pch
+    col.ori <- col
+
     ## handle reset ##
     if(reset){
         assign("sticky.points",FALSE,envir=env)
@@ -67,7 +72,7 @@ setMethod("plot", signature(x = "gGraph", y="missing"), function(x, y,shape="wor
     } else if(is.null(col)){
         col <- "red"
     } else{
-        col <- rep(col, length=length(getNodes(x)))
+        col <- rep(col.ori, length=length(getNodes(x)))
         names(col) <- getNodes(x)
         col <- col[toKeep]
     }
@@ -97,7 +102,7 @@ setMethod("plot", signature(x = "gGraph", y="missing"), function(x, y,shape="wor
         } else if(is.null(col)){
             col <- "red"
         } else{
-            col <- rep(col, length=length(getNodes(x)))
+            col <- rep(col.ori, length=length(getNodes(x)))
             names(col) <- getNodes(x)
             col <- col[toKeep]
         }
@@ -125,8 +130,8 @@ setMethod("plot", signature(x = "gGraph", y="missing"), function(x, y,shape="wor
     assign("last.plot", curCall, envir=env)
     temp <- get("last.plot.param", envir=env)
     temp$psize <- psize
-    temp$pch <- pch
-    temp$col <- col
+    temp$pch <- pch.ori
+    temp$col <- col.ori
     assign("last.plot.param", temp, envir=env)
 
     ## must re-assign the last call to points in envir.

@@ -188,6 +188,7 @@ setMethod("connectivityPlot", "gGraph", function(x,...){
 
     ## define colors ##
     nbSets <- length(connected.sets)
+    set.seed(123)
     colSets <- sample(rainbow(nbSets))
 
     myNodes <- getNodes(x)
@@ -216,9 +217,9 @@ setMethod("connectivityPlot", "gGraph", function(x,...){
 
 
 
-##################
+#################
 ## gData method
-##################
+#################
 setMethod("connectivityPlot", "gData", function(x,...){
     ## some checks ##
     if(!is.gData(x)) stop("x is not a valid gData object")
