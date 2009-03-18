@@ -19,7 +19,7 @@ setMethod("findLand", "matrix", function(x, shape="world") {
     if(!require(maptools)) stop("maptools package is required.")
 
     ## Load country shapefile
-    if(shape=="world"){
+    if(is.character(shape) && shape[1]=="world"){
         if(!require(sp)) stop("sp package needed to map the world")
         data(worldshape)
         shape <- worldshape
