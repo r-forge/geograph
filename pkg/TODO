@@ -66,6 +66,7 @@ o have a method to re-add edges, using a reference object.
 o test all relevant components of the bulk code -- done
 o check interactivity with layers:
 - pay attention to donuts/islands -> badly plotted... badly handled as well ??
+- -> badly handled: point.in.polygon is misleaded. Have to contact RB.
 - defines coasts
 
 
