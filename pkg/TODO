@@ -32,7 +32,7 @@ o use usr rather than zoomlog where needed (isInArea, ...)
 ======================
  DOCUMENTATION ISSUES
 ======================
-* document all items
+o document all items
 * make a vignette, or several (classes, graphics, data handling, graph operations)
 
 =====================
@@ -44,7 +44,7 @@ o define constructor(s)
 o provide accessors
 o make a worldshape dataset
 o make a worldgraph.10k dataset, with refined connections and attributes definitions
-*o* make a worldgraph.40k dataset, with refined connections and attributes definitions
+o make a worldgraph.40k dataset, with refined connections and attributes definitions
 o provide plot method
 o provide zoom method(s)
 o provide points add/removal methods
@@ -64,7 +64,9 @@ o have a method to re-add edges, using a reference object.
  TESTING
 ==========
 o test all relevant components of the bulk code -- done
-
+o check interactivity with layers:
+- pay attention to donuts/islands -> badly plotted... badly handled as well ??
+- defines coasts
 
 
 
