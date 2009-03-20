@@ -235,21 +235,21 @@ geo.change.attr <- function(x, mode=c("points","area"), attr.name, attr.value,
     mode <- match.arg(mode)
     if(!attr.name %in% colnames(x@nodes.attr)) stop("specified node attribute name not found")
 
-    ## set replacement color
-    if( (!is.null(x@meta$color)) && (attr.name %in% colnames(x@meta$color)) ){
-        temp <- which(attr.value == x@meta$color[,attr.name])[1]
-        if(!is.na(temp)){ # attr.value is documented in @meta$color
-            newCol <- x@meta$color[temp,2]
-        } else{ # if attr.value is not documented, we document it in @meta$color
-            if(is.factor(x@meta$color[,attr.name])){ # if attr is a factor
-                x@meta$color[,attr.name] <- as.character(x@meta$color[,attr.name]) # convert as character
-                x@meta$color <- rbind.data.frame(x@meta$color, c(attr.value,newCol))
-                x@meta$color[,attr.name] <- factor(x@meta$color[,attr.name]) # restore factor type
+    ## set replacement colors
+    if( (!is.null(x@meta$colors)) && (attr.name %in% colnames(x@meta$colors)) ){
+        temp <- which(attr.value == x@meta$colors[,attr.name])[1]
+        if(!is.na(temp)){ # attr.value is documented in @meta$colors
+            newCol <- x@meta$colors[temp,2]
+        } else{ # if attr.value is not documented, we document it in @meta$colors
+            if(is.factor(x@meta$colors[,attr.name])){ # if attr is a factor
+                x@meta$colors[,attr.name] <- as.character(x@meta$colors[,attr.name]) # convert as character
+                x@meta$colors <- rbind.data.frame(x@meta$colors, c(attr.value,newCol))
+                x@meta$colors[,attr.name] <- factor(x@meta$colors[,attr.name]) # restore factor type
             } else { # attr is not a factor
-                x@meta$color <- rbind.data.frame(x@meta$color, c(attr.value,newCol))
+                x@meta$colors <- rbind.data.frame(x@meta$colors, c(attr.value,newCol))
             }
         }
-    } # end setting replacement color
+    } # end setting replacement colors
 
 
     ## handle plot param
