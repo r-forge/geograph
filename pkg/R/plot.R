@@ -46,12 +46,12 @@ setMethod("plot", signature(x = "gGraph", y="missing"), function(x, y,shape="wor
     }
 
     ## handle attr.col (attribute used in color)
-    useAttrCol <- ( (!is.null(x@meta$color))  &&
-    (nrow(x@meta$color)>0) &&  is.null(col)) # use color from node attribute?
+    useAttrCol <- ( (!is.null(x@meta$colors))  &&
+    (nrow(x@meta$colors)>0) &&  is.null(col)) # use color from node attribute?
 
     if(useAttrCol){
         if(is.null(attr.col)){
-            attr.col <- colnames(x@meta$color)[1] # default attribute used for colors
+            attr.col <- colnames(x@meta$colors)[1] # default attribute used for colors
         }
     }
 
@@ -186,8 +186,8 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=N
     if(is.null(psize)) psize <- last.plot.param$psize
     if(is.null(pch)) pch <- last.plot.param$pch
 
-    useAttrCol <- ( (!is.null(x@meta$color))  &&
-                       (nrow(x@meta$color)>0) &&  is.null(col)) # use color from node attribute?
+    useAttrCol <- ( (!is.null(x@meta$colors))  &&
+                       (nrow(x@meta$colors)>0) &&  is.null(col)) # use color from node attribute?
 
 
     ## define colors for these points
@@ -274,12 +274,12 @@ plotEdges <- function(x, replot=TRUE, useCosts=NULL, col="black", lwd=1,
 
     ## adjust pcol to subset of points in area
      if(is.null(pcol)) {
-        useAttrCol <- ( (!is.null(x@meta$color))  &&
-                       (nrow(x@meta$color)>0) &&  is.null(pcol)) # use color from node attribute?
+        useAttrCol <- ( (!is.null(x@meta$colors))  &&
+                       (nrow(x@meta$colors)>0) &&  is.null(pcol)) # use color from node attribute?
 
         if(useAttrCol){
             if(is.null(attr.col)){
-                attr.col <- colnames(x@meta$color)[1] # default attribute used for colors
+                attr.col <- colnames(x@meta$colors)[1] # default attribute used for colors
             }
 
             pcol <- getColors(x, nodes=toKeep, attr.name=attr.col)

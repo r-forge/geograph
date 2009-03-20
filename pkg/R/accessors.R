@@ -324,11 +324,11 @@ setMethod("getColors", "gGraph", function(x, nodes="all", attr.name, ...) {
     if(!attr.name %in% colnames(getNodesAttr(x))) {
         stop("Requested attribute not found in x@nodes.attr.")
     }
-    if(is.null(x@meta$color)){
-        stop("No rule for color defined in x (x@meta$color is NULL).")
+    if(is.null(x@meta$colors)){
+        stop("No rule for color defined in x (x@meta$colors is NULL).")
     }
-    if(!attr.name %in% colnames(x@meta$color)){
-        stop(paste("Nothing known about",attr.name,"in color rules (x@meta$color)."))
+    if(!attr.name %in% colnames(x@meta$colors)){
+        stop(paste("Nothing known about",attr.name,"in color rules (x@meta$colors)."))
     }
 
     ## handle nodes ##
@@ -344,7 +344,7 @@ setMethod("getColors", "gGraph", function(x, nodes="all", attr.name, ...) {
     }
 
     ## define colors ##
-    rules <- x@meta$color
+    rules <- x@meta$colors
     criterion <- getNodesAttr(x, nodes=toKeep, attr.name=attr.name) # seek criterion in nodes.attr
     col <- as.character(unlist(criterion))
 
