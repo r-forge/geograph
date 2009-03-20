@@ -9,7 +9,8 @@
 }
 \usage{
 geo.change.attr(x, mode=c("points","area"), attr.name, attr.value,
-                only.name=NULL, only.value=NULL, newCol="black")
+                only.name=NULL, only.value=NULL, newCol="black"
+                restore.edges=TRUE, refObj = "rawgraph.40k")
 }
 \arguments{
   \item{x}{a valid \linkS4class{gGraph} object.}
@@ -25,6 +26,15 @@ geo.change.attr(x, mode=c("points","area"), attr.name, attr.value,
     can be selected. See details.}
   \item{newCol}{a character string giving the new color for the
     attribute value.}
+  \item{restore.edges}{a logical indicating whether edges stemming from
+    the modified nodes should be re-added to the graph, using
+    \code{refObj} as a reference. This is useful when connectivity is to
+  be redefined using \code{\link{setFriction}} for nodes that were
+  previously disconnected.}
+  \item{refObj}{a character string or a \linkS4class{gGraph} object,
+    used as reference when re-adding edges. If a character string is
+    provided, it must match one of the following dataset:
+    'rawgraph.10k', 'rawgraph.40k'.}
 }
 \value{
   A \linkS4class{gGraph} object with modified node attributes.
