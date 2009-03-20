@@ -65,6 +65,15 @@ geo.segments <- function(x0, y0, x1, y1,
     ## - H: distance between y0 and y1
 
 
+    d0 <- x0 - XMIN
+    d1 <- XMAX - x1
+    H <- abs(y1-y0)
+    h0 <- H * (d0/d1) / (1+ (d0/d1) )
+    h1 <- H - h0
+
+    new.x0 <- rep(-180, length(temp.x0))
+    new.y0 <- # have to figure out if it's + or -
+    
     ## add new segments to old segments
 
 
