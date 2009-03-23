@@ -246,7 +246,8 @@ plot.gPath <- function(x, col="rainbow", lwd=3, ...){
         if(N<2) return() # escape if a path is a single vertice
         from <- vecNodes[1:(N-1)]
         to <- vecNodes[2:N]
-        segments(xy[from,1], xy[from,2], xy[to,1], xy[to,2], col=col, lwd=lwd, ...)
+        ## segments(xy[from,1], xy[from,2], xy[to,1], xy[to,2], col=col, lwd=lwd, ...)
+        geo.segments(xy[from,1], xy[from,2], xy[to,1], xy[to,2], col=col, lwd=lwd, ...)
     }
 
 
