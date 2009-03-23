@@ -12,8 +12,8 @@
   \code{\link[pkg:fields]{rdist.earth}} of the \code{fields} package.
 }
 \usage{
-setDistCosts(x, \dots)
-\S4method{setDistCosts}{gGraph}(x, \dots)
+setDistCost(x, \dots)
+\S4method{setDistCost}{gGraph}(x, \dots)
 }
 \arguments{
   \item{x}{a valid \linkS4class{gGraph}.}
