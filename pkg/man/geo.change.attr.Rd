@@ -9,7 +9,7 @@
 }
 \usage{
 geo.change.attr(x, mode=c("points","area"), attr.name, attr.value,
-                only.name=NULL, only.value=NULL, newCol="black"
+                only.name=NULL, only.value=NULL, newCol="black",
                 restore.edges=TRUE, refObj = "rawgraph.40k")
 }
 \arguments{
