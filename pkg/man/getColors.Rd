@@ -29,7 +29,7 @@ getColors(x, \dots)
   \code{nodes.attr} data.frame. This attribute should have a finite
   number of values, and would most likely be a factor. Correspondence
   between values of this variable and colors must be provided in the
-  \code{@meta$color} slot. See example section to know how this slot
+  \code{@meta\$color} slot. See example section to know how this slot
   should be designed.
   
 }
