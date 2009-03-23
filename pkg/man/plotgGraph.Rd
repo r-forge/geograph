@@ -57,7 +57,7 @@ attr.col=NULL, sticky.edges=FALSE, \dots)
   \item{attr.col}{a data.frame with two named columns, the first
     one giving values of a node attribute, and the second one stating
     colors to be used for each value. If not provided, this is seeked
-    from the \code{@meta$color} slot of the object.}
+    from the \code{@meta\$color} slot of the object.}
   \item{sticky.points}{a logical indicating if added points should
     be kept when replotting (TRUE), or not (FALSE). In any case,
     \code{reset=TRUE} will prevent points to be redrawn.}

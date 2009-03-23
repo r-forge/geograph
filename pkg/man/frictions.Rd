@@ -5,7 +5,7 @@
 \description{
   The function \code{setFriction} define costs for the edges of a
   \linkS4class{gGraph} object according to a node attribute and some
-  rules defined in the \code{@meta$costs} slot of the object. Each node
+  rules defined in the \code{@meta\$costs} slot of the object. Each node
   has a value for the chosen attribute, which is associated to a costs
   (a friction). The cost of an edge is computed as a function (see
   argument \code{method}) of the costs of its nodes.\cr

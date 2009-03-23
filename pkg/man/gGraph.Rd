@@ -88,16 +88,16 @@
       about how data in the \code{nodes.attr} slot should be used in
       different contexts. This information is to be stored as named
       data.frames. Currently recognized meta-information are:\cr
-      - \code{$color}: a data.frame giving colors to be used when plotting
+      - \code{\$color}: a data.frame giving colors to be used when plotting
       the object, according to a node attribute taking a finite number of
       values (likely a factor). Each documented attribute is a column, the
       last one being reserved to (valid) named colors. See the
-      \code{@meta$color} slot in \code{\link{worldgraph.10k}} for an
+      \code{@meta\$color} slot in \code{\link{worldgraph.10k}} for an
       example.\cr
-      -  \code{$weights}: a data.frame giving weights to be used when computing
+      -  \code{\$weights}: a data.frame giving weights to be used when computing
       edge weights using \code{\link{setFriction}}. The first column is a
       node attribute, and the second column gives corresponding weights. See the
-      \code{@meta$costs} slot in \code{\link{worldgraph.10k}} for an
+      \code{@meta\$costs} slot in \code{\link{worldgraph.10k}} for an
       example.}
     \item{\code{graph}:}{Object of class \linkS4class{graphNEL} (see
       \code{class?graphNEL} for more information).}
@@ -129,7 +129,7 @@
     \item{findLand}{\code{signature(x = "gGraph")}: find which nodes are
       on land, and which are not.}
     \item{getColors*}{\code{signature(x = "gGraph")}: get colors
-      corresponding to the nodes, as specified in the \code{@meta$color} slot.}
+      corresponding to the nodes, as specified in the \code{@meta\$color} slot.}
     \item{getCoords}{\code{signature(x = "gGraph")}: get geographic
       coordinates of the object.}
     \item{getDates}{\code{signature(x = "gGraph")}: get dates of modifications of the object.}
