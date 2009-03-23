@@ -1,7 +1,7 @@
 #################
 ## geo.add.edges
 #################
-geo.add.edges <- function(x, mode=c("points","area","all"), refObj="rawgraph.10k") {
+geo.add.edges <- function(x, mode=c("points","area","all"), refObj="rawgraph.40k") {
     ## preliminary stuff
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
     mode <- match.arg(mode)
@@ -199,7 +199,7 @@ geo.remove.edges <- function(x, mode=c("points","area")) {
 ###################
 geo.change.attr <- function(x, mode=c("points","area"), attr.name, attr.value,
                             only.name=NULL, only.value=NULL, newCol="black",
-                            restoreEdges=TRUE, refObj="rawgraph.10k") {
+                            restoreEdges=TRUE, refObj="rawgraph.40k") {
 
     ## preliminary stuff ##
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
