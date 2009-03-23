@@ -28,7 +28,7 @@
 
 plotEdges(x, replot=TRUE, useCosts=NULL,
 col="black", lwd=1, lty=1, pch=NULL, psize=NULL, pcol=NULL, maxLwd=3,
-attr.col=NULL,\dots)
+attr.col=NULL, sticky.edges=FALSE, \dots)
 
 }
 \arguments{
@@ -65,6 +65,9 @@ attr.col=NULL,\dots)
     after plotting the edges (TRUE), or not (FALSE).}
   \item{lty}{the type of line (for the edges).}
   \item{pcol}{a character indicating the color to be used for points.}
+  \item{sticky.edges}{a logical indicating whether added edges should
+    be kept when replotting (TRUE), or not (FALSE, default). In any case,
+    \code{reset=TRUE} will prevent points to be redrawn.}
   \item{\dots}{further arguments passed to the generic methods
     (plot, points, and segments, respectively).}
 }
