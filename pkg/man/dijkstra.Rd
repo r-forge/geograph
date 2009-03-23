@@ -65,18 +65,18 @@ par(mar=rep(.1,4))
 plot(world, reset=TRUE)
 
 ## check connectivity
-isConnected(hgdp) # connectivity ok
+isConnected(hgdp) # must be ok
 
 ## Lowest cost path from an hypothetical origin
 ori.coord <- list(33,10) # one given location long/lat
 points(data.frame(ori.coord), pch="x", col="black", cex=3) # an 'x' shows the putative origin
 ori <- closestNode(world, ori.coord) # assign it the closest node
 
-myPath <- dijkstraFrom(myPop, ori) # compute shortest path
+myPath <- dijkstraFrom(hgdp, ori) # compute shortest path
 
 ## plotting
 plot(world,pch="") # plot the world
-points(myPop, lwd=3) # plot populations
+points(hgdp, lwd=3) # plot populations
 points(data.frame(ori.coord), pch="x", col="black", cex=3) # add origin
 plot(myPath) # plot the path
 }
