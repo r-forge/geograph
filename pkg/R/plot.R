@@ -69,7 +69,7 @@ setMethod("plot", signature(x = "gGraph", y="missing"), function(x, y,shape="wor
     ## handle colors -- these are default, not used in some sub-plotting
     if(useAttrCol){
         col <- getColors(x, nodes=toKeep, attr.name=attr.col)
-    } else if(is.null(col)){
+    } else if(is.null(col.ori)){
         col <- "red"
     } else{
         col <- rep(col.ori, length=length(getNodes(x)))
@@ -99,7 +99,7 @@ setMethod("plot", signature(x = "gGraph", y="missing"), function(x, y,shape="wor
         ## define colors for these points
         if(useAttrCol){
             col <- getColors(x, nodes=toKeep, attr.name=attr.col)
-        } else if(is.null(col)){
+        } else if(is.null(col.ori)){
             col <- "red"
         } else{
             col <- rep(col.ori, length=length(getNodes(x)))
