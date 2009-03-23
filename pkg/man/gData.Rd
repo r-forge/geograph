@@ -11,6 +11,7 @@
 \alias{initialize,gData-method}
 \alias{show,gData-method}
 \alias{is.gData}
+\alias{getGraph,gData-method}
 %%%% THESE HAVE THEIR OWN MANPAGE
 %\alias{isInArea,gData-method}
 %\alias{points,gData-method}
@@ -105,7 +106,9 @@
     \item{show}{\code{signature(object = "gData")}: prints the object
       to screen.}
     \item{isConnected}{\code{signature(object = "gData")}: check if
-    nodes are a connected set.}
+      nodes are a connected set.}
+    \item{getGraph}{\code{signature(object = "gData")}: get the
+    \linkS4class{graphNEL} object linked to a \code{gData}.}
   }
 }
 \author{Thibaut Jombart (\email{t.jombart@imperial.ac.uk})}
