@@ -27,9 +27,9 @@ geo.segments <- function(x0, y0, x1, y1,
              col = par("fg"), lty = par("lty"), lwd = par("lwd"), ...){
 
     ## some declarations ##
-    THRES <- 91
-    XMIN <- -180
-    XMAX <- 180
+    THRES <- 90
+    XMIN <- -185
+    XMAX <- 185
 
     ## pin down problematic segments ##
     toChange <- abs(x0-x1) > THRES
@@ -104,10 +104,15 @@ geo.segments <- function(x0, y0, x1, y1,
 
     ## final call to segments ##
     ## non-modified segments
+    oxpd <- par("xpd")
+    par(xpd=TRUE)
     segments(x0.ok, y0.ok, x1.ok, y1.ok,
              col = col, lty = lty, lwd = lwd, ...)
 
     ## modified segments
     segments(x0.out, y0.out, x1.out, y1.out,
              col = col, lty = 2, lwd = lwd, ...)
+
+    par(xpd=oxpd)
+    return(invisible())
 } # end geo.segments
