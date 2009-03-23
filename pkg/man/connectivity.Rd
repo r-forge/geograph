@@ -50,6 +50,9 @@ isReachable(x, loc)
   \item{nodes}{a vector of node names}
   \item{object}{a valid \linkS4class{gData} object.}
   \item{\dots}{other arguments passed to other methods.}
+  \item{loc}{location, specified as a list of two components giving
+    respectively the longitude and the latitude. Alternatively, it can
+    be a matrix-like object with one row and two columns.}
   \item{seed}{an optional integer giving the seed to be used when
     randomizing colors. One given seed will always give the same set of
     colors. NULL by default, meaning colors are randomized each time a
