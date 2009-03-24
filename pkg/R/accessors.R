@@ -262,7 +262,7 @@ setMethod("getCosts", "gGraph", function(x, res.type=c("asIs","vector"), unique=
         temp <- strsplit(nodeNames, "[.]")
         toKeep <- sapply(temp, function(v) v[1] < v[2])
         res <- res[toKeep]
-        }
+    }
 
     return(res)
 })
@@ -355,4 +355,41 @@ setMethod("getColors", "gGraph", function(x, nodes="all", attr.name, ...) {
     names(col) <- getNodes(x)[toKeep]
     return(col)
 })
+
+
+
+
+
+
+
+
+#################
+## getNodeCosts
+#################
+setGeneric("getNodeCosts", function(x, ...) {
+    standardGeneric("getNodeCosts")
+})
+
+
+
+setMethod("getNodeCosts", "gGraph", function(x, attr.name, ...) {
+    if(!is.gGraph(x)) stop("x is not a valid gGraph object")
+
+    ## assign costs to vertices
+    nodeAttr <- unlist(getNodesAttr(x, attr.name=attr.name))
+    if(!is.null(x@meta$costs)){
+        if(!any(attr.name %in% colnames(x@meta$costs))) {
+            stop("attr.name is not documented in x@meta$costs.")
+        }
+        nodeCosts <- as.character(nodeAttr)
+        rules <- x@meta$costs
+        for(i in 1:nrow(x@meta$costs)){
+            nodeCosts[nodeCosts==rules[i,attr.name]] <- rules[i,ncol(rules)]
+        }
+        nodeCosts <- as.numeric(nodeCosts)
+    } else stop("x@meta does not contain a 'costs' component.")
+
+
+    return(nodeCosts)
+}) # end getNodeCosts
 
