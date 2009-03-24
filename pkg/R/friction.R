@@ -8,7 +8,7 @@ setFriction <- function(x, attr.name=NULL, node.costs=NULL, method=c("mean", "pr
 
 
     ## assign costs to vertices
-    if(is.null(costs)){ # costs from a node attribute
+    if(is.null(node.costs)){ # costs from a node attribute
         nodeAttr <- unlist(getNodesAttr(x, attr.name=attr.name))
         if(!is.null(x@meta$costs)){
             if(!any(attr.name %in% colnames(x@meta$costs))) {
@@ -25,6 +25,7 @@ setFriction <- function(x, attr.name=NULL, node.costs=NULL, method=c("mean", "pr
         if(!is.numeric(node.costs)) stop("Provided 'node.costs' not numeric.")
         node.costs <- rep(node.costs, length=length(getNodes(x))) # recycling node costs
         nodeCosts <- node.costs
+        ## might add some more checks here...
     }
 
 
