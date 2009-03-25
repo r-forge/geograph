@@ -86,9 +86,31 @@ doSimul <- function(startNode,path=""){
 
 
 ## make some simulations
-##res <- doSimul(c("21820","22459"), "outputs")
+##res <- doSimul(c("21820","22459"), "outputs") # 2 sims to try
+
+## load("outputs/candidates.RData")
+## res <- doSimul(candidates, "outputs")
+## myNA <- names(res)[is.na(res)]
+## myNA # there are NAs
+## myNA %in% getNodes(hgdp) # NAs are all nodes associated to one population in hgdp
+
+## examin result
+range(res, na.rm=TRUE)
+hist(res, col="grey")
+
+## plot the worst one
+load(paste("outputs/path",which.min(res),".RData",sep=""))
+plot(worldgraph.40k,res=TRUE, col=0)
+plot(myPath,seed=1)
+title("'worst' result")
+
+## plot the best one
+x11()
+load(paste("outputs/path0",which.max(res),".RData",sep=""))
+plot(worldgraph.40k,res=TRUE, col=0)
+plot(myPath,seed=1)
+title("'best' result")
+
+## plot all results (R^2)
 
 
-load("/home/master/dev/geograph/pkg/misc/simulations/outputs/path1.RData")
-plot(worldgraph.40k, col=0)
-plot(myPath)
