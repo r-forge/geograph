@@ -100,17 +100,33 @@ hist(res, col="grey")
 
 ## plot the worst one
 load(paste("outputs/path",which.min(res),".RData",sep=""))
+par(mar=c(0,0,2,0))
 plot(worldgraph.40k,res=TRUE, col=0)
 plot(myPath,seed=1)
+points(hgdp,col.node="black")
+ori <- sub(":.*","",names(myPath)[1])
+points(getCoords(x)[ori,1],getCoords(x)[ori,2],pch="x", cex=2,col="red")
 title("'worst' result")
 
 ## plot the best one
 x11()
 load(paste("outputs/path0",which.max(res),".RData",sep=""))
+par(mar=c(0,0,2,0))
 plot(worldgraph.40k,res=TRUE, col=0)
 plot(myPath,seed=1)
+points(hgdp,col.node="black")
+ori <- sub(":.*","",names(myPath)[1])
+points(getCoords(x)[ori,1],getCoords(x)[ori,2],pch="x", cex=2,col="red")
 title("'best' result")
 
 ## plot all results (R^2)
+dispRes <- res - min(res,na.rm=TRUE)
+dispRes <- 1 + (99*dispRes/max(dispRes,na.rm=T))
+range(dispRes,na.rm=T)
 
+x <- worldgraph.40k[candidates]
 
+plot(x,reset=TRUE)
+palette(heat.colors(105))
+points(getCoords(x),col=dispRes,pch=15,cex=1)
+points(hgdp,col.node="blue") # show the NA -> these are pop from hgdp
