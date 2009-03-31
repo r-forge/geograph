@@ -52,7 +52,7 @@ doSimul <- function(startNode,path=""){
         geo.dist <- sapply(myPath[-length(myPath)],function(e) e$length)
         geo.dist[is.na(geo.dist)] <- 0 # occurs when the source is one hgdp pop
         R2[i] <- cor(geo.dist, hgdp@data$Genetic.Div)^2
-        cat("\n",i,"R2:", R2[i])
+        cat("\n",i,"/",N,"| R2:", R2[i])
     }
 
     cat("\n")
