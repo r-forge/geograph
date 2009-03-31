@@ -33,7 +33,7 @@
   \linkS4class{gGraph} object to which it is linked will
   have to be present in the same environment.
 }
-\section{Objects from the class \code{gData}}{
+\section{Objects from the class gData}{
   \code{gData} objects can be created by calls to \code{new("gData",
     ...)}, where '...' can be the following arguments:
   
