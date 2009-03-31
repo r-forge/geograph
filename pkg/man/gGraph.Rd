@@ -49,7 +49,7 @@
   In all slots, nodes are uniquely identified by their name (reference
   is taken from the row names of \code{@coords} slot).
 }
-\section{Objects from the class \code{gGraph}}{
+\section{Objects from the class gGraph}{
   \code{gGraph} objects can be created by calls to \code{new("gGraph",
     ...)}, where '...' can be the following arguments:
 
