@@ -63,10 +63,7 @@ worldgraph.40k <- dropCosts(worldgraph.40k)
 
 ## } # end doSimul
 
-
 source("doSimul.R")
-
-
 
 ##
 ## using Addis Ababa as source
@@ -79,7 +76,7 @@ doSimul(addis,".") # result: R2=0.749
 ##
 ## define candidate nodes on a large grid
 ##
-temp <- expand.grid(seq(-180,180,by=12), seq(-90,90,by=6))
+temp <- expand.grid(seq(-30,60,by=5), seq(-40,40,by=5))
 x <- closestNode(worldgraph.40k,temp) # this takes a while
 
 conCom <- connectedComp(getGraph(worldgraph.40k)) # get connected sets
@@ -88,9 +85,15 @@ conCom <- conCom[[1]]
 myCandidates <- intersect(x,conCom) # retained candidates
 length(myCandidates)
 
+temp <- findInLayer(getCoords(worldgraph.40k)[myCandidates,], attr="CONTINENT")
+myCandidates <- row.names(temp[temp=="Africa",,drop=FALSE]) # keep nodes in Africa
+plot(worldgraph.40k)
+points(getCoords(worldgraph.40k)[myCandidates,])
+
+
 
 ## make some simulations
-#res <- doSimul(myCandidates, "outputs") # this can take hours (3 sim/minute)
+# res <- doSimul(myCandidates, "outputs") # this can take hours (3 sim/minute)
 
 ## load("outputs/candidates.RData")
 ## res <- doSimul(candidates, "outputs")
