@@ -11,5 +11,5 @@ hours.
 
 
 ## nullPath.1.1.R ##
-Unique costs. Sources in relatively large grid (... nodes), restrained
-to Africa.
+Unique costs. Sources in relatively large grid (104 nodes), restrained
+to Africa. Runs in less than 1 hour.
