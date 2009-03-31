@@ -70,7 +70,7 @@ source("doSimul.R")
 ##
 addis <- list(lon=38.74,lat=9.03)
 addis <- closestNode(worldgraph.40k,addis) # this takes a while
-doSimul(addis,".") # result: R2=0.749
+doSimul(addis,".") # result: R2=0.74
 
 
 ##
