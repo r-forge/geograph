@@ -14,6 +14,8 @@ library(geoGraph)
 data(hgdp)
 data(worldgraph.40k)
 
+setwd("/home/master/dev/geograph/pkg/misc/simulations/")
+
 
 
 ##
@@ -79,12 +81,13 @@ x <- closestNode(worldgraph.40k,temp) # this takes a while
 
 conCom <- connectedComp(getGraph(worldgraph.40k)) # get connected sets
 conCom <- conCom[order(sapply(conCom,length),decreasing=TRUE)] # sort by decr. size
-myCandidates <- intersect(x,conSet) # retained candidates
+conCom <- conCom[[1]]
+myCandidates <- intersect(x,conCom) # retained candidates
 length(myCandidates)
 
 
 ## make some simulations
-res <- doSimul(myCandidates, "outputs") # 2 sims to try
+res <- doSimul(myCandidates, "outputs") # this can take hours (3 sim/minute)
 
 ## load("outputs/candidates.RData")
 ## res <- doSimul(candidates, "outputs")
