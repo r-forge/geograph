@@ -42,5 +42,20 @@ hgdp
 ## plotting the object
 plot(hgdp)
 
+
+## results from Handley et al.
+\dontrun{
+## Addis Ababa
+addis <- list(lon=38.74,lat=9.03)
+addis <- closestNode(worldgraph.40k,addis) # this takes a while
+
+## shortest path from Addis Ababa
+myPath <- dijkstraFrom(hgdp, addis)
+
+## plot results
+plot(worldgraph.40k, col=0)
+points(hgdp)
+
+}
 }
 \keyword{datasets}
