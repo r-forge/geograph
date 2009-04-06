@@ -49,10 +49,8 @@ setMethod("plot", signature(x = "gGraph", y="missing"), function(x, y,shape="wor
     useAttrCol <- ( (!is.null(x@meta$colors))  &&
     (nrow(x@meta$colors)>0) &&  is.null(col)) # use color from node attribute?
 
-    if(useAttrCol){
-        if(is.null(attr.col)){
-            attr.col <- colnames(x@meta$colors)[1] # default attribute used for colors
-        }
+    if(useAttrCol & is.null(attr.col)){
+        attr.col <- colnames(x@meta$colors)[1] # default attribute used for colors
     }
 
     toKeep <- isInArea(x, res.type="integer")
@@ -188,6 +186,10 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=N
 
     useAttrCol <- ( (!is.null(x@meta$colors))  &&
                        (nrow(x@meta$colors)>0) &&  is.null(col)) # use color from node attribute?
+
+    if(useAttrCol & is.null(attr.col)){
+        attr.col <- colnames(x@meta$colors)[1] # default attribute used for colors
+    }
 
 
     ## define colors for these points
