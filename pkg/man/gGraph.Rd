@@ -7,7 +7,6 @@
 \alias{getDates,gGraph-method}
 \alias{getGraph,gGraph-method}
 \alias{getHistory,gGraph-method}
-%\alias{getNodesAttr,gGraph-method}
 \alias{getNodes,gGraph-method}
 \alias{initialize,gGraph-method}
 \alias{dropCosts,gGraph-method}
@@ -16,7 +15,6 @@
 \alias{is.gGraph}
 \alias{getHistory}
 \alias{getGraph}
-\alias{getNodesAttr}
 \alias{getDates}
 \alias{getCoords}
 \alias{getNodes}
@@ -33,6 +31,8 @@
 %\alias{points,gGraph-method}
 %\alias{setEdges,gGraph-method}
 %\alias{getEdges,gGraph-method}
+%\alias{getNodesAttr}
+%\alias{getNodesAttr,gGraph-method}
 %%%%%%
 \title{Formal class "gGraph"}
 \description{The class \code{gGraph} is a formal (S4) class storing geographic
