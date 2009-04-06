@@ -75,7 +75,9 @@
 }
 \section{Methods}{
   Here is a list of methods available for \code{gData} objects. See
-  corresponding manpages for further documentation. 
+  corresponding manpages for further documentation. Specific manpages
+  exist for accessors with more than one argument. These are indicated
+  by a '*' symbol next to the method's name.
   \describe{
     \item{[}{\code{signature(x = "gData")}: usual method to subset
       objects in R. First indice corresponds to locations (it can be a logical,
@@ -108,7 +110,9 @@
     \item{isConnected}{\code{signature(object = "gData")}: check if
       nodes are a connected set.}
     \item{getGraph}{\code{signature(object = "gData")}: get the
-    \linkS4class{graphNEL} object linked to a \code{gData}.}
+      \linkS4class{graphNEL} object linked to a \code{gData}.}
+    \item{getNodesAttr*}{\code{signature(x = "gData")}: get the nodes
+      attributes of the object.}
   }
 }
 \author{Thibaut Jombart (\email{t.jombart@imperial.ac.uk})}
