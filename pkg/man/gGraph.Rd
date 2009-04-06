@@ -7,7 +7,7 @@
 \alias{getDates,gGraph-method}
 \alias{getGraph,gGraph-method}
 \alias{getHistory,gGraph-method}
-\alias{getNodesAttr,gGraph-method}
+%\alias{getNodesAttr,gGraph-method}
 \alias{getNodes,gGraph-method}
 \alias{initialize,gGraph-method}
 \alias{dropCosts,gGraph-method}
@@ -138,7 +138,7 @@
       object (as a \code{graphNEL} object).}
     \item{getHistory}{\code{signature(x = "gGraph")}: get the history of
       the object.}
-    \item{getNodesAttr}{\code{signature(x = "gGraph")}: get the nodes
+    \item{getNodesAttr*}{\code{signature(x = "gGraph")}: get the nodes
       attributes of the object.}
     \item{getNodes}{\code{signature(x = "gGraph")}: get the names of the
       nodes of the object.}
