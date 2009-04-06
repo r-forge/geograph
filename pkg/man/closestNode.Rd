@@ -18,7 +18,7 @@
 \usage{
 closestNode(x, \dots)
 \S4method{closestNode}{gGraph}(x, loc, zoneSize=5, attr.name=NULL, attr.values=NULL)
-\S4method{closestNode}{gData}(x, loc, zoneSize=5, attr.name=NULL, attr.values=NULL)
+\S4method{closestNode}{gData}(x, zoneSize=5, attr.name=NULL, attr.values=NULL)
 }
 \arguments{
   \item{x}{a valid \linkS4class{gGraph} or \linkS4class{gData}
