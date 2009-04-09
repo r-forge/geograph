@@ -17,4 +17,13 @@ to Africa. Runs in less than 1 hour.
 
 
 ## withProd.1.0.R ##
-Costs defined based on mean productivity (gC/m2/month).
+Costs defined based on mean productivity (gC/m2/month), rescaled on
+0-100. Runs in 30-40 minutes.
+
+
+
+## withProd.1.1.R ##
+Costs defined based on mean productivity (gC/m2/month), rescaled on
+0-100, and on mean variance rescaled to 0-100, both being averaged. Runs in 30-40 minutes.
+
+
