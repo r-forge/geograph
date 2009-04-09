@@ -67,7 +67,7 @@ setMethod("getNodesAttr", "gData", function(x, attr.name=NULL,...) {
     }
 
     myNodes <- getNodes(x)
-    if(!exists(hgdp@gGraph.name, .GlobalEnv)) stop("gGraph object not found in global environment.")
+    if(!exists(x@gGraph.name, .GlobalEnv)) stop("gGraph object not found in global environment.")
     mygGraph <- get(x@gGraph.name, envir=.GlobalEnv)
 
     res <- getNodesAttr(mygGraph, nodes=myNodes, attr.name=attr.name)
