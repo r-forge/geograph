@@ -13,3 +13,8 @@ hours.
 ## nullPath.1.1.R ##
 Unique costs. Sources in relatively large grid (104 nodes), restrained
 to Africa. Runs in less than 1 hour.
+
+
+
+## withProd.1.0.R ##
+Costs defined based on mean productivity (gC/m2/month).
