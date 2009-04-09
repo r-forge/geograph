@@ -27,3 +27,11 @@ Costs defined based on mean productivity (gC/m2/month), rescaled on
 0-100, and on mean variance rescaled to 0-100, both being averaged. Runs in 30-40 minutes.
 
 
+
+## withProd.1.2.R ##
+Costs defined from a model predicting population density in
+hunter/gatherers.
+/outputs/withProd.1.2: correlation based on H/(1-H)
+/outputs/withProd.1.2bis: correlation based on H (lower)
+
+
