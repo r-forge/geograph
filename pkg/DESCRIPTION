@@ -5,7 +5,7 @@ Title: geoGraph: implementing geographic graphs for large-scale spatial modellin
 Author: Andrea Manica, Thibaut Jombart, Francois Balloux
 Maintainer: Thibaut Jombart <jombart@biomserv.univ-lyon1.fr>
 Suggests: fields
-Depends: methods, graph, RBGL, sp, maptools
+Depends: methods, graph, RBGL, sp, maptools, MASS
 Description: .
 License: GPL (>=2)
 LazyLoad: yes
