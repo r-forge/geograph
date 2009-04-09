@@ -11,7 +11,7 @@
 ## LOAD STUFF
 ##
 library(geoGraph)
-data(hgdpPlus)
+data(hgdp)
 data(worldgraph.40k)
 
 setwd("/home/master/dev/geograph/pkg/misc/simulations/")
@@ -59,16 +59,15 @@ myCosts[worldgraph.40k@nodes.attr$landbridge] <- 100
 worldgraph.40k <- setFriction(worldgraph.40k, node.costs=myCosts)
 worldgraph.40k <- dropDeadEdges(worldgraph.40k, thres=2e5)
 
-isConnected(hgdpPlus)
+isConnected(hgdp)
 
-source("doSimul.R")
 
 ##
 ## using Addis Ababa as source
 ##
 addis <- list(lon=38.74,lat=9.03)
 addis <- closestNode(worldgraph.40k,addis) # this takes a while
-doSimul(addis,hgdpPlus, ".") # result: R2=0.7946
+doSimul(addis,hgdp, ".") # result: R2=0.7946
 
 
 ##
@@ -91,13 +90,13 @@ points(getCoords(worldgraph.40k)[myCandidates,])
 
 
 ## make some simulations
-res <- doSimul(myCandidates, hgdpPlus, "outputs") # this can take hours (3 sim/minute)
+res <- doSimul(myCandidates, hgdp, "outputs") # this can take hours (3 sim/minute)
 
 ## load("outputs/candidates.RData")
 ## res <- doSimul(candidates, "outputs")
 ## myNA <- names(res)[is.na(res)]
 ## myNA # there are NAs
-## myNA %in% getNodes(hgdpPlus) # NAs are all nodes associated to one population in hgdpPlus
+## myNA %in% getNodes(hgdp) # NAs are all nodes associated to one population in hgdp
 
 ## examin result
 range(res, na.rm=TRUE)
@@ -108,7 +107,7 @@ load(paste("outputs/path",which.min(res),".RData",sep=""))
 par(mar=c(0,0,2,0))
 plot(worldgraph.40k,res=TRUE, col=0)
 plot(myPath,seed=1)
-points(hgdpPlus,col.node="black")
+points(hgdp,col.node="black")
 ori <- sub(":.*","",names(myPath)[1])
 points(getCoords(worldgraph.40k)[ori,1],getCoords(worldgraph.40k)[ori,2],pch="x", cex=2,col="red")
 title("'worst' result")
@@ -119,7 +118,7 @@ load(paste("outputs/path0",which.max(res),".RData",sep=""))
 par(mar=c(0,0,2,0))
 plot(worldgraph.40k,res=TRUE, col=0)
 plot(myPath,seed=1)
-points(hgdpPlus,col.node="black")
+points(hgdp,col.node="black")
 ori <- sub(":.*","",names(myPath)[1])
 points(getCoords(worldgraph.40k)[ori,1],getCoords(worldgraph.40k)[ori,2],pch="x", cex=2,col="red")
 title("'best' result")
@@ -134,4 +133,4 @@ x <- worldgraph.40k[myCandidates]
 plot(x,reset=TRUE)
 palette(heat.colors(105))
 points(getCoords(x),col=dispRes,pch=15,cex=1)
-points(hgdpPlus,col.node="blue") # show the NA -> these are pop from hgdpPlus
+points(hgdp,col.node="blue") # show the NA -> these are pop from hgdp
