@@ -45,6 +45,7 @@ predLDens <- myCoef[1] + myCoef[2]*dat$meanProd +
 predLDens <- predLDens - min(predLDens)
 #predLDens[dat$habitat=="sea"] <- 0
 
+palette(heat.colors(105))
 range(predLDens)
 predLDens <- 100*predLDens/max(predLDens)
 plot(worldgraph.40k, col=predLDens,res=TRUE)
@@ -104,6 +105,8 @@ points(getCoords(worldgraph.40k)[myCandidates,])
 ## make some simulations
 res <- doSimul(myCandidates, hgdp, "outputs") # this can take hours (3 sim/minute)
 
+## save(res.1.2, file="/home/master/dev/geograph/pkg/misc/simulations/res.1.2.RData")
+
 ## load("outputs/candidates.RData")
 ## res <- doSimul(candidates, "outputs")
 ## myNA <- names(res)[is.na(res)]
@@ -146,3 +149,24 @@ plot(x,reset=TRUE)
 palette(heat.colors(105))
 points(getCoords(x),col=dispRes,pch=15,cex=1)
 points(hgdp,col.node="blue") # show the NA -> these are pop from hgdp
+
+
+
+##
+## pairwise correlations
+##
+
+## compute pairwise physical distances (hgdpPlus)
+# pairPath <- dijkstraBetween(hgdpPlus) # takes around 20 minutes
+
+# save(pairPath, file="pairPath.RData")
+
+## get pairwise distance
+dist.phy <- sapply(pairPath[-length(pairPath)], function(e) sum(e$length_detail[[1]]) )
+
+
+## shape as dist object
+temp <- dist(1:76)
+
+
+fst <- read.table("/home/master/dev/geograph/pkg/misc/HGDP/76pop.fst")
