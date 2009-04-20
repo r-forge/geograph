@@ -46,7 +46,16 @@ setMethod("dijkstraBetween", "gGraph", function(x, from, to){
 
 
     ## wrap ##
+    ## ! sp.between does not return duplicated paths
     res <- sp.between(myGraph, start=from[pairIdStart], finish=to[pairIdStop])
+
+
+    ## handle duplicated paths ##
+    if(length(res) < maxLength){ # res should have length = laxLength
+        fromTo <- paste(from[pairIdStart], to[pairIdStop], sep=":") # all different paths
+        res <- res[fromTo]
+    }
+
 
     ## make it a class "gPath" (output + xy coords) ##
     allNodes <- unique(unlist(lapply(res, function(e) e$path_detail)))
@@ -91,7 +100,15 @@ setMethod("dijkstraBetween", "gData", function(x){
     }
 
     ## wrap ##
+    ## ! sp.between does not return duplicated paths
     res <- sp.between(myGraph, start=x@nodes.id[pairIdStart], finish=x@nodes.id[pairIdStop])
+
+
+    ## handle duplicated paths ##
+    if(length(res) < maxLength){ # res should have length = laxLength
+        fromTo <- paste(from[pairIdStart], to[pairIdStop], sep=":") # all different paths
+        res <- res[fromTo]
+    }
 
 
     ## make it a class "gPath" (output + xy coords) ##
