@@ -38,7 +38,7 @@ setMethod("dijkstraBetween", "gGraph", function(x, from, to){
 
     for(i in 1:maxLength){
         j <- i
-        while((j <- j+1) < length(x@nodes.id)){
+        while((j <- j+1) < (maxLength+1) ){
             pairIdStart <- c(pairIdStart, i)
             pairIdStop <- c(pairIdStop, j)
         }
@@ -85,15 +85,15 @@ setMethod("dijkstraBetween", "gData", function(x){
     ## build the wrapper ##
     myGraph <- get(x@gGraph.name, envir=.GlobalEnv)
     coords <- getCoords(myGraph) # store xy coords for later
-    myGraph <- getGraph(myGraph)
+    myGraph <- getGraph(myGraph) # don't do this before getCoords
 
     ## build indices of all pairwise combinations ##
     pairIdStart <- integer()
     pairIdStop <- integer()
 
-    for(i in 1:length(x@nodes.id)){
+    for(i in 1:(length(getNodes(x))+1)){
         j <- i
-        while((j <- j+1) < length(x@nodes.id)){
+        while((j <- j+1) < length(getNodes(x))+1){
             pairIdStart <- c(pairIdStart, i)
             pairIdStop <- c(pairIdStop, j)
         }
@@ -105,8 +105,8 @@ setMethod("dijkstraBetween", "gData", function(x){
 
 
     ## handle duplicated paths ##
-    if(length(res) < maxLength){ # res should have length = laxLength
-        fromTo <- paste(from[pairIdStart], to[pairIdStop], sep=":") # all different paths
+    if(length(res) < length(pairIdStart)){ # res should have length = pairIdStart
+        fromTo <- paste(x@nodes.id[pairIdStart], x@nodes.id[pairIdStop], sep=":") # all different paths
         res <- res[fromTo]
     }
 
@@ -273,3 +273,23 @@ plot.gPath <- function(x, col="rainbow", lwd=3, ...){
 
     return(invisible())
 } # end plot.gPath
+
+
+
+
+
+
+
+
+
+
+######################################
+######################################
+
+##
+## CONVERSION gPath -> distance
+##
+
+as.dist.gPath <- function(x){
+
+}
