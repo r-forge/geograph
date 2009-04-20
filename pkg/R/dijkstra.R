@@ -292,4 +292,34 @@ plot.gPath <- function(x, col="rainbow", lwd=3, ...){
 
 as.dist.gPath <- function(x){
 
-}
+    ## remove xy coords
+    x <- x[-length(x)]
+
+
+    ## find the size of the dist object ##
+    L <- length(x)
+    x.names <- sub(":.*","",names(x))
+    i <- 1
+    while(x.names[i]==x.names[i+1] && i<L){
+        i <- i+1
+    }
+
+    resSize <- i+1
+
+    ## check size consistency
+    if(L != (resSize * (resSize-1) *0.5)){
+        warning("Length of x does not match a number of pairwise comparisons.")
+    }
+
+
+    ## GET DISTANCES ##
+    resDist <- sapply(x, function(e) sum(e$length_detail[[1]], na.rm=TRUE))
+
+
+    ## BUILD RESULT ##
+    res <- dist(1:resSize)
+
+    res[] <- resDist
+
+    return(res)
+} # end as.dist.gPath
