@@ -8,6 +8,7 @@
 \alias{dijkstraBetween-methods}
 \alias{dijkstraBetween,gData-method}
 \alias{dijkstraBetween,gGraph-method}
+\alias{as.dist.gPath}
 \alias{gPath}
 \alias{plot.gPath}
 \title{ Shortest path using Dijkstra algorithm }
@@ -23,6 +24,12 @@
 
   All these functions return objects with S3 class "gPath". These
   objects can be plotted using \code{plot.gPath}.
+  
+  \code{as.dist.gPath} extracts the pairwise distances from the \code{gPath}
+  returned by \code{dijkstraBetween} and returns a \code{dist}
+  object. Note that if the \code{gPath} does not contain pairwise
+  information, a warning will be issued, but the resulting output will
+  likely be meaningless.\cr
 }
 \usage{
   \S4method{dijkstraFrom}{gGraph}(x, start, weights="default")
@@ -30,6 +37,7 @@
   \S4method{dijkstraBetween}{gGraph}(x, from, to)
   \S4method{dijkstraBetween}{gData}(x)
   \method{plot}{gPath}(x, col="rainbow", lwd=3, \dots)
+  \method{as.dist}{gPath}(x)
 }
 \arguments{
   \item{x}{a \linkS4class{gGraph} or a \linkS4class{gData}
