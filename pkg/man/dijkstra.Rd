@@ -35,7 +35,7 @@
   \S4method{dijkstraFrom}{gGraph}(x, start, weights="default")
   \S4method{dijkstraFrom}{gData}(x, start, weights="default")
   \S4method{dijkstraBetween}{gGraph}(x, from, to)
-  \S4method{dijkstraBetween}{gData}(x)
+  \S4method{dijkstraBetween}{gData}(m, diag = FALSE, upper = FALSE)
   \method{plot}{gPath}(x, col="rainbow", lwd=3, \dots)
   \method{as.dist}{gPath}(x)
 }
@@ -49,6 +49,8 @@
   \item{col}{a character string indicating a color or
     a palette of colors to be used for plotting edges.}
   \item{lwd}{a numeric value indicating the width of edges.}
+  \item{m}{a \code{gPath} object obtained by \code{dijkstraBetween}.}
+  \item{diag,upper}{unused parameters added for consistency with \code{as.dist}.}
   \item{\dots}{further arguments passed to the \code{segments} method.}
 }
 \details{

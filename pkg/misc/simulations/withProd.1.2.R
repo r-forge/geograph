@@ -80,7 +80,7 @@ isConnected(hgdp)
 ##
 addis <- list(lon=38.74,lat=9.03)
 addis <- closestNode(worldgraph.40k,addis) # this takes a while
-doSimul(addis,hgdp, ".") # result: R2=0.7946
+doSimul(addis,hgdp, ".") # result: R2=0.85
 
 
 ##
