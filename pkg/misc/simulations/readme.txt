@@ -35,3 +35,12 @@ hunter/gatherers.
 /outputs/withProd.1.2bis: correlation based on H (lower)
 
 
+
+## withProd.1.3.R ##
+Costs defined from a model predicting population density in
+hunter/gatherers, based on 93 populations.
+Uses hgdpPlus.
+/outputs/withProd.1.2: correlation based on H/(1-H)
+/outputs/withProd.1.2bis: correlation based on H (lower)
+
+
