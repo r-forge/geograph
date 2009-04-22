@@ -20,6 +20,8 @@ save(gpp, file="/home/master/dev/geograph/pkg/misc/productivity/gpp.RData")
 ## mean prod, var, range size
 meanProd <- tapply(gpp$gpp, gpp$node, mean)
 varProd <- tapply(gpp$gpp, gpp$node, var)
+maxProd <- tapply(gpp$gpp, gpp$node, max)
+
 ## rangeProd <- tapply(gpp$gpp, gpp$node, function(e) diff(range(e)))
 ## minProd <- tapply(gpp$gpp, gpp$node, min)
 

@@ -44,3 +44,18 @@ Uses hgdpPlus.
 /outputs/withProd.1.2bis: correlation based on H (lower)
 
 
+
+## withProd.1.4.R ##
+Costs defined from a model predicting population density in
+hunter/gatherers, based on 94 populations, with a model taking into
+account:
+lm(formula = ldens ~ nbMonthLessThan15 + habitat + meanProd + varProd + maxProd + lat, data = dat)
+Uses hgdpPlus.
+/outputs/withProd.1.4: correlation based on H/(1-H)
+
+
+
+## withProd.1.5.R ##
+Uniform costs, based on 94 populations.
+Uses hgdpPlus.
+/outputs/withProd.1.5: correlation based on H/(1-H)
