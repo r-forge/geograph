@@ -37,7 +37,7 @@
   \S4method{dijkstraBetween}{gGraph}(x, from, to)
   \S4method{dijkstraBetween}{gData}(m, diag = FALSE, upper = FALSE)
   \method{plot}{gPath}(x, col="rainbow", lwd=3, \dots)
-  \method{as.dist}{gPath}(x)
+  \method{as.dist}{gPath}(m, diag=FALSE, upper=FALSE, res.type=c("dist","vector"))
 }
 \arguments{
   \item{x}{a \linkS4class{gGraph} or a \linkS4class{gData}
@@ -50,7 +50,12 @@
     a palette of colors to be used for plotting edges.}
   \item{lwd}{a numeric value indicating the width of edges.}
   \item{m}{a \code{gPath} object obtained by \code{dijkstraBetween}.}
-  \item{diag,upper}{unused parameters added for consistency with \code{as.dist}.}
+  \item{diag,upper}{unused parameters added for consistency with
+    \code{as.dist}.}
+  \item{res.type}{a character string indicating what type of result
+  should be returned: a \code{dist} object ('dist'), or a vector of
+  distances ('vector'). Note that 'dist' should only be required for
+  pairwise data, as output by dijkstraBetween (as opposed to dijkstraFrom).}
   \item{\dots}{further arguments passed to the \code{segments} method.}
 }
 \details{

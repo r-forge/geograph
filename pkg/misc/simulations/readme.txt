@@ -59,3 +59,10 @@ Uses hgdpPlus.
 Uniform costs, based on 94 populations.
 Uses hgdpPlus.
 /outputs/withProd.1.5: correlation based on H/(1-H)
+
+
+
+## withProd.1.6.R ##
+Costs based on lm3, based on 94 populations.
+Uses hgdpPlus. Uses an ANCOVA, additional factor being old world / new world
+/outputs/withProd.1.5: correlation based on H/(1-H)
