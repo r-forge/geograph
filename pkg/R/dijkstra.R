@@ -115,7 +115,7 @@ setMethod("dijkstraBetween", "gData", function(x){
     ## make it a class "gPath" (output + xy coords) ##
     allNodes <- unique(unlist(lapply(res, function(e) e$path_detail)))
     ##res$xy <- getCoords(x)[allNodes,]
-    attr(res,"xy") <- getCoords(x)[allNodes,]
+    attr(res,"xy") <- coords(x)[allNodes,]
     class(res) <- "gPath"
 
     return(res)
@@ -157,7 +157,7 @@ setMethod("dijkstraFrom", "gGraph", function(x, start){
     if(!all(start %in% getNodes(x))) stop("Starting node is not in x.")
 
     ## check connectivity ##
-    if(!areConnected(myGraph, getNodes(myGraph))) stop("Not all nodes are connected by the graph.")
+    if(!areConnected(x, getNodes(myGraph))) stop("Not all nodes are connected by the graph.")
 
     ## build the wrapper ##
     myGraph <- getGraph(x)
@@ -224,7 +224,7 @@ setMethod("dijkstraFrom", "gData", function(x, start){
     ## make it a class "gPath" (output + xy coords) ##
     allNodes <- unique(unlist(lapply(res, function(e) e$path_detail)))
     ##res$xy <- getCoords(x)[allNodes,]
-    attr(res,"xy") <- getCoords(x)[allNodes,]
+    attr(res,"xy") <- coords[allNodes,]
     class(res) <- "gPath"
 
     return(res)
@@ -301,6 +301,7 @@ as.dist.gPath <- function(m, diag=FALSE, upper=FALSE, res.type=c("dist","vector"
 
     ## find the size of the dist object ##
     x <- m
+    res.type <- match.arg(res.type)
     L <- length(x)
     x.names <- sub(":.*","",names(x))
     i <- 1
