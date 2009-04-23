@@ -59,7 +59,8 @@ setMethod("dijkstraBetween", "gGraph", function(x, from, to){
 
     ## make it a class "gPath" (output + xy coords) ##
     allNodes <- unique(unlist(lapply(res, function(e) e$path_detail)))
-    res$xy <- getCoords(x)[allNodes,]
+    ##res$xy <- getCoords(x)[allNodes,]
+    attr(res,"xy") <- getCoords(x)[allNodes,]
     class(res) <- "gPath"
 
     return(res)
@@ -113,7 +114,8 @@ setMethod("dijkstraBetween", "gData", function(x){
 
     ## make it a class "gPath" (output + xy coords) ##
     allNodes <- unique(unlist(lapply(res, function(e) e$path_detail)))
-    res$xy <- coords[allNodes,]
+    ##res$xy <- getCoords(x)[allNodes,]
+    attr(res,"xy") <- getCoords(x)[allNodes,]
     class(res) <- "gPath"
 
     return(res)
@@ -174,7 +176,8 @@ setMethod("dijkstraFrom", "gGraph", function(x, start){
 
     ## make it a class "gPath" (output + xy coords) ##
     allNodes <- unique(unlist(lapply(res, function(e) e$path_detail)))
-    res$xy <- getCoords(x)[allNodes,]
+    ##res$xy <- getCoords(x)[allNodes,]
+    attr(res,"xy") <- getCoords(x)[allNodes,]
     class(res) <- "gPath"
 
     return(res)
@@ -220,7 +223,8 @@ setMethod("dijkstraFrom", "gData", function(x, start){
 
     ## make it a class "gPath" (output + xy coords) ##
     allNodes <- unique(unlist(lapply(res, function(e) e$path_detail)))
-    res$xy <- coords[allNodes,]
+    ##res$xy <- getCoords(x)[allNodes,]
+    attr(res,"xy") <- getCoords(x)[allNodes,]
     class(res) <- "gPath"
 
     return(res)
@@ -245,8 +249,11 @@ setMethod("dijkstraFrom", "gData", function(x, start){
 #################
 plot.gPath <- function(x, col="rainbow", lwd=3, ...){
 
-    listNodes <- lapply(x[-length(x)], function(e) e$path_detail)
-    xy <- x$xy
+    ##listNodes <- lapply(x[-length(x)], function(e) e$path_detail)
+    listNodes <- lapply(x, function(e) e$path_detail)
+
+    ##xy <- x$xy
+    xy <- attr(x,"xy")
     Npath <- length(listNodes)
 
     ## handle color ##
@@ -290,13 +297,10 @@ plot.gPath <- function(x, col="rainbow", lwd=3, ...){
 ## CONVERSION gPath -> distance
 ##
 
-as.dist.gPath <- function(x){
-
-    ## remove xy coords
-    x <- x[-length(x)]
-
+as.dist.gPath <- function(m, diag=FALSE, upper=FALSE, res.type=c("dist","vector")){
 
     ## find the size of the dist object ##
+    x <- m
     L <- length(x)
     x.names <- sub(":.*","",names(x))
     i <- 1
@@ -308,6 +312,7 @@ as.dist.gPath <- function(x){
 
     ## check size consistency
     if(L != (resSize * (resSize-1) *0.5)){
+        if(res.type=="dist")
         warning("Length of x does not match a number of pairwise comparisons.")
     }
 
@@ -317,9 +322,14 @@ as.dist.gPath <- function(x){
 
 
     ## BUILD RESULT ##
-    res <- dist(1:resSize)
+    ## type == dist
+    if(res.type=="dist"){
+        res <- dist(1:resSize)
+        res[] <- resDist
+    }
 
-    res[] <- resDist
+    ## type == vector (no change)
+    res <- resDist
 
     return(res)
 } # end as.dist.gPath

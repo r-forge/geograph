@@ -25,9 +25,9 @@ source("doSimul.R")
 ##
 
 ## load costs
-load("/home/master/dev/geograph/pkg/misc/simulations/costsFromLm1.RData")
+load("/home/master/dev/geograph/pkg/misc/simulations/costsFromLm3.RData")
 
-myCosts <- costsFromLm1
+# myCosts <- costsFromLm3
 
 
 ## set costs

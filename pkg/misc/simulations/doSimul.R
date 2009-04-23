@@ -17,9 +17,10 @@ doSimul <- function(startNode, data = hgdp, path=""){
         myPath <- get(objName)
         save(myPath, file=paste(objName,".RData",sep=""))
 
-        geo.dist <- sapply(myPath[-length(myPath)],function(e) e$length)
-        geo.dist[is.na(geo.dist)] <- 0 # occurs when the source is one hgdp pop
-
+        ##geo.dist <- sapply(myPath[-length(myPath)],function(e) e$length)
+        ##geo.dist[is.na(geo.dist)] <- 0 # occurs when the source is one hgdp pop
+        geo.dist <- as.dist(myPath)
+        
         div <- data@data$Genetic.Div
         R2[i] <- cor(geo.dist, div/(1-div) )^2
         ##R2[i] <- cor(geo.dist, div)^2
