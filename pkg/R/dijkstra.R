@@ -115,7 +115,7 @@ setMethod("dijkstraBetween", "gData", function(x){
     ## make it a class "gPath" (output + xy coords) ##
     allNodes <- unique(unlist(lapply(res, function(e) e$path_detail)))
     ##res$xy <- getCoords(x)[allNodes,]
-    attr(res,"xy") <- coords(x)[allNodes,]
+    attr(res,"xy") <- getCoords(x)[allNodes,]
     class(res) <- "gPath"
 
     return(res)
