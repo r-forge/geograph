@@ -14,7 +14,6 @@ setGeneric("dijkstraBetween", function(x,...) {
 ## method for gGraph
 #####################
 setMethod("dijkstraBetween", "gGraph", function(x, from, to){
-
     ## some checks ##
     if(!require(RBGL)) stop("RBGL is required.")
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
@@ -75,6 +74,7 @@ setMethod("dijkstraBetween", "gGraph", function(x, from, to){
 ## method for gData
 #####################
 setMethod("dijkstraBetween", "gData", function(x){
+##temp <- function(x){ # for debugging
 
     ## some checks ##
     if(!require(RBGL)) stop("RBGL is required.")
@@ -115,7 +115,7 @@ setMethod("dijkstraBetween", "gData", function(x){
     ## make it a class "gPath" (output + xy coords) ##
     allNodes <- unique(unlist(lapply(res, function(e) e$path_detail)))
     ##res$xy <- getCoords(x)[allNodes,]
-    attr(res,"xy") <- getCoords(x)[allNodes,]
+    attr(res,"xy") <- coords[allNodes,]
     class(res) <- "gPath"
 
     return(res)
@@ -327,10 +327,10 @@ as.dist.gPath <- function(m, diag=FALSE, upper=FALSE, res.type=c("dist","vector"
     if(res.type=="dist"){
         res <- dist(1:resSize)
         res[] <- resDist
+    } else {
+        ## type == vector (no change)
+        res <- resDist
     }
-
-    ## type == vector (no change)
-    res <- resDist
 
     return(res)
 } # end as.dist.gPath
