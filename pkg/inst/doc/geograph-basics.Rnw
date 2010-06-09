@@ -1,0 +1,137 @@
+\documentclass{article}
+% \VignettePackage{geoGraph}
+% \VignetteIndexEntry{geoGraph: exploratory analyses for the phylogenetic comparative method}
+
+\usepackage{graphicx}
+\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
+\usepackage{array}
+\usepackage{color}
+
+\usepackage[utf8]{inputenc} % for UTF-8/single quotes from sQuote()
+\newcommand{\code}[1]{{{\tt #1}}}
+\title{\code{geoGraph}: implementing geographic graphs for large-scale spatial modelling}
+\author{Thibaut Jombart, Andrea Manica, Fran\ccois Balloux}
+\date{\today}
+
+
+
+
+\sloppy
+\hyphenpenalty 10000
+
+
+\begin{document}
+
+
+
+\definecolor{Soutput}{rgb}{0,0,0.56}
+\definecolor{Sinput}{rgb}{0.56,0,0}
+\DefineVerbatimEnvironment{Sinput}{Verbatim}
+{formatcom={\color{Sinput}},fontsize=\footnotesize, baselinestretch=0.75}
+\DefineVerbatimEnvironment{Soutput}{Verbatim}
+{formatcom={\color{Soutput}},fontsize=\footnotesize, baselinestretch=0.75}
+
+\color{black}
+
+\maketitle
+\tableofcontents
+
+
+
+%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%
+
+\SweaveOpts{prefix.string = figs/geoGraph, fig = FALSE, eps = FALSE, pdf = TRUE, width = 6, height = 6}
+
+
+This document describes the \code{geoGraph} package for the R software.
+\code{geoGraph} aims at implementing 
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%
+\section{First steps}
+%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%
+\subsection{Installing the package}
+%%%%%%%%%%%%%%%%%%%%%
+
+What is tricky here is that a vignette is basically available once the package
+is installed.  Assuming you got this document before installing the package, here are some clues
+about installing \code{geoGraph}.  \\
+
+First of all, \code{geoGraph} depends on other packages, being \code{methods}, \code{...},
+\code{...}, and \code{...}.  
+These dependencies are mandatory, that is, you actually need to
+have these packages installed before using \code{geoGraph}.  Also, it is better to make sure you are
+using the latest versions of these packages. This can be achieved using
+the \texttt{update.packages} command, or by installing devel versions from R-Forge
+(\url{http://r-forge.r-project.org/}).  In all cases, the latest version of \code{geoGraph} can be
+found from \url{http://r-forge.r-project.org/R/...}.  \\
+
+When loading the package, dependencies are also loaded:
+<<load>>=
+library(geoGraph)
+search()
+@
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%
+\subsection{Data representation}
+%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%
+\subsection{Getting started}
+%%%%%%%%%%%%%%%%%%%%%
+All the material of the package is summarized in a manpage accessible
+by typing:
+<<eval=FALSE>>=
+?geoGraph
+@
+
+The html version of this manpage may be preferred to browse easily the content
+of \code{geoGraph}; this is accessible by typing:
+<<eval=FALSE>>=
+help("geoGraph", package="geoGraph", html=TRUE)
+@
+
+To revert help back to text mode, simply type:
+<<eval=FALSE>>=
+options(htmlhelp = FALSE)
+@
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%
+\subsection{Putting data into shape}
+%%%%%%%%%%%%%%%%%%%%%
+
+
+
+% % % % % % % % % % %
+\subsubsection{Making a \code{phylo} object}
+% % % % % % % % % % %
+
+
+
+
+
+\end{document}
