@@ -97,14 +97,17 @@ What is tricky here is that a vignette is basically available once the package
 is installed.  Assuming you got this document before installing the package, here are some clues
 about installing \code{geoGraph}.  \\
 
-First of all, \code{geoGraph} depends on other packages, being \code{methods}, \code{...},
-\code{...}, and \code{...}.
+First of all, \code{geoGraph} depends on the packages \code{methods} (base package), \code{graph} (on Bioconductor),
+and \code{RBGL} (on Bioconductor).
 These dependencies are mandatory, that is, you actually need to
-have these packages installed before using \code{geoGraph}.  Also, it is better to make sure you are
-using the latest versions of these packages. This can be achieved using
-the \texttt{update.packages} command, or by installing devel versions from R-Forge
-(\url{http://r-forge.r-project.org/}).  In all cases, the latest version of \code{geoGraph} can be
-found from \url{http://r-forge.r-project.org/R/...}.  \\
+have these packages installed before using \code{geoGraph}.
+Also, it is better to make sure you are using the latest versions of these packages.
+While the \code{methods} package is part of the basic R release, \code{graph} and \code{RBGL} are
+no longer developped on CRAN, although some outdated versions still persist.
+To make sure you are using the right version, use the command \code{installDep.geoGraph()} while
+connected on the internet.
+Do NOT use \code{install.packages}, or related functionalities from the interactive menus.
+In all cases, the latest version of \code{geoGraph} can be found from \url{http://r-forge.r-project.org/R/...}.  \\
 
 When loading the package, dependencies are also loaded:
 <<load>>=
