@@ -130,7 +130,7 @@ installDep.geoGraph <- function(){
     source("http://bioconductor.org/biocLite.R")
     biocLite("graph")
     cat("\n...done.\n")
-    
+
     cat("\nInstalling RBGL from Bioconductor\n")
     biocLite("RBGL")
     cat("\n...done.\n")
