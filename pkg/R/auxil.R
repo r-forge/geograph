@@ -116,3 +116,22 @@ geo.segments <- function(x0, y0, x1, y1,
     par(xpd=oxpd)
     return(invisible())
 } # end geo.segments
+
+
+
+
+
+
+#######################
+## installDep.geoGraph
+#######################
+installDep.geoGraph <- function(){
+    cat("\nInstalling graph from Bioconductor ... \n")
+    source("http://bioconductor.org/biocLite.R")
+    biocLite("graph")
+    cat("\n...done.\n")
+    
+    cat("\nInstalling RBGL from Bioconductor\n")
+    biocLite("RBGL")
+    cat("\n...done.\n")
+} # end checkInstall.geoGraph
