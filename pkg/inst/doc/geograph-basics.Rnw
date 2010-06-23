@@ -48,7 +48,34 @@
 
 
 This document describes the \code{geoGraph} package for the R software.
-\code{geoGraph} aims at implementing 
+\code{geoGraph} aims at implementing graph approaches for geographic data.
+In \code{geoGraph}, a given geographic area is modelled by a fine regular grid, where each vertice
+has a set of spatial coordinates and a set of attributes, which can be for instance habitat
+descriptors, or the presence/abundance of a given species.
+'Travelling' within the geographic area can then be easily modelled as moving between connected vertices.
+The costs of moving from one vertex to another can be defined according to attribute values, which
+allows for instance to define \emph{frictions} based on habitat.
+\\
+
+\code{geoGraph} harnesses the full power of graph algorithms implemented in R by the \code{graph}
+and the \code{RBGL} (R Boost Graph Library) packages.
+In particular, RBGL is an interface between R and the impressive \emph{Boost Graph Library} in C++,
+proposing a wide range of algorithms with fast and efficient implementation.
+Therefore, once we have defined frictions for an entire geographic area, we can easily, for instance, find the least
+costs path from one node to another, or find the most parsimonious way of connecting a set of locations.
+\\
+
+Once all data are set, calling upon RBGL routines is generally straightforward.
+However, interfacing spatial data and graphs can be a complicated task.
+The purpose of \code{geoGraph} is to simplify these 'preliminary' steps.
+This is achieved by defining new classes of objects which are essentially geo-referenced graphs
+with attributes (\code{gGraph} objects) and interfaced spatial data (\code{gData} objects).
+In this vignette, we show how to install \code{geoGraph}, show how to construct and handle
+\code{gGraph}/\code{gData} objects, and illustrate some basic features of graph algorithms.
+
+
+
+
 
 
 
@@ -71,7 +98,7 @@ is installed.  Assuming you got this document before installing the package, her
 about installing \code{geoGraph}.  \\
 
 First of all, \code{geoGraph} depends on other packages, being \code{methods}, \code{...},
-\code{...}, and \code{...}.  
+\code{...}, and \code{...}.
 These dependencies are mandatory, that is, you actually need to
 have these packages installed before using \code{geoGraph}.  Also, it is better to make sure you are
 using the latest versions of these packages. This can be achieved using
