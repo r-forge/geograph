@@ -50,7 +50,6 @@ o provide zoom method(s)
 o provide points add/removal methods
 o provide edge add/removal methods
 o provide nodes.attr methods
-*o* provide revert method
 o provide a method to define connectivity from the @nodes.attr slot.
 o provide a method to interact with layers
 o use different lwd when plotting edges
@@ -67,7 +66,6 @@ o test all relevant components of the bulk code -- done
 o check interactivity with layers:
 - pay attention to donuts/islands -> badly plotted... badly handled as well ??
 - -> badly handled: point.in.polygon is misleaded. Have to contact RB.
-- defines coasts
 
 
 
