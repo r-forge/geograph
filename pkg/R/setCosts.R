@@ -1,7 +1,7 @@
 ###############
-## setFriction
+## setCosts
 ###############
-setFriction <- function(x, attr.name=NULL, node.costs=NULL, method=c("mean", "product")){
+setCosts <- function(x, attr.name=NULL, node.costs=NULL, method=c("mean", "product")){
     ## some checks + argument handling
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
     method <- match.arg(method)
@@ -52,4 +52,4 @@ setFriction <- function(x, attr.name=NULL, node.costs=NULL, method=c("mean", "pr
     res@graph <- newGraph
 
     return(res)
-} # end setFriction
+} # end setCosts

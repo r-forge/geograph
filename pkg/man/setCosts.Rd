@@ -1,9 +1,9 @@
 \encoding{UTF-8}
-\name{setFriction}
-\alias{setFriction}
+\name{setCosts}
+\alias{setCosts}
 \title{Set friction in a gGraph object}
 \description{
-  The function \code{setFriction} define costs for the edges of a
+  The function \code{setCosts} define costs for the edges of a
   \linkS4class{gGraph} object according to a node attribute and some
   rules defined in the \code{@meta\$costs} slot of the object. Each node
   has a value for the chosen attribute, which is associated to a costs
@@ -18,7 +18,7 @@
   'weights' as defined in \code{graph} and \code{RBGL} packages.
 }
 \usage{
-setFriction(x, attr.name=NULL, node.costs=NULL, method=c("mean", "product"))
+setCosts(x, attr.name=NULL, node.costs=NULL, method=c("mean", "product"))
 }
 \arguments{
   \item{x}{a \linkS4class{gGraph} object with a least one node
@@ -55,7 +55,7 @@ title("Europe")
 x <- rawgraph.10k[isInArea(rawgraph.10k)]
 
 ## define weights for edges
-x <- setFriction(x, attr.name="habitat")
+x <- setCosts(x, attr.name="habitat")
 plot(x,edges=TRUE)
 title("costs defined by habitat (land/land=1, other=100)")
 

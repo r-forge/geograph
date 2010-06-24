@@ -95,7 +95,7 @@
       \code{@meta\$color} slot in \code{\link{worldgraph.10k}} for an
       example.\cr
       -  \code{\$weights}: a data.frame giving weights to be used when computing
-      edge weights using \code{\link{setFriction}}. The first column is a
+      edge weights using \code{\link{setCosts}}. The first column is a
       node attribute, and the second column gives corresponding weights. See the
       \code{@meta\$costs} slot in \code{\link{worldgraph.10k}} for an
       example.}
@@ -195,7 +195,7 @@ plot(x,reset=TRUE, edges=TRUE)
 title("x does just contain these visible nodes.")
 
 ## define weights for edges
-x <- setFriction(x, attr.name="habitat", method="prod")
+x <- setCosts(x, attr.name="habitat", method="prod")
 plot(x,edges=TRUE)
 title("costs defined by habitat (land/land=1, other=100)")
 

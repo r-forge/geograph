@@ -45,7 +45,7 @@
 
    - \code{\link{findLand}}: checks which nodes are on land.\cr
    
-   - \code{\link{setFriction}}: define edges weights accoring to rules
+   - \code{\link{setCosts}}: define edges weights accoring to rules
      specified in the @meta slot.\cr
    
    - \code{\link{geo.add.edges}}, \code{\link{geo.remove.edges}}:
@@ -141,7 +141,7 @@ plot(x,reset=TRUE, edges=TRUE)
 title("x does just contain these visible nodes.")
 
 ## define weights for edges
-x <- setFriction(x, attr.name="habitat", method="prod")
+x <- setCosts(x, attr.name="habitat", method="prod")
 plot(x,edges=TRUE)
 title("connectivity defined by habitat (land/land=1, other=0)")
 
