@@ -166,9 +166,24 @@ data(worldgraph.10k)
 worldgraph.10k
 worldgraph.10k@meta
 @
+Lastly, the \code{graph} component is a \code{graphNEL} object, which is the standard class for
+graphs in the \code{graph} and \code{RBGL} packages.
+This object contains all information on the connections between nodes, and the weights (costs) of
+these connections.
+\\
 
-
-
+Four main \code{gGraph} are provided with \code{geoGraph}: \code{rawgraph.10k}, \code{rawgraph.40k},
+\code{worldgraph.10k}, and \code{worldgraph.40k}.
+These datasets are available using the command \code{data}.
+All these datasets are evenly spaced grids covering the entire earth, with some basic habitats
+descriptors provided as node attributes.
+The difference between rawgraphs and worldgraphs is that the first are entirely connected, while in the
+second connections occur only on land.
+Numbers `10k' and `40k' indicate that the grids are formed of roughly 10,000 and 40,000 nodes.
+For illustrative purposes, we shall use the 10k grids, since they are less heavy to handle.
+For most large-scale applications, the 40k versions should provide sufficient resolution.
+New \code{gGraph} can be constructed using the constructor (\code{new(...)}), but this topic is not
+documented in this vignette.
 
 
 
