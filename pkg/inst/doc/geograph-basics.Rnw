@@ -146,6 +146,7 @@ and a new empty object can be obtained using the constructor:
 <<>>=
 new("gGraph")
 @
+
 The documentation \code{?gGraph} explains the basics about the object's content.
 In a nutshell, these objects are spatial grids with nodes and segments connecting neighbouring
 nodes, and additional informations on the nodes or on the graph itself.
@@ -184,6 +185,41 @@ For illustrative purposes, we shall use the 10k grids, since they are less heavy
 For most large-scale applications, the 40k versions should provide sufficient resolution.
 New \code{gGraph} can be constructed using the constructor (\code{new(...)}), but this topic is not
 documented in this vignette.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{gData objects}
+%%%%%%%%%%%%%%%%%%%%%
+\code{gData} are essentially sets of locations that have been interfaced with a \code{gGraph} object.
+During this operation, each location is assigned to the closest node on the grid of the
+\code{gGraph}, then allowing for travelling between locations on the grid.
+Then, for instance, it is possible to find the shortest path between two locations through some
+types of habitats, or using ecological costs.
+\\
+
+Like for \code{gGraph}, the content of the formal class \code{gData} can be obtained using:
+<<>>=
+getClass("gData")
+@
+and a new empty object can be obtained using the constructor:
+<<>>=
+new("gData")
+@
+As before, the description of the content of these objects can be found in the documentation (\code{?gData}).
+\code{coords} is a matrix of xy (longitude/latitude) coordinates in which each row is a location.
+\code{nodes.id} is vector of characters giving the name of the nodes matching the locations; this is
+defined automatically when creating a new \code{gData}, or using the function \code{closestNode}.
+\code{data} is a slot storing data associated to the locations; it can be anything, but a data.frame
+should cover most requirements for storing data.
+Note that this object should be subsettable (i.e. the \code{[} operator should be defined), so that
+  data can be subsetted when subsetting the \code{gData} object.
+
+
+\\
+
+
 
 
 
