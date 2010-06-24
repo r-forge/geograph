@@ -29,7 +29,7 @@ geo.change.attr(x, mode=c("points","area"), attr.name, attr.value,
   \item{restore.edges}{a logical indicating whether edges stemming from
     the modified nodes should be re-added to the graph, using
     \code{refObj} as a reference. This is useful when connectivity is to
-  be redefined using \code{\link{setFriction}} for nodes that were
+  be redefined using \code{\link{setCosts}} for nodes that were
   previously disconnected.}
   \item{refObj}{a character string or a \linkS4class{gGraph} object,
     used as reference when re-adding edges. If a character string is
