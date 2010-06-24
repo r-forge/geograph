@@ -27,12 +27,11 @@ setClass("gGraph",
 
 
 setClass("gData", representation(coords="matrix", nodes.id="character", data="ANY",
-                                 gGraph.name="character", gGraph.version="character"),
+                                 gGraph.name="character"),
          prototype(coords = matrix(numeric(0), ncol=2, dimnames=list(NULL, c("lon","lat"))),
                    nodes.id = character(0),
                    data=NULL,
-                   gGraph.name="",
-                   gGraph.version="")
+                   gGraph.name="")
          )
 
 

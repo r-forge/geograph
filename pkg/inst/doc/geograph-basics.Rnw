@@ -10,7 +10,7 @@
 \usepackage[utf8]{inputenc} % for UTF-8/single quotes from sQuote()
 \newcommand{\code}[1]{{{\tt #1}}}
 \title{\code{geoGraph}: implementing geographic graphs for large-scale spatial modelling}
-\author{Thibaut Jombart, Andrea Manica, Fran\ccois Balloux}
+\author{Thibaut Jombart, Andrea Manica, Fran\c{c}ois Balloux}
 \date{\today}
 
 
@@ -225,40 +225,68 @@ of locations.
 
 
 
+
+
+
 %%%%%%%%%%%%%%%%%%%%%
-\subsection{Getting started}
 %%%%%%%%%%%%%%%%%%%%%
-All the material of the package is summarized in a manpage accessible
+\section{Using \code{geoGraph}}
+%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%
+An overview of the material implemented in the package is summarized in a manpage accessible
 by typing:
 <<eval=FALSE>>=
 ?geoGraph
 @
-
 The html version of this manpage may be preferred to browse easily the content
 of \code{geoGraph}; this is accessible by typing:
 <<eval=FALSE>>=
 help("geoGraph", package="geoGraph", html=TRUE)
 @
-
 To revert help back to text mode, simply type:
 <<eval=FALSE>>=
 options(htmlhelp = FALSE)
 @
 
+In the following, we go through various tasks that can be achieve using \code{geoGraph}.
 
 
 
 
 %%%%%%%%%%%%%%%%%%%%%
-\subsection{Putting data into shape}
+\subsection{Importing geographic data}
+%%%%%%%%%%%%%%%%%%%%%
+Geographic data consist of a set of locations, possibly accompanied with additional information.
+For instance, one may want to study the dispersal in a set of biological populations with known
+latitude and longitude.
+In \code{geoGraph}, geographic data are stored in \code{gData} objects, which matches each
+location to a node of a grid (\code{gGraph} object), and stored additional data.
+
+As a toy example, let us consider London (UK), Malaga (Spain), and Zagreb (Croatia).
+
+
+
+%%%%%%%%%%%%%%%%
+\subsection{Visualizing data}
+%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%
+\subsection{Editing graphs}
+%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%
+\subsection{Extracting information from GIS shapefiles}
 %%%%%%%%%%%%%%%%%%%%%
 
 
 
-% % % % % % % % % % %
-\subsubsection{Making a \code{phylo} object}
-% % % % % % % % % % %
-
+%%%%%%%%%%%%%%%%%%%%%
+\subsection{Finding least-cost paths}
+%%%%%%%%%%%%%%%%%%%%%
 
 
 
