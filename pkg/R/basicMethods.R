@@ -259,7 +259,8 @@ setMethod("show", "gData", function(object){
     print(head(x@data, nDisp))
     if(N > nDisp) cat("...\n")
 
-    cat("\nAssociated gGraph:",x@gGraph.name, "[",x@gGraph.version,"]\n")
+    ##cat("\nAssociated gGraph:",x@gGraph.name, "[",x@gGraph.version,"]\n")
+    cat("\nAssociated gGraph:",x@gGraph.name,"\n")
 
 }) # end show gData
 
