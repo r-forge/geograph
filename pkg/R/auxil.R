@@ -126,6 +126,12 @@ geo.segments <- function(x0, y0, x1, y1,
 ## installDep.geoGraph
 #######################
 installDep.geoGraph <- function(){
+    cat("\nInstalling MASS, sp, maptools from CRAN ... \n")
+    install.packages("MASS")
+    install.packages("sp")
+    install.packages("maptools")
+    cat("\n...done.\n")
+
     cat("\nInstalling graph from Bioconductor ... \n")
     source("http://bioconductor.org/biocLite.R")
     biocLite("graph")

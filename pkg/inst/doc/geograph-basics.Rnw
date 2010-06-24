@@ -213,8 +213,9 @@ As before, the description of the content of these objects can be found in the d
 defined automatically when creating a new \code{gData}, or using the function \code{closestNode}.
 \code{data} is a slot storing data associated to the locations; it can be anything, but a data.frame
 should cover most requirements for storing data.
-Note that this object should be subsettable (i.e. the \code{[} operator should be defined), so that
-  data can be subsetted when subsetting the \code{gData} object.
+Note that this object should be subsettable (i.e. the \code{[} operator should be defined), so that data can be subsetted when subsetting the \code{gData} object.
+Lastly, the slot \code{gGraph.name} contains the name of the \code{gGraph} object to which the
+\code{gData} has been interfaced.
 \\
 
 
@@ -263,6 +264,16 @@ In \code{geoGraph}, geographic data are stored in \code{gData} objects, which ma
 location to a node of a grid (\code{gGraph} object), and stored additional data.
 
 As a toy example, let us consider London (UK), Malaga (Spain), and Zagreb (Croatia).
+Since we will be working with a crude grid (10,000 nodes), locations need not be exact.
+We enter the longitudes and latitudes (in this order, that is, xy coordinates), in decimal degrees, for these cities:
+<<cities>>=
+London <- c(0,51)
+Malaga <- c(4,37)
+Zagreb <- c(16,46)
+cities <- rbind(London, Malaga, Zagreb)
+colnames(cities) <- c("lon","lat")
+cities
+@
 
 
 
