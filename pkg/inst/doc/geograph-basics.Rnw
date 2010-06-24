@@ -215,10 +215,12 @@ defined automatically when creating a new \code{gData}, or using the function \c
 should cover most requirements for storing data.
 Note that this object should be subsettable (i.e. the \code{[} operator should be defined), so that
   data can be subsetted when subsetting the \code{gData} object.
-
-
 \\
 
+
+Contrary to \code{gGraph} objects, \code{gData} objects will frequently be constructed.
+In the next sections, we shall illustrate how we can build and use \code{gData} objects from a set
+of locations.
 
 
 
