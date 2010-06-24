@@ -115,12 +115,58 @@ library(geoGraph)
 search()
 @
 
+The package is now ready to use.
+
 
 
 
 %%%%%%%%%%%%%%%%%%%%%
 \subsection{Data representation}
 %%%%%%%%%%%%%%%%%%%%%
+Two types of objects are used in \code{geoGraph}: \code{gGraph}, and \g{gData} objects.
+Both objects are defined as formal (S4) classes and often have methods for similar generic function
+(\textit{e.g.}, getNodes is defined for both objects).
+Essentially, \code{gGraph} objects contain underlying layers of informations, including a spatial
+grid and possibly node attributes, and covering the area of interest.
+\code{gData} are sets of locations -- like sampled sites, for instance -- which have been interfaced
+to a \code{gGraph} object, to allow further manipulations such as finding paths on the grid between
+pairs of locations.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{gGraph objects}
+%%%%%%%%%%%%%%%%%%%%%
+The content of the formal class \code{gGraph} can be obtained using:
+<<>>=
+getClass("gGraph")
+@
+and a new empty object can be obtained using the constructor:
+<<>>=
+new("gGraph")
+@
+The documentation \code{?gGraph} explains the basics about the object's content.
+In a nutshell, these objects are spatial grids with nodes and segments connecting neighbouring
+nodes, and additional informations on the nodes or on the graph itself.
+\code{coords} is a matrix of longitudes and latitudes of the nodes.
+\code{nodes.attr} is a data.frame storing attributes of the nodes, such as habitat descriptors; each
+row corresponds to a node of the grid, each column being a variable.
+\code{meta} is a list containing miscellanous informations on the graph itself.
+There is no contraint in the components of the list, but some components will be recognised by
+certain functions.
+For instance, you can specify plotting rules for representing a given node attribute by a given
+color by defining a component \code{\$colors}.
+Similarly, you can associate costs to a given node attribute by defining a component \code{\$costs}.
+An example of this can be found in already existing \code{gGraph} objects.
+For instance, \code{worldgraph.10k} is a graph of the world with approximately 10,000 nodes, and
+only on-land connectivity (\textit{i.e.} no travelling on the seas).
+<<>>=
+data(worldgraph.10k)
+worldgraph.10k
+worldgraph.10k@meta
+@
+
 
 
 
