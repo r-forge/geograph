@@ -6,14 +6,14 @@
 \alias{getCoords,gGraph-method}
 \alias{getDates,gGraph-method}
 \alias{getGraph,gGraph-method}
-\alias{getHistory,gGraph-method}
+% \alias{getHistory,gGraph-method}
 \alias{getNodes,gGraph-method}
 \alias{initialize,gGraph-method}
 \alias{dropCosts,gGraph-method}
 \alias{dropCosts}
 \alias{show,gGraph-method}
 \alias{is.gGraph}
-\alias{getHistory}
+% \alias{getHistory}
 \alias{getGraph}
 \alias{getDates}
 \alias{getCoords}
@@ -42,9 +42,9 @@
   vertices. Data associated to the nodes can also be stored ('nodes attributes'), as well as
   meta-information used when plotting the object, or when computing
   weights associated to the edges based on nodes attributes.\cr
-  History associated to a \code{gGraph} object is stored in the slot
-  \code{history}, as an object of the class
-  \linkS4class{gGraphHistory}.\cr
+  % History associated to a \code{gGraph} object is stored in the slot
+  % \code{history}, as an object of the class
+  % \linkS4class{gGraphHistory}.\cr
 
   In all slots, nodes are uniquely identified by their name (reference
   is taken from the row names of \code{@coords} slot).
@@ -64,12 +64,12 @@
     \item{\code{graph}}{an object of the class \linkS4class{graphNEL},
       from the \code{graph} package (see \code{class?graphNEL}),
       describing connectivity among nodes.}
-    \item{\code{history}}{an object of the class
-      \linkS4class{gGraphHistory}, storing a previous history.}
-    \item{\code{cmd}}{an unevaluated expression (see \code{?expression})
-      passed to the \linkS4class{gGraphHistory} object.}
-    \item{\code{comments}}{a character string passed to the
-      \linkS4class{gGraphHistory} object, commenting the object creation.}
+    %   \item{\code{history}}{an object of the class
+    %    \linkS4class{gGraphHistory}, storing a previous history.}
+    % \item{\code{cmd}}{an unevaluated expression (see \code{?expression})
+    %   passed to the \linkS4class{gGraphHistory} object.}
+    % \item{\code{comments}}{a character string passed to the
+    %   \linkS4class{gGraphHistory} object, commenting the object creation.}
     %  \item{\code{}}{}
     %   \item{\code{}}{}
     %   \item{\code{}}{}
@@ -101,9 +101,9 @@
       example.}
     \item{\code{graph}:}{Object of class \linkS4class{graphNEL} (see
       \code{class?graphNEL} for more information).}
-    \item{\code{history}:}{Object of class
-      \linkS4class{gGraphHistory}, recording the history associated to the
-      object.}
+    % \item{\code{history}:}{Object of class
+    %   \linkS4class{gGraphHistory}, recording the history associated to the
+    %   object.}
   }
 }
 \section{Methods}{
@@ -136,8 +136,8 @@
     \item{getEdges*}{\code{signature(x = "gGraph")}: get edges of the object.}
     \item{getGraph}{\code{signature(x = "gGraph")}: get the graph of the
       object (as a \code{graphNEL} object).}
-    \item{getHistory}{\code{signature(x = "gGraph")}: get the history of
-      the object.}
+    % \item{getHistory}{\code{signature(x = "gGraph")}: get the history of
+    %   the object.}
     \item{getNodesAttr*}{\code{signature(x = "gGraph")}: get the nodes
       attributes of the object.}
     \item{getNodes}{\code{signature(x = "gGraph")}: get the names of the
@@ -167,7 +167,7 @@
 
 \seealso{
   Related classes are:\cr
-  -  \code{\linkS4class{gGraphHistory}}: slot \code{@history} in \code{gGraph}.\cr
+  % -  \code{\linkS4class{gGraphHistory}}: slot \code{@history} in \code{gGraph}.\cr
   -  \code{\linkS4class{graphNEL}} (graph package): slot \code{@graph} in \code{gGraph}.\cr
 }
 \examples{

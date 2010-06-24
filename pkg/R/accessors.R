@@ -1,15 +1,15 @@
-##############
-## getHistory
-##############
-setGeneric("getHistory", function(x,...) {
-    standardGeneric("getHistory")
-})
+## ##############
+## ## getHistory
+## ##############
+## setGeneric("getHistory", function(x,...) {
+##     standardGeneric("getHistory")
+## })
 
 
-setMethod("getHistory", "gGraph", function(x, ...) {
-    res <- x@history
-    return(res)
-})
+## setMethod("getHistory", "gGraph", function(x, ...) {
+##     res <- x@history
+##     return(res)
+## })
 
 
 
@@ -87,18 +87,18 @@ setGeneric("getDates", function(x, ...) {
 
 
 
-setMethod("getDates", "gGraphHistory", function(x, ...) {
-    res <- x@dates
-    res <- as.POSIXct(res)
-    return(res)
-})
+## setMethod("getDates", "gGraphHistory", function(x, ...) {
+##     res <- x@dates
+##     res <- as.POSIXct(res)
+##     return(res)
+## })
 
 
 
-setMethod("getDates", "gGraph", function(x, ...) {
-    res <- getDates(getHistory(x))
-    return(res)
-})
+## setMethod("getDates", "gGraph", function(x, ...) {
+##     res <- getDates(getHistory(x))
+##     return(res)
+## })
 
 
 
@@ -238,8 +238,8 @@ setMethod("setEdges", "gGraph", function(x, add=NULL, remove=NULL, costs=NULL, .
 
     ## remember this action
     curCall <- match.call()
-    newHist <- new("gGraphHistory", res@history, cmd=curCall, comments="Modified edges using setEdges.")
-    res@history <- newHist
+    ##newHist <- new("gGraphHistory", res@history, cmd=curCall, comments="Modified edges using setEdges.")
+    ##res@history <- newHist
 
     ## make assignement
     ## parEnv <- parent.frame()

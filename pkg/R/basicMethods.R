@@ -5,16 +5,16 @@
 ###################
 ## [ gGraphHistory
 ###################
-setMethod("[", "gGraphHistory", function(x, i, j = "missing", drop = "missing") {
-    if(missing(i)) i <- TRUE
+## setMethod("[", "gGraphHistory", function(x, i, j = "missing", drop = "missing") {
+##     if(missing(i)) i <- TRUE
 
-    res <- x
-    res@cmd <- res@cmd[i]
-    res@dates <- res@dates[i]
-    res@comments <- res@comments[i]
+##     res <- x
+##     res@cmd <- res@cmd[i]
+##     res@dates <- res@dates[i]
+##     res@comments <- res@comments[i]
 
-    return(res)
-})
+##     return(res)
+## })
 
 
 
@@ -106,8 +106,8 @@ setMethod("[", "gGraph", function(x, i, j, ..., drop=TRUE) {
 
     ## remember this subsetting
     curCall <- match.call()
-    newHist <- new("gGraphHistory", res@history, cmd=curCall, comments="Subsetting using [...]")
-    res@history <- newHist
+    ## newHist <- new("gGraphHistory", res@history, cmd=curCall, comments="Subsetting using [...]")
+    ## res@history <- newHist
 
     return(res)
 })
@@ -176,26 +176,26 @@ setMethod("[", "gData", function(x, i, j, ..., drop=FALSE) {
 ######################
 ## show gGraphHistory
 ######################
-setMethod("show", "gGraphHistory", function(object){
-    x <- object
-    N <- length(x@cmd)
+## setMethod("show", "gGraphHistory", function(object){
+##     x <- object
+##     N <- length(x@cmd)
 
-    ## printing
-    ## cat("\n=== gGgraphHistory ===\n")
-    if(N > 0){
-        for(i in 1:N){
-            cat("=",i, "=\n")
-            cat("Date:", x@dates[i], "\n")
-            cat("Comment:", x@comments[i], "\n")
-            cat("Command: ")
-            print(x@cmd[[i]])
-            cat("\n")
-        }
-    } else{
-        cat("\t- empty object -\n")
-    }
+##     ## printing
+##     ## cat("\n=== gGgraphHistory ===\n")
+##     if(N > 0){
+##         for(i in 1:N){
+##             cat("=",i, "=\n")
+##             cat("Date:", x@dates[i], "\n")
+##             cat("Comment:", x@comments[i], "\n")
+##             cat("Command: ")
+##             print(x@cmd[[i]])
+##             cat("\n")
+##         }
+##     } else{
+##         cat("\t- empty object -\n")
+##     }
 
-}) # end show gGraphHistory
+## }) # end show gGraphHistory
 
 
 
@@ -226,9 +226,9 @@ setMethod("show", "gGraph", function(object){
     cat("\n@graph:\n")
     print(x@graph)
 
-    cat("\n@history: (", length(x@history@cmd)," items )\n")
-    print(x@history[1:min(nDisp,length(x@history@cmd))])
-    if(length(x@history@cmd) > nDisp) cat("\n...\n")
+    ##cat("\n@history: (", length(x@history@cmd)," items )\n")
+    ##print(x@history[1:min(nDisp,length(x@history@cmd))])
+    ##if(length(x@history@cmd) > nDisp) cat("\n...\n")
 
 }) # end show gGraph
 
