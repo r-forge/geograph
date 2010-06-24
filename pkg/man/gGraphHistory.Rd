@@ -1,6 +1,6 @@
-% \name{gGraphHistory-class}
+\name{gGraphHistory}
 % \docType{class}
-% \alias{gGraphHistory}
+\alias{gGraphHistory}
 % \alias{gGraphHistory-class}
 % \alias{[,gGraphHistory-method}
 % \alias{getDates,gGraphHistory-method}
@@ -8,6 +8,8 @@
 % \alias{show,gGraphHistory-method}
 % \alias{is.gGraphHistory}
 % \title{Formal class "gGraphHistory"}
+\title{Disabled functionality}
+\description{Disabled functionality}
 % \description{Objects of the class \code{gGraphHistory} are designed to
 %   store the history of modifications made to a \code{gGraph}
 %   object. Each modification is stored in three components: the command
