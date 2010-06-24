@@ -16,15 +16,14 @@
    In \code{geoGraph}, data are stored as a particular formal class
    named \linkS4class{gGraph}. This class contains spatial coordinates
    of a set of nodes (@coords), attributes for these nodes
-   (@nodes.attr), meta-information about nodes attributes (@meta), a
-   graph of connections between nodes of class graphNEL (@graph), and a
-   detailed history of modifications of an object (@history).\cr
+   (@nodes.attr), meta-information about nodes attributes (@meta), and a
+   graph of connections between nodes of class graphNEL (@graph).\cr
 
    Several functions are available for handling gGraph data:
    
    - some accessors allow to access slots of an object, sometimes with
    additional treatment of information:
-   \code{\link{getHistory}}, \code{\link{getGraph}}, \code{\link{getNodesAttr}}, \code{\link{getDates}},
+   \code{\link{getGraph}}, \code{\link{getNodesAttr}}, \code{\link{getDates}},
    \code{\link{getCoords}}, \code{\link{getNodes}}, \code{\link{getEdges}}, \code{\link{getCosts}}.\cr
    
    - \code{\link{setEdges}}: add/remove edges specified edges.\cr
@@ -42,7 +41,7 @@
    
    - \code{\link{hasCosts}}: tests if the graph is weighted.\cr
    
-   - \code{\link{show}}: printing of gGraph and gGraphHistory objects.\cr
+   - \code{\link{show}}: printing of gGraph objects.\cr
 
    - \code{\link{findLand}}: checks which nodes are on land.\cr
    
@@ -55,8 +54,8 @@
    - \code{\link{geo.change.attr}}: graphical functions for changing
      attributes of nodes.\cr
    
-   - \code{\link{rebuild}}: a function allowing one to rebuild an object
-     from its history, at any stage of its 'evolution'.\cr
+   % - \code{\link{rebuild}}: a function allowing one to rebuild an object
+   %   from its history, at any stage of its 'evolution'.\cr
   
 
    === GRAPHICS ===\cr

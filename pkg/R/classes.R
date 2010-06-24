@@ -11,18 +11,17 @@
 ## CLASSES DEFINITION
 ######################
 
-setClass("gGraphHistory", representation(cmd = "list", dates = "character", comments = "character"))
+## setClass("gGraphHistory", representation(cmd = "list", dates = "character", comments = "character"))
 
 
 
 setClass("gGraph",
          representation(coords = "matrix", nodes.attr = "data.frame", meta = "list",
-                        graph = "graphNEL", history = "gGraphHistory"),
+                        graph = "graphNEL"),
          prototype(coords = matrix(numeric(0), ncol=2, dimnames=list(NULL, c("lon","lat"))),
                    nodes.attr = data.frame(),
                    meta = list(),
-                   graph = new("graphNEL"),
-                   history = new("gGraphHistory") )
+                   graph = new("graphNEL"))
          )
 
 
@@ -84,30 +83,30 @@ setClass("gData", representation(coords="matrix", nodes.id="character", data="AN
 
 
 
-.gGprahHistory.valid <- function(object){
-    x <- object
-    Lcmd <- length(x@cmd)
-    Ldates <- length(x@dates)
-    Lcomments <- length(x@comments)
-    ## several cases of non-validity ##
+## .gGprahHistory.valid <- function(object){
+##     x <- object
+##     Lcmd <- length(x@cmd)
+##     Ldates <- length(x@dates)
+##     Lcomments <- length(x@comments)
+##     ## several cases of non-validity ##
 
-    ## empty object always ok
-    if(all(c(Lcmd,Ldates,Lcomments) == 0)) return(TRUE)
+##     ## empty object always ok
+##     if(all(c(Lcmd,Ldates,Lcomments) == 0)) return(TRUE)
 
-    ## different length
-    if(length(unique(c(Lcmd, Ldates, Lcomments)))>1) {
-        cat("\n Components have different lengths.")
-        return(FALSE)
-    }
+##     ## different length
+##     if(length(unique(c(Lcmd, Ldates, Lcomments)))>1) {
+##         cat("\n Components have different lengths.")
+##         return(FALSE)
+##     }
 
-    ## cmd wrong class
-    if(!all(sapply(x@cmd, class)=="expression")){
-        cat("\n Some cmd components are not calls.")
-        return(FALSE)
-    }
+##     ## cmd wrong class
+##     if(!all(sapply(x@cmd, class)=="expression")){
+##         cat("\n Some cmd components are not calls.")
+##         return(FALSE)
+##     }
 
-    return(TRUE)
-} # end .gGprahHistory.valid
+##     return(TRUE)
+## } # end .gGprahHistory.valid
 
 
 
@@ -138,14 +137,14 @@ setClass("gData", representation(coords="matrix", nodes.id="character", data="AN
 
 
 setValidity("gGraph", .gGprah.valid)
-setValidity("gGraphHistory", .gGprahHistory.valid)
+## setValidity("gGraphHistory", .gGprahHistory.valid)
 setValidity("gData", .gData.valid)
 
 
-is.gGraphHistory <- function(x){
-    res <- (is(x, "gGraphHistory") & validObject(x))
-    return(res)
-}
+## is.gGraphHistory <- function(x){
+##     res <- (is(x, "gGraphHistory") & validObject(x))
+##     return(res)
+## }
 
 is.gGraph <- function(x){
     res <- (is(x, "gGraph") & validObject(x))
@@ -169,46 +168,46 @@ is.gData <- function(x){
 ##################
 ## gGraphHistory
 ##################
-setMethod("initialize", "gGraphHistory", function(.Object, ...) {
-    x <- .Object
-    input <- list(...)
-    inputClasses <- sapply(input, class)
+## setMethod("initialize", "gGraphHistory", function(.Object, ...) {
+##     x <- .Object
+##     input <- list(...)
+##     inputClasses <- sapply(input, class)
 
 
-    ## handle ... ##
-    if(is.null(input$cmd)){
-        input$cmd <- expression()
-    }
+##     ## handle ... ##
+##     if(is.null(input$cmd)){
+##         input$cmd <- expression()
+##     }
 
-    if(is.null(input$dates)){
-        input$dates <- format(Sys.time())
-    } else{
-        input$dates <- as.character(input$dates)
-    }
+##     if(is.null(input$dates)){
+##         input$dates <- format(Sys.time())
+##     } else{
+##         input$dates <- as.character(input$dates)
+##     }
 
-    if(is.null(input$comments)){
-        input$comments <- ""
-    } else{
-        input$comments <- as.character(input$comments)
-    }
+##     if(is.null(input$comments)){
+##         input$comments <- ""
+##     } else{
+##         input$comments <- as.character(input$comments)
+##     }
 
 
-    ## if a gGraphHistory object is provided in ..., merge data with it. ##
-    if(length(input)>0 && any(inputClasses=="gGraphHistory")){
-        prevObj <- input[[which(inputClasses=="gGraphHistory")[1]]] # 1st obj taken if several provided
-        res <- prevObj
-        res@cmd[[length(res@cmd)+1]] <- input$cmd
-        res@dates <- c(res@dates, input$dates)
-        res@comments <- c(res@comments, input$comments)
-    } else{
-        res <- x
-        res@cmd[[length(res@cmd)+1]] <- input$cmd
-        res@dates <- input$dates
-        res@comments <- input$comments
-    }
+##     ## if a gGraphHistory object is provided in ..., merge data with it. ##
+##     if(length(input)>0 && any(inputClasses=="gGraphHistory")){
+##         prevObj <- input[[which(inputClasses=="gGraphHistory")[1]]] # 1st obj taken if several provided
+##         res <- prevObj
+##         res@cmd[[length(res@cmd)+1]] <- input$cmd
+##         res@dates <- c(res@dates, input$dates)
+##         res@comments <- c(res@comments, input$comments)
+##     } else{
+##         res <- x
+##         res@cmd[[length(res@cmd)+1]] <- input$cmd
+##         res@dates <- input$dates
+##         res@comments <- input$comments
+##     }
 
-    return(res)
-}) # end gGraphHistory constructor
+##     return(res)
+## }) # end gGraphHistory constructor
 
 
 
@@ -274,17 +273,17 @@ setMethod("initialize", "gGraph", function(.Object, ...) {
     x@graph <- input$graph
 
 
-    ## handle history ##
-    if(is.null(input$cmd)){
-        input$cmd <-sys.call(-2)
-    }
+    ## ## handle history ##
+    ## if(is.null(input$cmd)){
+    ##     input$cmd <-sys.call(-2)
+    ## }
 
-    if(is.null(input$comments) || input$comments==""){
-        input$comments <- "Creation of the object (using new)."
-    }
+    ## if(is.null(input$comments) || input$comments==""){
+    ##     input$comments <- "Creation of the object (using new)."
+    ## }
 
-    x@history <- new("gGraphHistory", history=input$history,
-                 cmd=input$cmd, dates=input$dates, comments=input$comments)
+    ## x@history <- new("gGraphHistory", history=input$history,
+    ##              cmd=input$cmd, dates=input$dates, comments=input$comments)
 
 
     ## return object
@@ -339,9 +338,9 @@ setMethod("initialize", "gData", function(.Object, ...) {
             x@gGraph.name <- input$gGraph.name
         }
 
-        if(is.null(input$gGraph.version) & !is.null(myGraph)){
-            x@gGraph.version <- myGraph@history@dates[length(myGraph@history@dates)]
-        }
+        ## if(is.null(input$gGraph.version) & !is.null(myGraph)){
+        ##     x@gGraph.version <- myGraph@history@dates[length(myGraph@history@dates)]
+        ## }
     } else{
         myGraph <- NULL
     }
