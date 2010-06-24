@@ -9,4 +9,4 @@ Depends: methods, graph, RBGL, sp, maptools, MASS
 Description: .
 License: GPL (>=2)
 LazyLoad: yes
-Collate: classes.R basicMethods.R accessors.R auxil.R connectivity.R dropDead.R closestNode.R isInArea.R rebuild.R plot.R zoom.R findLand.R findInLayer.R interact.R friction.R dijkstra.R setDistCost.R zzz.R
+Collate: classes.R basicMethods.R accessors.R auxil.R connectivity.R dropDead.R closestNode.R isInArea.R rebuild.R plot.R zoom.R findLand.R findInLayer.R interact.R setCosts.R dijkstra.R setDistCost.R zzz.R
