@@ -262,6 +262,8 @@ For instance, one may want to study the dispersal in a set of biological populat
 latitude and longitude.
 In \code{geoGraph}, geographic data are stored in \code{gData} objects, which matches each
 location to a node of a grid (\code{gGraph} object), and stored additional data.
+\\
+
 
 As a toy example, let us consider London (UK), Malaga (Spain), and Zagreb (Croatia).
 Since we will be working with a crude grid (10,000 nodes), locations need not be exact.
@@ -270,9 +272,23 @@ We enter the longitudes and latitudes (in this order, that is, xy coordinates), 
 London <- c(0,51)
 Malaga <- c(4,37)
 Zagreb <- c(16,46)
-cities <- rbind(London, Malaga, Zagreb)
-colnames(cities) <- c("lon","lat")
-cities
+cities.xy <- rbind(London, Malaga, Zagreb)
+colnames(cities.xy) <- c("lon","lat")
+cities.xy
+@
+We load a \code{gGraph} object which contains the grid supporting the data:
+<<fig=TRUE>>=
+data(worldgraph.10k)
+worldgraph.10k
+plot(worldgraph.10k)
+@
+(use \code{worldgraph.40k} for a better resolution).
+On this figure, each node is represented with a color depending on the habitat type, either 'sea'
+(blue) or 'land' (green).
+We will interface the cities data with this grid; to do so, we create a \code{gData} object using
+\code{new} (see \code{?gData} object):
+<<>>=
+cities <- new("gData", coords=cities.xy, gGraph.name="worldgrah.10k")
 @
 
 
