@@ -123,7 +123,7 @@ The package is now ready to use.
 %%%%%%%%%%%%%%%%%%%%%
 \subsection{Data representation}
 %%%%%%%%%%%%%%%%%%%%%
-Two types of objects are used in \code{geoGraph}: \code{gGraph}, and \g{gData} objects.
+Two types of objects are used in \code{geoGraph}: \code{gGraph}, and \code{gData} objects.
 Both objects are defined as formal (S4) classes and often have methods for similar generic function
 (\textit{e.g.}, getNodes is defined for both objects).
 Essentially, \code{gGraph} objects contain underlying layers of informations, including a spatial
@@ -269,7 +269,7 @@ additional data if needed.
 \\
 
 
-As a toy example, let us consider three locations: London (UK), Malaga (Spain), and Zagreb (Croatia).
+As a toy example, let us consider three locations: Bordeaux (France), London (UK), Malaga (Spain), and Zagreb (Croatia).
 Since we will be working with a crude grid (10,000 nodes), locations need not be exact.
 We enter the longitudes and latitudes (in this order, that is, xy coordinates) of these cities in
 decimal degrees, as well as approximate population sizes:
@@ -290,7 +290,8 @@ data(worldgraph.10k)
 worldgraph.10k
 plot(worldgraph.10k)
 @
-(we could use \code{worldgraph.40k} for a better resolution).
+
+\noindent (we could use \code{worldgraph.40k} for a better resolution).
 On this figure, each node is represented with a color depending on the habitat type, either 'sea'
 (blue) or 'land' (green).
 We are going to interface the cities data with this grid; to do so, we create a \code{gData} object using
@@ -299,6 +300,7 @@ We are going to interface the cities data with this grid; to do so, we create a 
 cities <- new("gData", coords=cities.dat[,1:2], data=cities.dat[,3,drop=FALSE], gGraph.name="worldgraph.10k")
 cities
 plot(cities, type="both")
+plotEdges(worldgraph.10k)
 @
 
 \noindent This figure illustrates the matching of original locations (crosses) to nodes of the grid
@@ -310,6 +312,7 @@ Locations can be re-assigned to nodes with restrictions for some node attribute 
 <<closeNode, fig=TRUE>>=
 cities <- closestNode(cities, attr.name="habitat", attr.value="land")
 plot(cities, type="both")
+plotEdges(worldgraph.10k)
 @
 
 \noindent Now, all cities have been assigned to a node on the grid (again, better accuracy will be
@@ -320,6 +323,10 @@ For instance, we can retrieve original locations, assigned nodes, and additional
 getCoords(cities)
 getNodes(cities)
 getData(cities)
+@
+We can also get the exact coordinates of the matching nodes using:
+<<>>=
+getCoords(worldgraph.10k[getNodes(cities)])
 @
 More interestingly, we can now retrieve all the geographic information contained in the underlying
 grid (i.e., \code{gGraph} object) as node attributes:
@@ -335,9 +342,14 @@ However, more complex habitat information could be incorporated, for instance fr
 
 
 
+
+
 %%%%%%%%%%%%%%%%
 \subsection{Visualizing data}
 %%%%%%%%%%%%%%%%
+
+
+
 
 
 
@@ -347,9 +359,15 @@ However, more complex habitat information could be incorporated, for instance fr
 
 
 
+
+
+
 %%%%%%%%%%%%%%%%%%%%%
 \subsection{Extracting information from GIS shapefiles}
 %%%%%%%%%%%%%%%%%%%%%
+
+
+
 
 
 
