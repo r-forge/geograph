@@ -480,7 +480,7 @@ symbols(getCoords(cities)[,1], getCoords(cities)[,2], circ=sqrt(unlist(getData(c
 
 
 %%%%%%%%%%%%%%%%
-\subsection{Editing \code{gGraphs}]
+\subsection{Editing \code{gGraphs}}
 %%%%%%%%%%%%%%%%
 Editing graphs is an essential task in \code{geoGraph}.
 While available \code{gGraph} objects provide a basis to work with (see \code{?worldgraph.10k}),
@@ -551,7 +551,6 @@ For instance, travelling to the Australian coasts:
 geo.zoomin(c(110,130,-27,-12))
 geo.bookmark("australia")
 @
-
 
 
 The second approach is to refine the graph by hand, adding or removing locally some connections.
