@@ -299,7 +299,7 @@ We are going to interface the cities data with this grid; to do so, we create a 
 <<cities, fig=TRUE>>=
 cities <- new("gData", coords=cities.dat[,1:2], data=cities.dat[,3,drop=FALSE], gGraph.name="worldgraph.10k")
 cities
-plot(cities, type="both")
+plot(cities, type="both", reset=TRUE)
 plotEdges(worldgraph.10k)
 @
 
@@ -311,7 +311,7 @@ Locations can be re-assigned to nodes with restrictions for some node attribute 
 (defined as node attribute in \code{worldgraph.10k}) equalling \code{land} (green points):
 <<closeNode, fig=TRUE>>=
 cities <- closestNode(cities, attr.name="habitat", attr.value="land")
-plot(cities, type="both")
+plot(cities, type="both", reset=TRUE)
 plotEdges(worldgraph.10k)
 @
 
@@ -442,23 +442,61 @@ plotting history and undo possible wrong manipulations.
 
 
 
+
 % % % % % % % % % % % %
 \subsubsection{Plotting \code{gData} objects}
 % % % % % % % % % % % %
 \code{gData} objects are by default plotted in addition to the corresponding \code{gGraph}.
 For instance, using the \code{cities} example from above:
-<<>>=
-plot(cities)
+<<fig=TRUE>>=
+plot(cities, reset=TRUE)
+text(getCoords(cities), rownames(getData(cities)))
+@
+\noindent Note the argument \code{reset=TRUE}, which tells the plotting function to adapt the
+plotted area to the geographic extent of the dataset.
+\\
 
+To plot additional information, it can be useful to extract the spatial coordinates from the data.
+This is achieved by \code{getCoords}.
+This method takes an extra argument \code{original}, which is TRUE if original spatial coordinates
+are seeked, or FALSE for coordinates of the nodes on the grid.
+We can use this to represent, for instance, the population sizes for the different cities:
+<<fig=TRUE>>=
+plot(cities, reset=TRUE)
+par(xpd=TRUE)
+text(getCoords(cities)+-.5, rownames(getData(cities)))
+symbols(getCoords(cities)[,1], getCoords(cities)[,2], circ=sqrt(unlist(getData(cities))), inch=.2, bg=transp("red"), add=TRUE)
 @
 
 
 
-%%%%%%%%%%%%%%%%
-\subsection{Editing graphs}
-%%%%%%%%%%%%%%%%
 
 
+
+%%%%%%%%%%%%%%%%
+\subsection{Editing \code{gGraphs}]
+%%%%%%%%%%%%%%%%
+Editing graphs is an essential task in \code{geoGraph}.
+While available \code{gGraph} objects provide a basis to work with (see \code{?worldgraph.10k}),
+one may want to adapt a graph to a specific case.
+For instance, connectivity should be defined according to biological knowledge of the organism under study.
+\code{gGraph} can be modified in different ways: by changing the connectivity, and by changing costs
+and attribute values.
+
+
+
+% % % % % % % % % % % %
+\subsubsection{Changing the connectivity of a \code{gGraph}}
+% % % % % % % % % % % %
+
+There are two main ways of editing \code{gGraph} objects, which match two different objectives.
+The first approach is to perform global and systematic changes of the connectivity of the graph.
+For instance, one may want to remove all connections implying nodes in the sea, if terrestrial
+organisms are under study.
+The second approach is to refine the graph by hand, adding or removing locally some connections.
+This can be necessary to connect components such as islands to the main landmasses.
+Apart from adding or removing connections, other possible operations will concern changing costs
+properties as well as changing attribute values.
 
 
 
