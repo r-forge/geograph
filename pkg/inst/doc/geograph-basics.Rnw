@@ -234,13 +234,13 @@ of locations.
 \section{Using \code{geoGraph}}
 %%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%
-An overview of the material implemented in the package is summarized in a manpage accessible
-by typing:
+An overview of the material implemented in the package is summarized the package's manpage, accessible
+via:
 <<eval=FALSE>>=
 ?geoGraph
 @
-The html version of this manpage may be preferred to browse easily the content
-of \code{geoGraph}; this is accessible by typing:
+The html version of this manpage may be preferred to browse more easily the content
+of \code{geoGraph}; it is accessible by typing:
 <<eval=FALSE>>=
 help("geoGraph", package="geoGraph", html=TRUE)
 @
@@ -254,20 +254,24 @@ In the following, we go through various tasks that can be achieve using \code{ge
 
 
 
+
+
+
 %%%%%%%%%%%%%%%%%%%%%
 \subsection{Importing geographic data}
 %%%%%%%%%%%%%%%%%%%%%
-Geographic data consist of a set of locations, possibly accompanied with additional information.
-For instance, one may want to study the dispersal in a set of biological populations with known
-latitude and longitude.
-In \code{geoGraph}, geographic data are stored in \code{gData} objects, which matches each
-location to a node of a grid (\code{gGraph} object), and stored additional data.
+Geographic data consist of a set of locations, possibly accompanied by additional information.
+For instance, one may want to study the migrations amongst a set of biological populations with known
+geographic coordinates.
+In \code{geoGraph}, geographic data are stored in \code{gData} objects.
+These objects match locations to the closest nodes on a grid (a \code{gGraph} object), and store
+additional data if needed.
 \\
 
 
-As a toy example, let us consider London (UK), Malaga (Spain), and Zagreb (Croatia).
+As a toy example, let us consider three locations: London (UK), Malaga (Spain), and Zagreb (Croatia).
 Since we will be working with a crude grid (10,000 nodes), locations need not be exact.
-We enter the longitudes and latitudes (in this order, that is, xy coordinates), in decimal degrees, for these cities:
+We enter the longitudes and latitudes (in this order, that is, xy coordinates) of these cities in decimal degrees:
 <<cities>>=
 London <- c(0,51)
 Malaga <- c(4,37)
