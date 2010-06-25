@@ -4,12 +4,15 @@
 \alias{geo.zoomout}
 \alias{geo.slide}
 \alias{geo.back}
+\alias{geo.bookmark}
+\alias{geo.goto}
 \alias{.zoomlog.up}
 \title{Navigate in the plot of a gGraph object}
 \description{
   The functions \code{geo.zoomin}, \code{geo.zoomout}, \code{geo.slide},
-  and \code{geo.back} are used to navigate interactively in the plot of
-  a \linkS4class{gGraph} object.\cr
+  \code{geo.back}, \code{geo.bookmark} and \code{geo.goto} are used to
+  navigate interactively in the plot of a \linkS4class{gGraph}
+  object.
 
   \code{geo.zoomin} and \code{geo.zoomout} are used to zoom in and
   out. For zooming in, the user has to delimit the opposite corner of
@@ -22,6 +25,12 @@
 
   \code{geo.back} redraws previous plots each time screen is clicked.\cr
 
+  \code{geo.bookmark} sets a bookmark for the current area. If the name
+  for the bookmark is left to NULL, then the list of currently available
+  bookmarks is returned.\cr
+
+  \code{geo.goto} allows the user to get back to a bookmarked area.\cr
+  
   \code{.zoomlog.up} is an auxiliary function used to update the zoom
   log, by providing new sets of coordinates.
 
@@ -32,6 +41,8 @@ geo.zoomin(reg=NULL)
 geo.zoomout()
 geo.slide()
 geo.back()
+geo.bookmark(name=NULL)
+geo.goto(name)
 .zoomlog.up(vec)
 }
 \arguments{
@@ -39,7 +50,10 @@ geo.back()
     the new x (longitude) boundaries (a vector of length 2), and its second being new y
     (latitude) boundaries (a vector of length 2).}
   \item{vec}{a numeric vector of length 4 giving the new
-    coordinates of the plotting window, in the order: xmin, xmax, ymin, ymax.}
+    coordinates of the plotting window, in the order: xmin, xmax, ymin,
+    ymax.}
+  \item{name}{a character string giving the name of the bookmark to
+    create (in \code{geo.bookmark}) or to get back to (in \code{geo.goto}).}
 }
 \seealso{
   \code{\link{plot.gGraph}} for plotting of a \linkS4class{gGraph} object.
