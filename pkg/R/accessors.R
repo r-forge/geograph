@@ -119,8 +119,12 @@ setMethod("getCoords", "gGraph", function(x, ...) {
 
 
 
-setMethod("getCoords", "gData", function(x, ...) {
-    res <- x@coords
+setMethod("getCoords", "gData", function(x, original=TRUE, ...) {
+    if(original){ # original coords
+        res <- x@coords
+    } else {
+        res <- getCoords(get(x@gGraph.name, env=.GlobalEnv))[getNodes(x),,drop=FALSE] # 
+    }
     rownames(res) <- x@nodes.id
     return(res)
 })
