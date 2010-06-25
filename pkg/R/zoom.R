@@ -25,7 +25,17 @@
 ##############
 ## geo.zoomin
 ##############
-geo.zoomin <- function(reg=NULL){
+geo.zoomin <- function(reg=NULL){ # reg should be a list as returned by locator()
+    ## a few checks
+    if(is.list(reg)){
+        names(reg) <- c("x", "y")
+    }
+
+    if(is.numeric(reg) && length(reg)==4){ # is reg is a vector: x1, x2, y1, y2
+        temp <- reg
+        reg <- list(x=temp[1:2], y=temp[3:4])
+    }
+
     ## get environment
     geoEnv <- get(".geoGraphEnv", envir=.GlobalEnv)
 
