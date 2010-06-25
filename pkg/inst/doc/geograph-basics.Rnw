@@ -352,6 +352,7 @@ In \code{geoGraph}, the spatial grids (\code{gGraph}) and spatial data (\code{gD
 and browsed using a variety of functions.
 
 
+
 % % % % % % % % % % % %
 \subsubsection{Plotting \code{gGraph} objects}
 % % % % % % % % % % % %
@@ -427,9 +428,23 @@ R is that the \code{geoGraph} keeps the changes to the plotting area in memory.
 This allows to undo one or several moves using \code{geo.back}.
 Moreover, even if the graphical device is killed, plotting again a \code{gGraph} will use the old
 parameters by default.
-To disable this behavior, set the argument \code{reset=FALSE} when calling upon \code{plot}.
+To disable this behavior, set the argument \code{reset=TRUE} when calling upon \code{plot}.
+Technically, this 'plotting memory' is implemented by storing plotting information in an environment
+defined by the hidden variable \code{.geoGraphEnv}:
+<<>>=
+.geoGraphEnv
+ls(get(".geoGraphEnv"))
+get("last.plot",get(".geoGraphEnv"))
+@
+However, it is recommended not to modify these objects, unless you really know what you are doing.
+In any case, plotting a \code{gGraph} object with argument \code{reset=TRUE} will remove previous
+plotting history and undo possible wrong manipulations.
 
 
+
+% % % % % % % % % % % %
+\subsubsection{Plotting \code{gData} objects}
+% % % % % % % % % % % %
 
 
 %%%%%%%%%%%%%%%%
