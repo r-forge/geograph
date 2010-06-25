@@ -271,14 +271,18 @@ additional data if needed.
 
 As a toy example, let us consider three locations: London (UK), Malaga (Spain), and Zagreb (Croatia).
 Since we will be working with a crude grid (10,000 nodes), locations need not be exact.
-We enter the longitudes and latitudes (in this order, that is, xy coordinates) of these cities in decimal degrees:
+We enter the longitudes and latitudes (in this order, that is, xy coordinates) of these cities in
+decimal degrees, as well as approximate population sizes:
 <<cities>>=
+Bordeaux <- c(-1,45)
 London <- c(0,51)
-Malaga <- c(4,37)
+Malaga <- c(-4,37)
 Zagreb <- c(16,46)
-cities.xy <- rbind(London, Malaga, Zagreb)
-colnames(cities.xy) <- c("lon","lat")
-cities.xy
+cities.dat <- rbind.data.frame(Bordeaux, London, Malaga, Zagreb)
+colnames(cities.dat) <- c("lon","lat")
+cities.dat$pop <- c(1e6, 13e6, 5e5, 1.2e6)
+row.names(cities.dat) <- c("Bordeaux","London","Malaga","Zagreb")
+cities.dat
 @
 We load a \code{gGraph} object which contains the grid supporting the data:
 <<fig=TRUE>>=
@@ -286,13 +290,31 @@ data(worldgraph.10k)
 worldgraph.10k
 plot(worldgraph.10k)
 @
-(use \code{worldgraph.40k} for a better resolution).
+(we could use \code{worldgraph.40k} for a better resolution).
 On this figure, each node is represented with a color depending on the habitat type, either 'sea'
 (blue) or 'land' (green).
-We will interface the cities data with this grid; to do so, we create a \code{gData} object using
+We are going to interface the cities data with this grid; to do so, we create a \code{gData} object using
 \code{new} (see \code{?gData} object):
+<<cities, fig=TRUE>>=
+cities <- new("gData", coords=cities.dat[,1:2], data=cities.dat$pop, gGraph.name="worldgraph.10k")
+cities
+plot(cities, type="both")
+@
+
+\noindent This figure illustrates the matching of original locations (crosses) to nodes of the grid
+(red circles).
+As we can see, an issue occured for Bordeaux, which has been assigned to a node in the sea (in blue).
+Locations can be re-assigned to nodes with restrictions for some node attribute values using \code{closestNode}:
+<<closeNode, fig=TRUE>>=
+cities <- closestNode(cities, attr.name="habitat", attr.value="land")
+plot(cities, type="both")
+@
+
+\noindent Now, all cities have been assigned to a node on the grid.
+Content of \code{cities} can be accessed via various accessors (see \code{?gData}).
+For instance, original locations:
 <<>>=
-cities <- new("gData", coords=cities.xy, gGraph.name="worldgrah.10k")
+
 @
 
 
