@@ -398,10 +398,16 @@ X11.options(type="cairo")
 % % % % % % % % % % % %
 In practice, it is often useful to be able to peer at specific regions, and more generally to
 navigate inside the graphical representation of the data.
-For this, use the interactive functions \code{geo.zoomin}, \code{geo.zoomout}, \code{geo.slide}, and
-\code{geo.back}.
-All these functions will require you to left-click on the graphics to zoom in, zoom out, or slide to
+For this, use the interactive functions \code{geo.zoomin}, \code{geo.zoomout}, \code{geo.slide},
+\code{geo.back}, \code{geo.bookmark}, and \code{geo.goto}.
+The zoom and slide functions will require you to left-click on the graphics to zoom in, zoom out, or slide to
 adjacent areas; in all cases, a right click ends the function.
+Also note that \code{geo.zoomin} can accept an argument specifying a rectangular region, which will
+be adapted by the function to fit best a square area with similar position and centre, and zoom to
+this area (see \code{?geo.zoomin}).
+\code{geo.bookmark} and \code{geo.goto} respectively set and go to a bookmark, i.e. a tagged area.
+This is most useful when one has to zoom to distant areas repeatedly.
+\\
 
 Here are some examples based on the previous plotting of \code{worldgraph.10k}, but you are best playing with these functions by yourself.
 Zooming in:
@@ -430,11 +436,11 @@ Moreover, even if the graphical device is killed, plotting again a \code{gGraph}
 parameters by default.
 To disable this behavior, set the argument \code{reset=TRUE} when calling upon \code{plot}.
 Technically, this 'plotting memory' is implemented by storing plotting information in an environment
-defined by the hidden variable \code{.geoGraphEnv}:
+defined as the hidden variable \code{.geoGraphEnv}:
 <<>>=
 .geoGraphEnv
-ls(get(".geoGraphEnv"))
-get("last.plot",get(".geoGraphEnv"))
+ls(env=.geoGraphEnv)
+get("last.plot", .geoGraphEnv)
 @
 However, it is recommended not to modify these objects, unless you really know what you are doing.
 In any case, plotting a \code{gGraph} object with argument \code{reset=TRUE} will remove previous
@@ -489,10 +495,65 @@ and attribute values.
 \subsubsection{Changing the connectivity of a \code{gGraph}}
 % % % % % % % % % % % %
 
-There are two main ways of editing \code{gGraph} objects, which match two different objectives.
+There are two main ways of chaning the connectivity of a \code{gGraph}, which match two different objectives.
 The first approach is to perform global and systematic changes of the connectivity of the graph.
-For instance, one may want to remove all connections implying nodes in the sea, if terrestrial
-organisms are under study.
+Typically, one will want to remove all connections over a given type of landscape, which is
+uncrossable by the organism under study.
+Let's assume one is interested in sea fishes.
+To model fish dispersal, we have to define a graph which connects only nodes falling in seas.
+We load the \code{gGraph} object \code{rawgraph.10k}, and zoom in to a smaller area (Madagascar) to illustrate
+changes in connectivity:
+<<fig=TRUE>>=
+data(rawgraph.10k)
+geo.zoomin(c(35,54,-26,-10))
+plotEdges(rawgraph.10k)
+@
+
+\noindent We shall set a bookmark for this area, in case we would want to get back to this place
+later on:
+<<>>=
+geo.bookmark("madagascar")
+@
+What we now want to do is remove all but sea-sea connections.
+To do so, the easiest approach is to i) define costs for edges based on habitat, with land being
+given large costs and ii) remove all edges with large costs.
+\\
+
+Costs of a given node attribute (here, `habitat') are indicated in the \code{@meta\$costs} slot:
+<<>>=
+rawgraph.10k@meta$costs
+newGraph <- rawgraph.10k
+newGraph@meta$costs[2:6,2] <- 100
+newGraph@meta$costs[1,2] <- 1
+newGraph@meta$costs
+@
+We have just changed the costs associated to habitat type, but this change is not yet effective on
+edges between nodes.
+To do so, we use \code{setCosts}, which sets the cost of an edge to the average of the costs of the nodes:
+<<fig=TRUE>>=
+newGraph <- setCosts(newGraph, attr.name="habitat")
+plot(newGraph,edge=TRUE)
+@
+On this new graph, we represent the edges with a width inversely proportional to the associated
+cost; that is, bold lines for easy travelling and light edges/dotted lines for more costly mouvement.
+This is not enough yet, since travelling on land is still possible.
+However, we can tell \code{geoGraph} to remove all edges associated to too strong a cost, as defined
+by a given threshold (using \code{dropDeadEdges}).
+Here, only sea-sea connections shall be retained, that is, edges with cost 1.
+<<fig=TRUE>>=
+newGraph <- dropDeadEdges(newGraph, thres=1.1)
+plot(newGraph,edge=TRUE)
+@
+Here we are: \code{newGraph} only contains connections in the sea.
+Note that, despite we restrained the plotting area to Madagascar, this change is effective everywhere.
+For instance, travelling to the Australian coasts:
+<<fig=TRUE>>=
+geo.zoomin(c(110,130,-27,-12))
+geo.bookmark("australia")
+@
+
+
+
 The second approach is to refine the graph by hand, adding or removing locally some connections.
 This can be necessary to connect components such as islands to the main landmasses.
 Apart from adding or removing connections, other possible operations will concern changing costs

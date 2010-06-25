@@ -281,7 +281,7 @@ geo.bookmark <- function(name=NULL){
         bookmarks[name,] <-  new.book
         warning("This bookmark already existed; removing previous bookmark.")
     } else {
-        onames <- names(bookmarks)
+        onames <- rownames(bookmarks)
         bookmarks <- rbind(bookmarks,as.vector(new.book))
         rownames(bookmarks) <- c(onames, name)
         cat("\nBookmark '", name, " 'saved.\n")
