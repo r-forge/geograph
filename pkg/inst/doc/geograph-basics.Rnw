@@ -347,8 +347,87 @@ However, more complex habitat information could be incorporated, for instance fr
 %%%%%%%%%%%%%%%%
 \subsection{Visualizing data}
 %%%%%%%%%%%%%%%%
+An essential aspect of spatial analysis lies in visualizing the data.
+In \code{geoGraph}, the spatial grids (\code{gGraph}) and spatial data (\code{gData}) can be plotted
+and browsed using a variety of functions.
 
 
+% % % % % % % % % % % %
+\subsubsection{Plotting \code{gGraph} objects}
+% % % % % % % % % % % %
+Displaying a \code{gGraph} object is done through \code{plot} and \code{points} functions.
+The first opens a new plotting region, while the second draws in the current plotting region;
+functions have otherwise similar arguments (see \code{?plot.gGraph}).
+
+By default, plotting a \code{gGraph} displays the grid of nodes overlaying a shapefile (by default,
+the landmasses).
+Edges can be plotted at the same time (argument \code{edges}), or added afterwards using \code{plotEdges}.
+If the \code{gGraph} object possesses an adequately formed \code{@meta\$colors} component, the
+colors of the nodes are chosen according to the node attributes and the color scheme specified in \code{@meta\$colors}.
+Alternatively, the color of the nodes can be specified via the \code{col} argument in \code{plot}/\code{points}.
+
+Here is an example using \code{worldgraph.10k}:
+<<fig=TRUE>>=
+data(worldgraph.10k)
+worldgraph.10k@meta$colors
+head(getNodesAttr(worldgraph.10k))
+table(getNodesAttr(worldgraph.10k))
+plot(worldgraph.10k)
+title("Default plotting of worldgraph.10k")
+@
+
+\noindent It may be worth noting that plotting \code{gGraph} objects involves plotting a fairly
+large number of points and edges.
+On some graphical devices, the resulting plotting can be slow.
+For instance, one may want to disable \emph{cairo} under linux: this graphical device yields better
+graphics than \emph{Xlib}, but at the expense of increase computational time.
+To switch to \emph{Xlib}, type:
+<<eval=FALSE>>=
+X11.options(type="Xlib")
+@
+and to revert to \emph{cairo}, type:
+<<eval=FALSE>>=
+X11.options(type="cairo")
+@
+
+
+
+% % % % % % % % % % % %
+\subsubsection{Zooming in and out, sliding, etc.}
+% % % % % % % % % % % %
+In practice, it is often useful to be able to peer at specific regions, and more generally to
+navigate inside the graphical representation of the data.
+For this, use the interactive functions \code{geo.zoomin}, \code{geo.zoomout}, \code{geo.slide}, and
+\code{geo.back}.
+All these functions will require you to left-click on the graphics to zoom in, zoom out, or slide to
+adjacent areas; in all cases, a right click ends the function.
+
+Here are some examples based on the previous plotting of \code{worldgraph.10k}, but you are best playing with these functions by yourself.
+Zooming in:
+<<eval=FALSE>>=
+geo.zoomin()
+@
+\includegraphics{figs/zoomin.png}
+
+Zooming out:
+<<eval=FALSE>>=
+geo.zoomout()
+@
+\includegraphics{figs/zoomout.png}
+
+Sliding to the east:
+<<eval=FALSE>>=
+geo.slide()
+@
+\includegraphics{figs/slide.png}
+
+
+One important thing which makes plotting \code{gGraph} objects different from most other plotting in
+R is that the \code{geoGraph} keeps the changes to the plotting area in memory.
+This allows to undo one or several moves using \code{geo.back}.
+Moreover, even if the graphical device is killed, plotting again a \code{gGraph} will use the old
+parameters by default.
+To disable this behavior, set the argument \code{reset=FALSE} when calling upon \code{plot}.
 
 
 
