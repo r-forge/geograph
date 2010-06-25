@@ -296,7 +296,7 @@ On this figure, each node is represented with a color depending on the habitat t
 We are going to interface the cities data with this grid; to do so, we create a \code{gData} object using
 \code{new} (see \code{?gData} object):
 <<cities, fig=TRUE>>=
-cities <- new("gData", coords=cities.dat[,1:2], data=cities.dat$pop, gGraph.name="worldgraph.10k")
+cities <- new("gData", coords=cities.dat[,1:2], data=cities.dat[,3,drop=FALSE], gGraph.name="worldgraph.10k")
 cities
 plot(cities, type="both")
 @
@@ -304,18 +304,34 @@ plot(cities, type="both")
 \noindent This figure illustrates the matching of original locations (crosses) to nodes of the grid
 (red circles).
 As we can see, an issue occured for Bordeaux, which has been assigned to a node in the sea (in blue).
-Locations can be re-assigned to nodes with restrictions for some node attribute values using \code{closestNode}:
+Locations can be re-assigned to nodes with restrictions for some node attribute values using
+\code{closestNode}; for instance, here we constrain matching nodes to have an \code{habitat} value
+(defined as node attribute in \code{worldgraph.10k}) equalling \code{land} (green points):
 <<closeNode, fig=TRUE>>=
 cities <- closestNode(cities, attr.name="habitat", attr.value="land")
 plot(cities, type="both")
 @
 
-\noindent Now, all cities have been assigned to a node on the grid.
+\noindent Now, all cities have been assigned to a node on the grid (again, better accuracy will be
+gained on 40k or finer grids - we use 10k for illustrative purposes only).
 Content of \code{cities} can be accessed via various accessors (see \code{?gData}).
-For instance, original locations:
+For instance, we can retrieve original locations, assigned nodes, and additional data using:
 <<>>=
-
+getCoords(cities)
+getNodes(cities)
+getData(cities)
 @
+More interestingly, we can now retrieve all the geographic information contained in the underlying
+grid (i.e., \code{gGraph} object) as node attributes:
+<<>>=
+getNodesAttr(cities)
+@
+In this example, the information stored in \code{worldgraph.10k} is rather crude: it only
+distinguishes land from sea.
+However, more complex habitat information could be incorporated, for instance from GIS shapefiles
+(see dedicated section below).
+
+
 
 
 
