@@ -94,7 +94,10 @@
     \item{findInLayer}{\code{signature(x = "gData")}: retrieve
       information from a shapefile and add it to \code{nodes.attr}.}
     \item{getCoords}{\code{signature(x = "gData")}: get geographic
-      coordinates of the object.}
+      coordinates of the object. The additional argument \code{original}
+    is a logical indicating if original coordinates should be returned
+    (TRUE, default), or if coordinates of the assigned nodes of the
+    \code{gGraph} should be returned.}
     \item{getData}{\code{signature(x = "gData")}: get the data of the
       object (i.e., content of the slot \code{@data}).}
     \item{getNodes}{\code{signature(x = "gData")}: get the names of the
