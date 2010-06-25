@@ -243,3 +243,73 @@ geo.slide <- function(){
     return(invisible())
 } # end geo.slide
 
+
+
+
+
+
+############
+## geo.bookmark
+############
+geo.bookmark <- function(name=NULL){
+    ## get environment
+    geoEnv <- get(".geoGraphEnv", envir=.GlobalEnv)
+
+    if(is.null(name)){
+        cat("\nAvailable bookmarks:\n")
+        return(get("bookmarks", env=geoEnv))
+    }
+
+
+    ## get current zoom coords
+    zoomLog <- get("zoom.log", env=geoEnv)
+    new.book <- zoomLog[1,]
+
+    ## update bookmarks
+    bookmarks <- get("bookmarks", env=geoEnv)
+    if(name %in% rownames(bookmarks)){ # erase previous bookmark if it exists
+        bookmarks[name,] <-  new.book
+        warning("This bookmark already existed; removing previous bookmark.")
+    } else {
+        onames <- names(bookmarks)
+        bookmarks <- rbind(bookmarks,as.vector(new.book))
+        rownames(bookmarks) <- c(onames, name)
+        cat("\nBookmark '", name, " 'saved.\n")
+    }
+
+    assign("bookmarks", bookmarks, env=geoEnv)
+
+    return(invisible())
+} # end geo.bookmark
+
+
+
+
+
+############
+## geo.goto
+############
+geo.goto <- function(name){
+    ## get environment
+    geoEnv <- get(".geoGraphEnv", envir=.GlobalEnv)
+
+    ## get next zoom coords
+    bookmarks <- get("bookmarks", env=geoEnv)
+    zoomLog <- get("zoom.log", env=geoEnv)
+    last.plot.call <- get("last.plot", envir=geoEnv)
+
+    if(! name %in% rownames(bookmarks)) {
+        cat("\nUnknown bookmark\n")
+        return(geo.bookmark(NULL))
+    }
+
+    zoomLog <- rbind(as.vector(bookmarks[name, ]), zoomLog)
+    assign("zoom.log", zoomLog, env=geoEnv)
+
+    ## reconstruct a valid call to plot
+    temp <- deparse(last.plot.call)
+    newCall <- parse(text=temp)
+    eval(newCall)
+
+    return(invisible())
+} # end geo.goto
