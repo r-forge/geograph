@@ -460,13 +460,13 @@ setMethod("plot", signature(x="gData", y="missing"), function(x, type=c("nodes",
     }
 
     ## define visible area if reset ##
-    ##    if((!exists("zoom.log", envir=env)) | reset){ # -> comment: systematically redraw area
-    loc <- getCoords(x)
-    coords.nodes <- getCoords(myGraph)[x@nodes.id,, drop=FALSE]
-    temp <- rbind(loc, coords.nodes)
-    myRegion <- as.vector(apply(temp,2,range)) # return xmin, xmax, ymin, ymax
-    .zoomlog.up(myRegion) # define new window limits
-    ##   }
+    if((!exists("zoom.log", envir=env)) | reset){
+        loc <- getCoords(x)
+        coords.nodes <- getCoords(myGraph)[x@nodes.id,, drop=FALSE]
+        temp <- rbind(loc, coords.nodes)
+        myRegion <- as.vector(apply(temp,2,range)) # return xmin, xmax, ymin, ymax
+        .zoomlog.up(myRegion) # define new window limits
+    }
 
     zoomlog <- get("zoom.log", envir=env)
     zoomlog <- zoomlog[1,]

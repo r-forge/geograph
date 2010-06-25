@@ -326,7 +326,7 @@ getData(cities)
 @
 We can also get the exact coordinates of the matching nodes using:
 <<>>=
-getCoords(worldgraph.10k[getNodes(cities)])
+getCoords(cities, original=FALSE)
 @
 More interestingly, we can now retrieve all the geographic information contained in the underlying
 grid (i.e., \code{gGraph} object) as node attributes:
@@ -445,6 +445,13 @@ plotting history and undo possible wrong manipulations.
 % % % % % % % % % % % %
 \subsubsection{Plotting \code{gData} objects}
 % % % % % % % % % % % %
+\code{gData} objects are by default plotted in addition to the corresponding \code{gGraph}.
+For instance, using the \code{cities} example from above:
+<<>>=
+plot(cities)
+
+@
+
 
 
 %%%%%%%%%%%%%%%%
