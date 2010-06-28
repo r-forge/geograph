@@ -23,7 +23,7 @@
 %\alias{closestNode,gGraph-method}
 %\alias{dijkstraBetween,gGraph-method}
 %\alias{dijkstraFrom,gGraph-method}
-%\alias{findInLayer,gGraph-method}
+%\alias{extractFromLayer,gGraph-method}
 %\alias{findLand,gGraph-method}
 %\alias{getColors,gGraph-method}
 %\alias{isInArea,gGraph-method}
@@ -124,7 +124,7 @@
       path between a set of nodes and a 'source node'.}
     \item{dropCosts}{\code{signature(x = "gGraph")}: remove costs
       associated to edges.}
-    \item{findInLayer}{\code{signature(x = "gGraph")}: retrieve
+    \item{extractFromLayer}{\code{signature(x = "gGraph")}: retrieve
       information from a shapefile and add it to \code{nodes.attr}.}
     \item{findLand}{\code{signature(x = "gGraph")}: find which nodes are
       on land, and which are not.}

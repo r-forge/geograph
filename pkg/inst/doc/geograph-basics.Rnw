@@ -373,7 +373,7 @@ data(worldgraph.10k)
 worldgraph.10k@meta$colors
 head(getNodesAttr(worldgraph.10k))
 table(getNodesAttr(worldgraph.10k))
-plot(worldgraph.10k)
+plot(worldgraph.10k, reset=TRUE)
 title("Default plotting of worldgraph.10k")
 @
 
@@ -416,13 +416,13 @@ geo.zoomin()
 @
 \includegraphics{figs/zoomin.png}
 
-Zooming out:
+\noindent Zooming out:
 <<eval=FALSE>>=
 geo.zoomout()
 @
 \includegraphics{figs/zoomout.png}
 
-Sliding to the east:
+\noindent Sliding to the east:
 <<eval=FALSE>>=
 geo.slide()
 @
@@ -430,7 +430,7 @@ geo.slide()
 
 
 One important thing which makes plotting \code{gGraph} objects different from most other plotting in
-R is that the \code{geoGraph} keeps the changes to the plotting area in memory.
+R is that the \code{geoGraph} keeps the changes made to the plotting area in memory.
 This allows to undo one or several moves using \code{geo.back}.
 Moreover, even if the graphical device is killed, plotting again a \code{gGraph} will use the old
 parameters by default.
@@ -458,6 +458,7 @@ For instance, using the \code{cities} example from above:
 plot(cities, reset=TRUE)
 text(getCoords(cities), rownames(getData(cities)))
 @
+
 \noindent Note the argument \code{reset=TRUE}, which tells the plotting function to adapt the
 plotted area to the geographic extent of the dataset.
 \\
@@ -534,6 +535,7 @@ To do so, we use \code{setCosts}, which sets the cost of an edge to the average 
 newGraph <- setCosts(newGraph, attr.name="habitat")
 plot(newGraph,edge=TRUE)
 @
+
 On this new graph, we represent the edges with a width inversely proportional to the associated
 cost; that is, bold lines for easy travelling and light edges/dotted lines for more costly mouvement.
 This is not enough yet, since travelling on land is still possible.
@@ -544,9 +546,10 @@ Here, only sea-sea connections shall be retained, that is, edges with cost 1.
 newGraph <- dropDeadEdges(newGraph, thres=1.1)
 plot(newGraph,edge=TRUE)
 @
+
 Here we are: \code{newGraph} only contains connections in the sea.
 Note that, despite we restrained the plotting area to Madagascar, this change is effective everywhere.
-For instance, travelling to the Australian coasts:
+For instance, travelling to the nort-west Australian coasts:
 <<fig=TRUE>>=
 geo.zoomin(c(110,130,-27,-12))
 geo.bookmark("australia")
@@ -564,9 +567,37 @@ properties as well as changing attribute values.
 %%%%%%%%%%%%%%%%%%%%%
 \subsection{Extracting information from GIS shapefiles}
 %%%%%%%%%%%%%%%%%%%%%
+An important feature of \code{geoGraph} is serving as an interface between \emph{geographic information
+system} (GIS) layers and geographic data.
+As currently implemented, \code{geoGraph} can extract information from shapefiles with the Arc GIS
+(\url{http://...}) format, using the function \code{extractFromLayer}.
+Here, we illustrate this procedure using the shapefile \code{world-countries.shp} provided with the
+package.
+The GIS shapefile is first read in R using \code{readShapePoly} from the \code{maptools} package:
+<<>>=
+world.countries <- readShapePoly(system.file("files/shapefiles/world-countries.shp",package="geoGraph"))
+class(world.countries)
+summary(world.countries)
+@
+The summary of the object shows the different informations (`\emph{attributes}') stored in the layer.
+For now, we assume that we are only interested in retrieving continent and country information for the
+\code{worldgraph.10k} object.
+Note that \code{extractFromLayer} can handle other types of objects (see \code{?extractFromLayer})
+<<>>=
+summary(getNodesAttr(worldgraph.10k))
+data(worldgraph.10k)
+newGraph <- extractFromLayer(worldgraph.10k,  layer=world.countries, attr=c("CONTINENT","NAME"))
+summary(getNodesAttr(newGraph))
+@
+The new object \code{newGraph} is a \code{gGraph} which now includes, for each node of the grid, the
+corresponding continent and country retrieved from the GIS layer.
 
+<<fig=TRUE>>=
+temp <- unique(getNodesAttr(newGraph)$"CONTINENT")
+col <- c("transparent", rainbow(7))
+colMat <- data.frame(CONTINENT=temp, color=col)
 
-
+@
 
 
 

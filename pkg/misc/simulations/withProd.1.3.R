@@ -95,7 +95,7 @@ conCom <- conCom[[1]]
 myCandidates <- intersect(x,conCom) # retained candidates
 length(myCandidates)
 
-temp <- findInLayer(getCoords(worldgraph.40k)[myCandidates,], attr="CONTINENT")
+temp <- extractFromLayer(getCoords(worldgraph.40k)[myCandidates,], attr="CONTINENT")
 myCandidates <- row.names(temp[temp=="Africa",,drop=FALSE]) # keep nodes in Africa
 plot(worldgraph.40k)
 points(getCoords(worldgraph.40k)[myCandidates,])
