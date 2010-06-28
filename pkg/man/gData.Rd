@@ -19,7 +19,7 @@
 %\alias{closestNode,gData-method}
 %\alias{dijkstraBetween,gData-method}
 %\alias{dijkstraFrom,gData-method}
-%\alias{findInLayer,gData-method}
+%\alias{extractFromLayer,gData-method}
 %%%%
 \title{Formal class "gData"}
 \description{The class \code{gData} is a formal (S4) class storing
@@ -91,7 +91,7 @@
       path between two sets of nodes.}
     \item{dijkstraFrom}{\code{signature(x = "gData")}: least-cost
       path between a set of nodes and a 'source node'.}
-    \item{findInLayer}{\code{signature(x = "gData")}: retrieve
+    \item{extractFromLayer}{\code{signature(x = "gData")}: retrieve
       information from a shapefile and add it to \code{nodes.attr}.}
     \item{getCoords}{\code{signature(x = "gData")}: get geographic
       coordinates of the object. The additional argument \code{original}
