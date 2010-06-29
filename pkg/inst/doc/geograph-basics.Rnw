@@ -590,9 +590,17 @@ For graph based on 10k or 40k grids, the raw graphs provided in \code{geoGraph} 
 We may also want to modify the attributes of specific nodes.
 This is again done interactively, using the function \code{geo.change.attr}:
 <<eval=FALSE>>=
+plot(newGraph, edge=TRUE)
 temp <- geo.change.attr(newGraph, mode="area", attr.name="habitat", attr.value="shallowwater", newCol="deepskyblue")
 temp <- geo.change.attr(temp, attr.name="habitat", attr.value="shallowwater", newCol="deepskyblue")
-temp <- geo.change.attr(temp, attr.name="habitat", attr.value="shallowwater", newCol="deepskyblue")
+newGraph <- temp
+@
+<<echo=FALSE>>=
+load("Robjects/newGraph2.RData")
+@
+<<fig=TRUE>>=
+newGraph@meta$colors
+plot(newGraph,edge=TRUE)
 @
 
 
@@ -659,9 +667,13 @@ getNodesAttr(cities)
 
 
 
+
+
 %%%%%%%%%%%%%%%%%%%%%
 \subsection{Finding least-cost paths}
 %%%%%%%%%%%%%%%%%%%%%
+One especially useful application of \code{geoGraph} is the research of least-cost paths between
+couples of locations.
 
 
 
