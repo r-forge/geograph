@@ -493,7 +493,7 @@ and attribute values.
 
 
 % % % % % % % % % % % %
-\subsubsection{Changing the connectivity of a \code{gGraph}}
+\subsubsection{Changing the global connectivity of a \code{gGraph}}
 % % % % % % % % % % % %
 
 There are two main ways of chaning the connectivity of a \code{gGraph}, which match two different objectives.
@@ -556,10 +556,47 @@ geo.bookmark("australia")
 @
 
 
-The second approach is to refine the graph by hand, adding or removing locally some connections.
-This can be necessary to connect components such as islands to the main landmasses.
-Apart from adding or removing connections, other possible operations will concern changing costs
-properties as well as changing attribute values.
+
+
+% % % % % % % % % % % %
+\subsubsection{Changing local properties of a \code{gGraph}}
+% % % % % % % % % % % %
+A second approach to chaning a \code{gGraph} is to refine the graph by hand, adding or removing
+locally some connections, or altering the values of node attributes.
+This can be necessary to connect components such as islands to the main landmasses, or to correct
+erroneous data.
+Adding and removing edges from a the grid of a \code{gGraph} can be achieved by \code{geo.add.edges}
+and \code{geo.remove.edges}, respectively.
+These functions are interactive, and require the user to select individual nodes or a rectangular
+area in which edges are added or removed.
+See \code{?geo.add.edges} for more information on this functions.
+For instance, we can remove a few odd connections in the previous graph, near the Australian coasts
+(note that we have to save the changes using \code{<-}):
+<<eval=FALSE>>=
+geo.goto("autralia")
+newGraph <- geo.remove.edges(newGraph)
+@
+<<eval=TRUE, echo=FALSE>>=
+load("Robjects/newGraph.RData")
+@
+\includegraphics{figs/georemove.png}
+
+\noindent Note that when adding nodes is done for an area or for an entire graph, node addition is based on
+another \code{gGraph}.
+For graph based on 10k or 40k grids, the raw graphs provided in \code{geoGraph} should be used
+(\code{rawgraph.10k}, \code{rawgraph.40k}).
+\\
+
+We may also want to modify the attributes of specific nodes.
+This is again done interactively, using the function \code{geo.change.attr}:
+<<eval=FALSE>>=
+temp <- geo.change.attr(newGraph, mode="area", attr.name="habitat", attr.value="shallowwater", newCol="deepskyblue")
+temp <- geo.change.attr(temp, attr.name="habitat", attr.value="shallowwater", newCol="deepskyblue")
+temp <- geo.change.attr(temp, attr.name="habitat", attr.value="shallowwater", newCol="deepskyblue")
+@
+
+
+
 
 
 
@@ -599,10 +636,15 @@ col <- c("transparent", rainbow(length(temp)-1))
 colMat <- data.frame(NAME=temp, color=col)
 head(colMat)
 tail(colMat)
-plot(newGraph, col.rules=colMat)
+plot(newGraph, col.rules=colMat, reset=TRUE)
 @
 
-As soon as a GIS layer has been extracted to a \code{gGraph}, this information becomes available for
+\noindent This information could in turn be used to define costs for travelling on the grid.
+For instance, one could import habitat descriptors from a GIS, use these values to formulate a
+habitat model, and derive costs for dispersal on the grid.
+\\
+
+As soon as a GIS layer has been extracted to a \code{gGraph}, this information becomes also available for
 any \code{gData} interfaced with this object.
 For instance, we can re-use the \code{cities} example defined in a previous section, and interface it
 with \code{newGraph}:
@@ -610,7 +652,10 @@ with \code{newGraph}:
 cities.dat
 cities <- new("gData", coords=cities.dat[,1:2], data=cities.dat[,3,drop=FALSE], gGraph.name="newGraph")
 cities <- closestNode(cities, attr.name="habitat", attr.value="land")
+getData(cities)
+getNodesAttr(cities)
 @
+
 
 
 
