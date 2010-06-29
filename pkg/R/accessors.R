@@ -123,7 +123,7 @@ setMethod("getCoords", "gData", function(x, original=TRUE, ...) {
     if(original){ # original coords
         res <- x@coords
     } else {
-        res <- getCoords(get(x@gGraph.name, env=.GlobalEnv))[getNodes(x),,drop=FALSE] # 
+        res <- getCoords(get(x@gGraph.name, env=.GlobalEnv))[getNodes(x),,drop=FALSE] #
     }
     rownames(res) <- x@nodes.id
     return(res)
@@ -339,15 +339,25 @@ setGeneric("getColors", function(x, ...) {
 
 
 
-setMethod("getColors", "gGraph", function(x, nodes="all", attr.name, ...) {
+setMethod("getColors", "gGraph", function(x, nodes="all", attr.name, col.rules=NULL, ...) {
     if(!attr.name %in% colnames(getNodesAttr(x))) {
         stop("Requested attribute not found in x@nodes.attr.")
     }
-    if(is.null(x@meta$colors)){
-        stop("No rule for color defined in x (x@meta$colors is NULL).")
+
+    if(is.null(col.rules)){
+        if(is.null(x@meta$colors)){
+            stop("No rule for color provided, and none defined in x (x@meta$colors is NULL).")
+        } else {
+            col.rules <- x@meta$colors
+        }
     }
-    if(!attr.name %in% colnames(x@meta$colors)){
-        stop(paste("Nothing known about",attr.name,"in color rules (x@meta$colors)."))
+
+    if(is.null(ncol(col.rules)) || ncol(col.rules)!=2){
+        stop("Color rules does not contain two columns.")
+    }
+
+    if(!attr.name %in% colnames(col.rules)){
+        stop(paste("Nothing known about",attr.name,"in color rules."))
     }
 
     ## handle nodes ##
@@ -363,17 +373,16 @@ setMethod("getColors", "gGraph", function(x, nodes="all", attr.name, ...) {
     }
 
     ## define colors ##
-    rules <- x@meta$colors
     criterion <- getNodesAttr(x, nodes=toKeep, attr.name=attr.name) # seek criterion in nodes.attr
     col <- as.character(unlist(criterion))
 
-    for(i in 1:nrow(rules)){
-        col[col==rules[i,1]] <- rules[i,2]
+    for(i in 1:nrow(col.rules)){
+        col[col==col.rules[i,1]] <- col.rules[i,2]
     }
 
     names(col) <- getNodes(x)[toKeep]
     return(col)
-})
+}) # end getColors for gGraph
 
 
 

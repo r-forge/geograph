@@ -66,7 +66,7 @@ setMethod("plot", signature(x = "gGraph", y="missing"), function(x, y,shape="wor
 
     ## handle colors -- these are default, not used in some sub-plotting
     if(useAttrCol){
-        col <- getColors(x, nodes=toKeep, attr.name=attr.col)
+        col <- getColors(x, nodes=toKeep, attr.name=colnames(attr.col)[1], col.rules=attr.col)
     } else if(is.null(col.ori)){
         col <- "red"
     } else{
@@ -96,7 +96,7 @@ setMethod("plot", signature(x = "gGraph", y="missing"), function(x, y,shape="wor
 
         ## define colors for these points
         if(useAttrCol){
-            col <- getColors(x, nodes=toKeep, attr.name=attr.col)
+            col <- getColors(x, nodes=toKeep, attr.name=colnames(attr.col)[1], col.rules=attr.col)
         } else if(is.null(col.ori)){
             col <- "red"
         } else{
@@ -194,7 +194,7 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=N
 
     ## define colors for these points
     if(useAttrCol){
-        col <- getColors(x, nodes=toKeep, attr.name=attr.col)
+        col <- getColors(x, nodes=toKeep, attr.name=colnames(attr.col)[1], col.rules=attr.col)
     } else if(is.null(col)){
         col <- "red"
     } else{
@@ -284,7 +284,7 @@ plotEdges <- function(x, replot=TRUE, useCosts=NULL, col="black", lwd=1,
                 attr.col <- colnames(x@meta$colors)[1] # default attribute used for colors
             }
 
-            pcol <- getColors(x, nodes=toKeep, attr.name=attr.col)
+            pcol <- getColors(x, nodes=toKeep, attr.name=colnames(attr.col)[1], col.rules=attr.col)
 
         } else {
             pcol <- "black"

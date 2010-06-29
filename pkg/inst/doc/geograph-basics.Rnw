@@ -584,6 +584,7 @@ For now, we assume that we are only interested in retrieving continent and count
 \code{worldgraph.10k} object.
 Note that \code{extractFromLayer} can handle other types of objects (see \code{?extractFromLayer})
 <<>>=
+data(worldgraph.10k)
 summary(getNodesAttr(worldgraph.10k))
 data(worldgraph.10k)
 newGraph <- extractFromLayer(worldgraph.10k,  layer=world.countries, attr=c("CONTINENT","NAME"))
