@@ -704,6 +704,7 @@ isConnected(hgdp)
 @
 In practice, we may want to assess graphically the connectivity of the underlying grid, especially
 if not all locations of the \code{gData} are not connected.
+This can be done by \code{connectibityPlot}:
 
 
 
