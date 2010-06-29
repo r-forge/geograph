@@ -33,8 +33,8 @@ setMethod("extractFromLayer", "matrix", function(x, layer="world", attr="all",..
         selAttr <- 1:ncol(layer@data)
     } else{
         selAttr <- match(attr, colnames(layer@data)) # selected attributes
-        if(is.na(selAttr)){ # attribute not found in layer@data
-            cat("\nRequested attribute (attr) not found in the layer.\n")
+        if(any(is.na(selAttr))){ # attribute not found in layer@data
+            cat("\nSome requested attribute (attr) not found in the layer.\n")
             cat("\nAvailable data are:\n")
             print(head(layer@data))
             return(NULL) # return NULL if attr not found, not generate an error
