@@ -311,7 +311,7 @@ geo.change.attr <- function(x, mode=c("points","area"), attr.name, attr.value,
         res@nodes.attr[toChange,attr.name] <- attr.value
     }
 
-    ## readd some edges if restore.edges is TRUE ##
+    ## re-add some edges if restore.edges is TRUE ##
     nodeLab <- getNodes(res)[toChange] # label of changed nodes
     temp <- adj(getGraph(refObj), nodeLab)
     toAdd1 <- rep(names(temp),sapply(temp,length))
