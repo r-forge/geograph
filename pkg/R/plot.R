@@ -3,7 +3,7 @@
 ###################
 setMethod("plot", signature(x = "gGraph", y="missing"), function(x, y,shape="world", psize=NULL, pch=19, col=NULL,
                                       edges=FALSE, reset=FALSE, bg.col="gray", border.col="dark gray",
-                                      lwd=1, useCosts=NULL, maxLwd=3, attr.col=NULL,...){
+                                      lwd=1, useCosts=NULL, maxLwd=3, col.rules=NULL,...){
     ## some checks
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
 
@@ -45,13 +45,17 @@ setMethod("plot", signature(x = "gGraph", y="missing"), function(x, y,shape="wor
         psize <- get("psize", env=env)
     }
 
-    ## handle attr.col (attribute used in color)
-    useAttrCol <- ( (!is.null(x@meta$colors))  &&
-    (nrow(x@meta$colors)>0) &&  is.null(col)) # use color from node attribute?
-
-    if(useAttrCol & is.null(attr.col)){
-        attr.col <- colnames(x@meta$colors)[1] # default attribute used for colors
+    ## handle color from attribute
+    useAttrCol <- FALSE
+    if(is.null(col.rules)){
+        if(!is.null(x@meta$colors)){
+            col.rules <- x@meta$colors
+            useAttrCol <- TRUE
+        }
+    } else {
+        useAttrCol <- TRUE
     }
+
 
     toKeep <- isInArea(x, res.type="integer")
     coords <- coords[toKeep, ]
@@ -64,9 +68,10 @@ setMethod("plot", signature(x = "gGraph", y="missing"), function(x, y,shape="wor
         last.points <- expression()
     }
 
-    ## handle colors -- these are default, not used in some sub-plotting
+
+    ## handle colors
     if(useAttrCol){
-        col <- getColors(x, nodes=toKeep, attr.name=colnames(attr.col)[1], col.rules=attr.col)
+        col <- getColors(x, nodes=toKeep, attr.name=colnames(col.rules)[1], col.rules=col.rules)
     } else if(is.null(col.ori)){
         col <- "red"
     } else{
@@ -96,7 +101,7 @@ setMethod("plot", signature(x = "gGraph", y="missing"), function(x, y,shape="wor
 
         ## define colors for these points
         if(useAttrCol){
-            col <- getColors(x, nodes=toKeep, attr.name=colnames(attr.col)[1], col.rules=attr.col)
+            col <- getColors(x, nodes=toKeep, attr.name=colnames(col.rules)[1], col.rules=col.rules)
         } else if(is.null(col.ori)){
             col <- "red"
         } else{
@@ -154,7 +159,7 @@ setMethod("plot", signature(x = "gGraph", y="missing"), function(x, y,shape="wor
 ## points for gGraph
 #####################
 setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=NULL,
-                                      edges=FALSE, lwd=1, useCosts=NULL, maxLwd=3, attr.col=NULL,
+                                      edges=FALSE, lwd=1, useCosts=NULL, maxLwd=3, col.rules=NULL,
                                                   sticky.points=FALSE,...){
     ## some checks
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
@@ -184,17 +189,34 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=N
     if(is.null(psize)) psize <- last.plot.param$psize
     if(is.null(pch)) pch <- last.plot.param$pch
 
-    useAttrCol <- ( (!is.null(x@meta$colors))  &&
-                       (nrow(x@meta$colors)>0) &&  is.null(col)) # use color from node attribute?
 
-    if(useAttrCol & is.null(attr.col)){
-        attr.col <- colnames(x@meta$colors)[1] # default attribute used for colors
+    ## handle color from attribute
+    useAttrCol <- FALSE
+    if(is.null(col.rules)){
+        if(!is.null(x@meta$colors)){
+            col.rules <- x@meta$colors
+            useAttrCol <- TRUE
+        }
+    } else {
+        useAttrCol <- TRUE
+    }
+
+
+    ## handle color
+    if(useAttrCol){
+        col <- getColors(x, nodes=toKeep, attr.name=colnames(col.rules)[1], col.rules=col.rules)
+    } else if(is.null(col.ori)){
+        col <- "red"
+    } else{
+        col <- rep(col.ori, length=length(getNodes(x)))
+        names(col) <- getNodes(x)
+        col <- col[toKeep]
     }
 
 
     ## define colors for these points
     if(useAttrCol){
-        col <- getColors(x, nodes=toKeep, attr.name=colnames(attr.col)[1], col.rules=attr.col)
+        col <- getColors(x, nodes=toKeep, attr.name=colnames(col.rules)[1], col.rules=col.rules)
     } else if(is.null(col)){
         col <- "red"
     } else{
@@ -246,7 +268,7 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=N
 ## plotEdges
 ############
 plotEdges <- function(x, replot=TRUE, useCosts=NULL, col="black", lwd=1,
-                      lty=1, pch=NULL, psize=NULL, pcol=NULL, maxLwd=3, attr.col=NULL,
+                      lty=1, pch=NULL, psize=NULL, pcol=NULL, maxLwd=3, col.rules=NULL,
                       sticky.edges=FALSE,...){
     ## some checks
     if(!is.gGraph(x)) stop("x is not a valid gGraph object.")
@@ -275,16 +297,29 @@ plotEdges <- function(x, replot=TRUE, useCosts=NULL, col="black", lwd=1,
     keptCoords <- coords[toKeep, , drop=FALSE]
 
     ## adjust pcol to subset of points in area
+
      if(is.null(pcol)) {
-        useAttrCol <- ( (!is.null(x@meta$colors))  &&
-                       (nrow(x@meta$colors)>0) &&  is.null(pcol)) # use color from node attribute?
+         ## handle color from attribute
+         useAttrCol <- FALSE
+         if(is.null(col.rules)){
+             if(!is.null(x@meta$colors)){
+                 col.rules <- x@meta$colors
+                 useAttrCol <- TRUE
+             }
+         } else {
+             useAttrCol <- TRUE
+         }
+
+         if(!is.null(pcol)) { # pcol overrides color by attribute
+             useAttrCol <- FALSE
+         }
 
         if(useAttrCol){
-            if(is.null(attr.col)){
-                attr.col <- colnames(x@meta$colors)[1] # default attribute used for colors
+            if(is.null(col.rules)){
+                col.rules <- colnames(x@meta$colors)[1] # default attribute used for colors
             }
 
-            pcol <- getColors(x, nodes=toKeep, attr.name=colnames(attr.col)[1], col.rules=attr.col)
+            pcol <- getColors(x, nodes=toKeep, attr.name=colnames(col.rules)[1], col.rules=col.rules)
 
         } else {
             pcol <- "black"

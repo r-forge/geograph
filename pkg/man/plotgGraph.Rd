@@ -20,15 +20,15 @@
 \usage{
   \S4method{plot}{gGraph}(x, shape="world", psize=NULL, pch=19,
   col=NULL, edges=FALSE, reset=FALSE, bg.col="gray", border.col="dark
-  gray", lwd=1, useCosts=NULL, maxLwd=3, attr.col=NULL, \dots)
+  gray", lwd=1, useCosts=NULL, maxLwd=3, col.rules=NULL, \dots)
 
  \S4method{points}{gGraph}(x, psize=NULL, pch=NULL, col=NULL,
- edges=FALSE, lwd=1, useCosts=NULL, maxLwd=3, attr.col=NULL,
+ edges=FALSE, lwd=1, useCosts=NULL, maxLwd=3, col.rules=NULL,
  sticky.points=FALSE,\dots)
 
 plotEdges(x, replot=TRUE, useCosts=NULL,
 col="black", lwd=1, lty=1, pch=NULL, psize=NULL, pcol=NULL, maxLwd=3,
-attr.col=NULL, sticky.edges=FALSE, \dots)
+col.rules=NULL, sticky.edges=FALSE, \dots)
 
 }
 \arguments{
@@ -54,7 +54,7 @@ attr.col=NULL, sticky.edges=FALSE, \dots)
     inversely proportionnal to edge cost (TRUE) or not (FALSE).}
   \item{maxLwd}{a numeric indicating the maximum edge width
     (corresponding to the maximum weight).}
-  \item{attr.col}{a data.frame with two named columns, the first
+  \item{col.rules}{a data.frame with two named columns, the first
     one giving values of a node attribute, and the second one stating
     colors to be used for each value. If not provided, this is seeked
     from the \code{@meta\$color} slot of the object.}
