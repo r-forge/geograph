@@ -592,14 +592,14 @@ summary(getNodesAttr(newGraph))
 @
 The new object \code{newGraph} is a \code{gGraph} which now includes, for each node of the grid, the
 corresponding continent and country retrieved from the GIS layer.
-We can use the newly acquired information for plotting \code{newGraph}, by defining 
+We can use the newly acquired information for plotting \code{newGraph}, by defining
 <<fig=TRUE>>=
 temp <- unique(getNodesAttr(newGraph)$"NAME")
 col <- c("transparent", rainbow(length(temp)-1))
 colMat <- data.frame(NAME=temp, color=col)
 head(colMat)
 tail(colMat)
-plot(newGraph, attr.col=colMat)
+plot(newGraph, col.rules=colMat)
 @
 
 As soon as a GIS layer has been extracted to a \code{gGraph}, this information becomes available for
