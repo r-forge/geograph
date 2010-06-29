@@ -674,6 +674,38 @@ getNodesAttr(cities)
 %%%%%%%%%%%%%%%%%%%%%
 One especially useful application of \code{geoGraph} is the research of least-cost paths between
 couples of locations.
+This can be achieved using the functions \code{dijkstraFrom} and \code{dijkstraBetween} on a
+\code{gData} object which contains all the locations of interest.
+These functions return least-cost paths with the format \code{gPath}.
+\code{dijkstraFrom} compute the paths from a given node of the grid to all locations of the
+\code{gData}, while \code{dijkstraBetween} computes the paths between pairs of locations of the
+\code{gData}.
+Below, we re-use the example of the documentation of these functions, which uses the famous dataset of native
+Human populations HGDP:
+<<fig=TRUE>>=
+data(hgdp)
+data(worldgraph.40k)
+hgdp
+plot(hgdp, reset=TRUE)
+@
+
+\noindent Populations of the dataset are shown by red circles, while the underlying grid
+(\code{worldgraph.40k}) is represented with colors depending on habitat (blue: sea; green: land;
+pink: coasts).
+Genetic theory predicts that genetic diversity within populations should decrease as populations are
+located further away from the geographic origin of the species.
+Here, we verify this relationship for a theoretical origin in Addis abeba, Ethiopia.
+We shall seek all paths through landmasses to the HGDP populations.
+
+
+First, we check that all populations are connected on the grid using \code{isConnected}:
+<<>>=
+isConnected(hgdp)
+@
+In practice, we may want to assess graphically the connectivity of the underlying grid, especially
+if not all locations of the \code{gData} are not connected.
+
+
 
 
 
