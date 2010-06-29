@@ -56,6 +56,10 @@ setMethod("plot", signature(x = "gGraph", y="missing"), function(x, y,shape="wor
         useAttrCol <- TRUE
     }
 
+    if(!is.null(col)) { # col overrides rules
+        useAttrCol <- FALSE
+    }
+
 
     toKeep <- isInArea(x, res.type="integer")
     coords <- coords[toKeep, ]
@@ -178,6 +182,10 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=N
     xlim <- zoomlog[1:2]
     ylim <- zoomlog[3:4]
 
+    ## store original parameters to be passed to last.plot.param ##
+    pch.ori <- pch
+    col.ori <- col
+
 
     ## subset data to visible area ##
     coords <- getCoords(x)
@@ -199,6 +207,10 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=N
         }
     } else {
         useAttrCol <- TRUE
+    }
+
+    if(!is.null(col)) { # col overrides rules
+        useAttrCol <- FALSE
     }
 
 
