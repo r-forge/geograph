@@ -10,7 +10,7 @@
 \usepackage[utf8]{inputenc} % for UTF-8/single quotes from sQuote()
 \newcommand{\code}[1]{{{\tt #1}}}
 \title{\code{geoGraph}: implementing geographic graphs for large-scale spatial modelling}
-\author{Thibaut Jombart, Andrea Manica, Fran\c{c}ois Balloux}
+\author{Thibaut Jombart, Fran\c{c}ois Balloux, Andrea Manica}
 \date{\today}
 
 
@@ -596,8 +596,8 @@ corresponding continent and country retrieved from the GIS layer.
 temp <- unique(getNodesAttr(newGraph)$"CONTINENT")
 col <- c("transparent", rainbow(7))
 colMat <- data.frame(CONTINENT=temp, color=col)
-
 @
+
 
 
 
