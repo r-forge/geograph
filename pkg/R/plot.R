@@ -116,7 +116,9 @@ setMethod("plot", signature(x = "gGraph", y="missing"), function(x, y,shape="wor
 
 
         if(edges){
-            plotEdges(x, replot=FALSE, lwd=lwd, useCosts=useCosts, maxLwd=maxLwd)
+            ## plotEdges(x, replot=FALSE, lwd=lwd, useCosts=useCosts, maxLwd=maxLwd)
+            plotEdges(x, lwd=lwd, useCosts=useCosts, maxLwd=maxLwd)
+
         }
         points(coords, cex=psize, pch=pch, col=col, ...)
 
@@ -124,13 +126,15 @@ setMethod("plot", signature(x = "gGraph", y="missing"), function(x, y,shape="wor
         plot(coords, xlab="longitude", ylab="latitude", xlim=xlim, ylim=ylim,
              cex=psize, pch=pch, col=col, ...)
         if(edges){
-            plotEdges(x, replot=TRUE, psize=psize, pch=pch, pcol=col, lwd=lwd,
+            ##       plotEdges(x, replot=TRUE, psize=psize, pch=pch, pcol=col, lwd=lwd,
+            ##            useCosts=useCosts, maxLwd=maxLwd)
+            plotEdges(x, psize=psize, pch=pch, pcol=col, lwd=lwd,
                       useCosts=useCosts, maxLwd=maxLwd)
         }
     }
 
 
-    ## misc assignement in our dedicated environment
+    ## misc assignements in our dedicated environment
     assign("usr", par("usr"), envir=env)
 
     curCall <- sys.call(-1)
@@ -245,9 +249,10 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=N
 
 
     ## add only points and optionally edges
-     if(edges){
-            plotEdges(x, replot=FALSE, lwd=lwd, useCosts=useCosts, maxLwd=maxLwd)
-        }
+    if(edges){
+        ## plotEdges(x, replot=FALSE, lwd=lwd, useCosts=useCosts, maxLwd=maxLwd)
+        plotEdges(x, lwd=lwd, useCosts=useCosts, maxLwd=maxLwd)
+    }
     points(coords, xlab="longitude", ylab="latitude", xlim=xlim, ylim=ylim,
            cex=psize, pch=pch, col=col, ...)
 
@@ -279,7 +284,7 @@ setMethod("points", signature("gGraph"), function(x, psize=NULL, pch=NULL, col=N
 ############
 ## plotEdges
 ############
-plotEdges <- function(x, replot=TRUE, useCosts=NULL, col="black", lwd=1,
+plotEdges <- function(x, useCosts=NULL, col="black", lwd=1,
                       lty=1, pch=NULL, psize=NULL, pcol=NULL, maxLwd=3, col.rules=NULL,
                       sticky.edges=FALSE,...){
     ## some checks
@@ -300,14 +305,14 @@ plotEdges <- function(x, replot=TRUE, useCosts=NULL, col="black", lwd=1,
         last.points <- expression()
     }
 
-    ## handle plot param
-    last.plot.param <- get("last.plot.param", envir=env)
-    if(is.null(psize)) psize <- last.plot.param$psize
-    if(is.null(pch)) pch <- last.plot.param$pch
-    if(is.null(pcol)) pcol <- last.plot.param$col
-    if(is.null(psize)){
-        psize <- get("psize", env=env)
-    }
+    ## handle plot param # ! discarded: now call last points
+    ## last.plot.param <- get("last.plot.param", envir=env)
+    ## if(is.null(psize)) psize <- last.plot.param$psize
+    ## if(is.null(pch)) pch <- last.plot.param$pch
+    ## if(is.null(pcol)) pcol <- last.plot.param$col
+    ## if(is.null(psize)){
+    ##     psize <- get("psize", env=env)
+    ## }
 
     ## retained coords (those within plotting area)
     coords <- getCoords(x)
@@ -375,9 +380,9 @@ plotEdges <- function(x, replot=TRUE, useCosts=NULL, col="black", lwd=1,
 
 
     ## replot points
-    if(replot){
-        points(keptCoords[,1], keptCoords[,2], pch=pch, cex=psize, col=pcol)
-    }
+    ##points(keptCoords[,1], keptCoords[,2], pch=pch, cex=psize, col=pcol)
+    eval(last.points)
+
 
     ## if sticky edges are used, store info in env ##
     if(sticky.edges) {

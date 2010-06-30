@@ -26,7 +26,7 @@
  edges=FALSE, lwd=1, useCosts=NULL, maxLwd=3, col.rules=NULL,
  sticky.points=FALSE,\dots)
 
-plotEdges(x, replot=TRUE, useCosts=NULL,
+plotEdges(x, useCosts=NULL,
 col="black", lwd=1, lty=1, pch=NULL, psize=NULL, pcol=NULL, maxLwd=3,
 col.rules=NULL, sticky.edges=FALSE, \dots)
 
@@ -61,8 +61,8 @@ col.rules=NULL, sticky.edges=FALSE, \dots)
   \item{sticky.points}{a logical indicating if added points should
     be kept when replotting (TRUE), or not (FALSE). In any case,
     \code{reset=TRUE} will prevent points to be redrawn.}
-  \item{replot}{a logical indicating if points should be redrawn
-    after plotting the edges (TRUE), or not (FALSE).}
+  % \item{replot}{a logical indicating if points should be redrawn
+  %   after plotting the edges (TRUE), or not (FALSE).}
   \item{lty}{the type of line (for the edges).}
   \item{pcol}{a character indicating the color to be used for points.}
   \item{sticky.edges}{a logical indicating whether added edges should
