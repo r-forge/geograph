@@ -43,7 +43,8 @@
   \item{col.nodes}{a character string indicating the color to be
     used for nodes.}
   \item{col.gGraph}{a (recycled) color vector for the associated
-    \linkS4class{gGraph} object. If NULL, default color is used.}
+    \linkS4class{gGraph} object. If NULL, default color is used. Set to
+    \code{NA} or "transparent" to avoid plotting the \linkS4class{gGraph}.}
   \item{reset}{a logical stating whether the plotting area should be
     reset to fit the \code{gData} object (TRUE), or should conserve
     previous plotting and settings (FALSE, default).}
