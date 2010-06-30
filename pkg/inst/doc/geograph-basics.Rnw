@@ -462,7 +462,7 @@ text(getCoords(cities), rownames(getData(cities)))
 @
 
 \noindent Note the argument \code{reset=TRUE}, which tells the plotting function to adapt the
-plotted area to the geographic extent of the dataset.
+plotting area to the geographic extent of the dataset.
 \\
 
 To plot additional information, it can be useful to extract the spatial coordinates from the data.
@@ -489,8 +489,8 @@ Editing graphs is an essential task in \code{geoGraph}.
 While available \code{gGraph} objects provide a basis to work with (see \code{?worldgraph.10k}),
 one may want to adapt a graph to a specific case.
 For instance, connectivity should be defined according to biological knowledge of the organism under study.
-\code{gGraph} can be modified in different ways: by changing the connectivity, and by changing costs
-and attribute values.
+\code{gGraph} can be modified in different ways: by changing the connectivity, the costs of
+edges, or the attribute values.
 
 
 
@@ -518,7 +518,7 @@ later on:
 geo.bookmark("madagascar")
 @
 What we now want to do is remove all but sea-sea connections.
-To do so, the easiest approach is to i) define costs for edges based on habitat, with land being
+To do so, the easiest approach is to i) define costs for the edges based on habitat, with land being
 given large costs and ii) remove all edges with large costs.
 \\
 
@@ -532,7 +532,7 @@ newGraph@meta$costs
 @
 We have just changed the costs associated to habitat type, but this change is not yet effective on
 edges between nodes.
-To do so, we use \code{setCosts}, which sets the cost of an edge to the average of the costs of the nodes:
+We use \code{setCosts} to set the cost of an edge to the average of the costs of its nodes:
 <<fig=TRUE>>=
 newGraph <- setCosts(newGraph, attr.name="habitat")
 plot(newGraph,edge=TRUE)
