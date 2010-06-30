@@ -293,12 +293,18 @@ plotEdges <- function(x, replot=TRUE, useCosts=NULL, col="black", lwd=1,
     ## get the environment
     env <- get(".geoGraphEnv", envir=.GlobalEnv)
 
+
+    if(exists("last.points", env=env)){
+        last.points <- get("last.points", env=env)
+    } else {
+        last.points <- expression()
+    }
+
     ## handle plot param
     last.plot.param <- get("last.plot.param", envir=env)
     if(is.null(psize)) psize <- last.plot.param$psize
     if(is.null(pch)) pch <- last.plot.param$pch
-    ##if(is.null(pcol)) pcol <- last.plot.param$col
-
+    if(is.null(pcol)) pcol <- last.plot.param$col
     if(is.null(psize)){
         psize <- get("psize", env=env)
     }
@@ -324,6 +330,7 @@ plotEdges <- function(x, replot=TRUE, useCosts=NULL, col="black", lwd=1,
 
          if(!is.null(pcol)) { # pcol overrides color by attribute
              useAttrCol <- FALSE
+             pcol <- pcol[toKeep]
          }
 
         if(useAttrCol){
