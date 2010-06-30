@@ -696,26 +696,44 @@ Genetic theory predicts that genetic diversity within populations should decreas
 located further away from the geographic origin of the species.
 Here, we verify this relationship for a theoretical origin in Addis abeba, Ethiopia.
 We shall seek all paths through landmasses to the HGDP populations.
-
+\\
 
 First, we check that all populations are connected on the grid using \code{isConnected}:
 <<>>=
 isConnected(hgdp)
 @
-In practice, we may often want to assess graphically the connectivity of the underlying grid, especially
+Note that in practice, we may often want to assess graphically the connectivity of the underlying grid, especially
 if not all locations of the \code{gData} are not connected.
 This can be done by \code{connectivityPlot}, which has methods for both \code{gGraph} and
 \code{gData}, and represents different connected components using different colors.
 For instance, for \code{worldgraph.10k}:
 <<>>=
 data(worldgraph.10k)
-geo.zoomin(c(90,150,18,-25))
-@
-<<fig=TRUE>>=
 connectivityPlot(worldgraph.10k, edges=TRUE, seed=1)
 @
+<<fig=TRUE>>=
+geo.zoomin(c(90,150,18,-25))
+title("Different connected components\n in worldgraph.10k")
+@
 
 
+Since all locations in \code{hgdp} are connected, we can proceed further.
+We have to set the costs of the \code{gGraph}.
+To do so, we can choose between i) strictly uniform costs (using \code{dropCosts}) ii)
+distance-based costs -- roughly uniform -- (using \code{setDistCosts}) or iii) attribute-driven
+costs (using \code{setCosts}).
+
+
+
+now seek least-costs paths from Addis abeba
+to each population.
+
+using \code{dijkstraFrom}
+<<>>=
+addis <- c(38,9)
+ori <- closestNode(worldgraph.40k, ori.coord)
+patths <- dijkstraFrom(hgdp, ori)
+@
 
 
 

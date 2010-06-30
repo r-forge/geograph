@@ -1,8 +1,8 @@
 ############
 ## generic
 ############
-setGeneric("setDistCost", function(x,...) {
-    standardGeneric("setDistCost")
+setGeneric("setDistCosts", function(x,...) {
+    standardGeneric("setDistCosts")
 })
 
 
@@ -12,7 +12,7 @@ setGeneric("setDistCost", function(x,...) {
 #################
 ## gGraph method
 #################
-setMethod("setDistCost", "gGraph", function(x, ...){
+setMethod("setDistCosts", "gGraph", function(x, ...){
 
     ## some checks ##
     if(!require(fields)) stop("Package fields is required.")
@@ -34,4 +34,4 @@ setMethod("setDistCost", "gGraph", function(x, ...){
     edgeData(x@graph, from = E[,1], to = E[,2], attr = "weight") <- w
 
     return(x)
-}) # end setDistCost gGraph
+}) # end setDistCosts gGraph

@@ -1,19 +1,19 @@
 \encoding{UTF-8}
-\name{setDistCost}
-\alias{setDistCost}
-\alias{setDistCost-methods}
-\alias{setDistCost,gGraph-method}
+\name{setDistCosts}
+\alias{setDistCosts}
+\alias{setDistCosts-methods}
+\alias{setDistCosts,gGraph-method}
 \title{Set costs associated to edges based on geographic distances}
 \description{
-  The function \code{setDistCost} sets the costs of a
+  The function \code{setDistCosts} sets the costs of a
   \linkS4class{gGraph} object using the geographic distance. The cost
   associated to an edge is defined as the great circle distance between
-  the two nodes of this edge. \code{setDistCost} actually relies on
+  the two nodes of this edge. \code{setDistCosts} actually relies on
   \code{\link[pkg:fields]{rdist.earth}} of the \code{fields} package.
 }
 \usage{
-setDistCost(x, \dots)
-\S4method{setDistCost}{gGraph}(x, \dots)
+setDistCosts(x, \dots)
+\S4method{setDistCosts}{gGraph}(x, \dots)
 }
 \arguments{
   \item{x}{a valid \linkS4class{gGraph}.}
@@ -46,7 +46,7 @@ plotEdges(rawgraph.10k)
 
 ## compute costs
 x <- rawgraph.10k[isInArea(rawgraph.10k)]
-x <- setDistCost(x)
+x <- setDistCosts(x)
 
 ## replot edges
 plotEdges(x) # no big differences can be seen
