@@ -18,6 +18,7 @@
  \S4method{plot}{gData}(x, type=c("nodes","original","both"),
                         pch.ori=4, pch.nodes=1,
                         col.ori="black", col.nodes="red",
+                        col.gGraph=NULL, reset=FALSE,
                         sticky.points=TRUE,\dots)
 
  \S4method{points}{gData}(x, type=c("nodes","original","both"),
@@ -41,10 +42,15 @@
     used for locations.}
   \item{col.nodes}{a character string indicating the color to be
     used for nodes.}
- \item{sticky.points}{a logical indicating if added points should
+  \item{col.gGraph}{a (recycled) color vector for the associated
+    \linkS4class{gGraph} object. If NULL, default color is used.}
+  \item{reset}{a logical stating whether the plotting area should be
+    reset to fit the \code{gData} object (TRUE), or should conserve
+    previous plotting and settings (FALSE, default).}
+  \item{sticky.points}{a logical indicating if added points should
     be kept when replotting (TRUE, default), or not (FALSE). In any case,
     \code{reset=TRUE} will prevent points to be redrawn.}
-   \item{\dots}{further arguments passed to \code{points}.}
+  \item{\dots}{further arguments passed to \code{points}.}
 }
 \details{
   When \code{sticky.points} is set to TRUE, all operations performed on
@@ -54,7 +60,8 @@
 \seealso{
   - Different functions to explore these plots:\cr
   \code{\link{geo.zoomin}}, \code{\link{geo.zoomout}},
-  \code{\link{geo.slide}}, \code{\link{geo.back}}.\cr
+  \code{\link{geo.slide}}, \code{\link{geo.back}},
+  \code{\link{geo.bookmark}}, \code{\link{geo.goto}}.\cr
 }
 \author{Thibaut Jombart (\email{t.jombart@imperial.ac.uk})}
 \examples{
