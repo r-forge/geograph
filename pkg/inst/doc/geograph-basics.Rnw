@@ -729,19 +729,67 @@ paths between Addis abeba and the populations of \code{hgdp}:
 <<>>=
 myGraph <- dropCosts(worldgraph.40k)
 hgdp@gGraph.name <- "myGraph"
-addis <- c(38,9)
-ori <- closestNode(myGraph, ori.coord)
+addis <- cbind(38,9)
+ori <- closestNode(myGraph, addis)
 paths <- dijkstraFrom(hgdp, ori)
 @
 The object \code{paths} contains the identified paths, as a list with class \code{gPath} (see \code{?gPath}).
 Paths can be plotted easily:
 <<fig=TRUE>>=
+addis <- as.vector(addis)
 plot(newGraph, col=NA, reset=TRUE)
 plot(paths)
 points(addis[1], addis[2], pch="x", cex=2)
 text(addis[1]+35, addis[2], "Addis abeba", cex=.8, font=2)
 points(hgdp, col.node="black")
 @
+
+\noindent On this graph, each path is plotted with a different color, but paths overlap at several places.
+We can extract the distances from the `origin' using \code{as.dist.gPath}, and then examine the
+relationship between genetic diversity within populations and the distance from the origin:
+<<fig=TRUE>>=
+div <- getData(hgdp)$"Genetic.Div"
+dgeo.unif <- as.dist.gPath(paths, res.type="vector")
+plot(div~dgeo.unif, xlab="Geographic distance (arbitrary units)", ylab="Genetic diversity")
+lm.unif <- lm(div~dgeo.unif)
+abline(lm.unif, col="red")
+summary(lm.unif)
+title("Genetic diversity vs geographic distance \n uniform costs ")
+@
+
+
+Alternatively, we could use costs based on habitat.
+As a toy example, we will consider that coasts are four times more favourable for dispersal than
+the rest of the landmasses.
+We first define these new costs:
+<<>>=
+myGraph@meta$costs[7,] <- c("coast", 0.25)
+myGraph@meta$costs
+myGraph <- setCosts(myGraph, attr.name="habitat")
+paths.2 <- dijkstraFrom(hgdp, ori)
+@
+<<fig=TRUE>>=
+plot(newGraph, col=NA, reset=TRUE)
+plot(paths.2)
+points(addis[1], addis[2], pch="x", cex=2)
+text(addis[1]+35, addis[2], "Addis abeba", cex=.8, font=2)
+points(hgdp, col.node="black")
+@
+
+Now the new paths are slightly different from the previous ones.
+We can examine the new relationship with genetic distance:
+<<fig=TRUE>>=
+dgeo.hab <- as.dist.gPath(paths.2, res.type="vector")
+plot(div~dgeo.hab, xlab="Geographic distance (arbitrary units)", ylab="Genetic diversity")
+lm.hab <- lm(div~dgeo.hab)
+abline(lm.hab, col="red")
+summary(lm.hab)
+title("Genetic diversity vs geographic distance \n habitat costs ")
+@
+
+Of course, the distinction between coasts and inner landmasses is a somewhat poor description of the habitat.
+In practice, complex habitat models can be used as simply.
+
 
 
 \end{document}
