@@ -208,6 +208,17 @@ setMethod("connectivityPlot", "gGraph", function(x, ..., seed=NULL){
     ## call to plot ##
     plot(x, col=col, ...)
 
+    ## save plot param ## (will be used by plot gGraph
+    dots <- list(...)
+    temp <- get("last.plot.param", envir=env)
+    if(!is.null(dots$psize)) {
+        temp$psize <- dots$psize
+    }
+    if(!is.null(dots$pch)){
+        temp$pch <- dots$pch
+    }
+    temp$col <- col
+    assign("last.plot.param", temp, envir=env)
 
     ## fix last call ##
     curCall <- sys.call(-1)

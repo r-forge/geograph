@@ -92,7 +92,7 @@ geo.zoomin <- function(reg=NULL){ # reg should be a list as returned by locator(
 
                 ## reconstruct a valid call to plot
                 temp <- deparse(last.plot.call)
-                temp <- sub("res..[^,]*,","",temp) # remove subset if provided
+                temp <- sub("res..[^,]*,","",temp) # remove 'reset' if provided
                 temp <- sub(",[[:blank:]]*res..[^)]*", "",temp) # same thing, if last arg
 
                 newCall <- parse(text=temp)
