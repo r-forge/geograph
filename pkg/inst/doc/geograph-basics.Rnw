@@ -707,11 +707,12 @@ if not all locations of the \code{gData} are not connected.
 This can be done by \code{connectivityPlot}, which has methods for both \code{gGraph} and
 \code{gData}, and represents different connected components using different colors.
 For instance, for \code{worldgraph.10k}:
-<<fig=TRUE>>=
+<<>>=
 data(worldgraph.10k)
-connectivityPlot(worldgraph.10k, seed=1)
 geo.zoomin(c(90,150,18,-25))
-plotEdges(worldgraph.10k)
+@
+<<fig=TRUE>>=
+connectivityPlot(worldgraph.10k, edges=TRUE, seed=1)
 @
 
 
