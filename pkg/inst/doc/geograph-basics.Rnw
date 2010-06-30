@@ -723,18 +723,25 @@ To do so, we can choose between i) strictly uniform costs (using \code{dropCosts
 distance-based costs -- roughly uniform -- (using \code{setDistCosts}) or iii) attribute-driven
 costs (using \code{setCosts}).
 
-
-
-now seek least-costs paths from Addis abeba
-to each population.
-
-using \code{dijkstraFrom}
+We shall illustrate first the strictly uniform costs.
+After setting a \code{gGraph} with uniform costs, we use \code{dijkstraFrom} to find the shortests
+paths between Addis abeba and the populations of \code{hgdp}:
 <<>>=
+myGraph <- dropCosts(worldgraph.40k)
+hgdp@gGraph.name <- "myGraph"
 addis <- c(38,9)
-ori <- closestNode(worldgraph.40k, ori.coord)
-patths <- dijkstraFrom(hgdp, ori)
+ori <- closestNode(myGraph, ori.coord)
+paths <- dijkstraFrom(hgdp, ori)
 @
-
+The object \code{paths} contains the identified paths, as a list with class \code{gPath} (see \code{?gPath}).
+Paths can be plotted easily:
+<<fig=TRUE>>=
+plot(newGraph, col=NA, reset=TRUE)
+plot(paths)
+points(addis[1], addis[2], pch="x", cex=2)
+text(addis[1]+35, addis[2], "Addis abeba", cex=.8, font=2)
+points(hgdp, col.node="black")
+@
 
 
 \end{document}
