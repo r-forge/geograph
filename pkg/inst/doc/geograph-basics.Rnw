@@ -567,11 +567,11 @@ A second approach to changing a \code{gGraph} is to refine the graph by hand, ad
 locally some connections, or altering the attributes of some nodes.
 This can be necessary to connect components such as islands to the main landmasses, or to correct
 erroneous data.
-Adding and removing edges from a the grid of a \code{gGraph} can be achieved by \code{geo.add.edges}
+Adding and removing edges from the grid of a \code{gGraph} can be achieved by \code{geo.add.edges}
 and \code{geo.remove.edges}, respectively.
 These functions are interactive, and require the user to select individual nodes or a rectangular
 area in which edges are added or removed.
-See \code{?geo.add.edges} for more information on this functions.
+See \code{?geo.add.edges} for more information on these functions.
 For instance, we can remove a few odd connections in the previous graph, near the Australian coasts
 (note that we have to save the changes using \code{<-}):
 <<eval=FALSE>>=
@@ -583,14 +583,19 @@ load("Robjects/newGraph.RData")
 @
 \includegraphics{figs/georemove.png}
 
-\noindent Note that when adding nodes is done for an area or for an entire graph, node addition is based on
-another \code{gGraph}.
-For graph based on 10k or 40k grids, the raw graphs provided in \code{geoGraph} should be used
-(\code{rawgraph.10k}, \code{rawgraph.40k}).
+\noindent When adding connections within an area or in an entire graph, node addition is based on
+another \code{gGraph}, \textit{i.e.} only connections existing in another \code{gGraph} serving as
+reference can be added to the current \code{gGraph}.
+For graphs based on 10k or 40k grids, the raw graphs provided in \code{geoGraph} should be used,
+(\code{rawgraph.10k}, \code{rawgraph.40k}), since they are fully connected.
 \\
 
-We may also want to modify the attributes of specific nodes.
-This is again done interactively, using the function \code{geo.change.attr}:
+
+
+In addition to changing grid connectivity, we may also want to modify the attributes of specific nodes.
+This is again done interactively, using the function \code{geo.change.attr}.
+For instance, here, we define a new value \code{shalowwater} (plotted in light blue) for the attribute \code{habitat},
+selecting affected nodes using the 'area' mode first, and refining the changes using the 'point' mode:
 <<eval=FALSE>>=
 plot(newGraph, edge=TRUE)
 temp <- geo.change.attr(newGraph, mode="area", attr.name="habitat", attr.value="shallowwater", newCol="deepskyblue")
@@ -605,6 +610,8 @@ newGraph@meta$colors
 plot(newGraph,edge=TRUE)
 @
 
+Again, note that the changes made to the graph have to be save in an object (using \code{<-}) to be
+effective.
 
 
 
