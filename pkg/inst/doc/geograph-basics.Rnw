@@ -498,12 +498,12 @@ edges, or the attribute values.
 \subsubsection{Changing the global connectivity of a \code{gGraph}}
 % % % % % % % % % % % %
 
-There are two main ways of chaning the connectivity of a \code{gGraph}, which match two different objectives.
+There are two main ways of changing the connectivity of a \code{gGraph}, which match two different objectives.
 The first approach is to perform global and systematic changes of the connectivity of the graph.
 Typically, one will want to remove all connections over a given type of landscape, which is
 uncrossable by the organism under study.
-Let's assume one is interested in sea fishes.
-To model fish dispersal, we have to define a graph which connects only nodes falling in seas.
+Let's assume we are interested in saltwater fishes.
+To model fish dispersal, we have to define a graph which connects only nodes overlaying the sea.
 We load the \code{gGraph} object \code{rawgraph.10k}, and zoom in to a smaller area (Madagascar) to illustrate
 changes in connectivity:
 <<fig=TRUE>>=
@@ -550,7 +550,7 @@ plot(newGraph,edge=TRUE)
 @
 
 Here we are: \code{newGraph} only contains connections in the sea.
-Note that, despite we restrained the plotting area to Madagascar, this change is effective everywhere.
+Note that, although we restrained the plotting area to Madagascar, this change is effective everywhere.
 For instance, travelling to the nort-west Australian coasts:
 <<fig=TRUE>>=
 geo.zoomin(c(110,130,-27,-12))
@@ -563,8 +563,8 @@ geo.bookmark("australia")
 % % % % % % % % % % % %
 \subsubsection{Changing local properties of a \code{gGraph}}
 % % % % % % % % % % % %
-A second approach to chaning a \code{gGraph} is to refine the graph by hand, adding or removing
-locally some connections, or altering the values of node attributes.
+A second approach to changing a \code{gGraph} is to refine the graph by hand, adding or removing
+locally some connections, or altering the attributes of some nodes.
 This can be necessary to connect components such as islands to the main landmasses, or to correct
 erroneous data.
 Adding and removing edges from a the grid of a \code{gGraph} can be achieved by \code{geo.add.edges}
