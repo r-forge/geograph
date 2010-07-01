@@ -5,8 +5,9 @@
 \docType{package}
 \title{The geoGraph package}
 
-\description{This package implements classes and methods for large-scale
-  georeferenced data.\cr
+\description{
+  This package implements classes and methods for large-scale
+  georeferenced data handled through spatial graphs.\cr
 
   
   Main functionalities of \code{geoGraph} are summarized below.\cr
@@ -23,25 +24,35 @@
    
    - some accessors allow to access slots of an object, sometimes with
    additional treatment of information:
-   \code{\link{getGraph}}, \code{\link{getNodesAttr}}, \code{\link{getDates}},
-   \code{\link{getCoords}}, \code{\link{getNodes}}, \code{\link{getEdges}}, \code{\link{getCosts}}.\cr
+   \code{\link{getGraph}}, \code{\link{getNodesAttr}},
+   \code{\link{getCoords}}, \code{\link{getNodes}},
+   \code{\link{getEdges}}, \code{\link{getCosts}}.\cr
    
    - \code{\link{setEdges}}: add/remove edges specified edges.\cr
    
+   - \code{\link{setCosts}}: set costs of edges.\cr
+
+   - \code{\link{hasCosts}}: tests if the graph is weighted (i.e., has
+     non-uniform costs).\cr
+
    - \code{\link{isInArea}}: finds which nodes are in the currently
    plotted area.\cr
    
-   - \code{\link{areConnected}}: tests if nodes are directly connected.\cr
+   - \code{\link{areConnected}}: tests if nodes are directly
+   connected.\cr
+   
+   - \code{\link{connectivityPlot}}: plot connected components with
+     different colors.\cr
    
    - \code{\link{dropDeadEdges}}: suppress edges whose weight is null.\cr
  
    - \code{\link{closestNode}}: given a longitude and a latitude, finds
      the closest node; specific values of node attribute can be
      provided, for instance, to find the closest node on land.\cr
-   
-   - \code{\link{hasCosts}}: tests if the graph is weighted.\cr
-   
+     
    - \code{\link{show}}: printing of gGraph objects.\cr
+
+   - \code{\link{extractFromLayer}}: extract information from GIS layers.\cr
 
    - \code{\link{findLand}}: checks which nodes are on land.\cr
    
@@ -54,9 +65,7 @@
    - \code{\link{geo.change.attr}}: graphical functions for changing
      attributes of nodes.\cr
    
-   % - \code{\link{rebuild}}: a function allowing one to rebuild an object
-   %   from its history, at any stage of its 'evolution'.\cr
-  
+   
 
    === GRAPHICS ===\cr
    \code{geoGraph} aims at providing advanced graphical facilities,
@@ -79,8 +88,11 @@
    - \code{\link{geo.back}}: replot the previous screens.\cr
 
    - \code{\link{geo.slide}}: slide the plotted area toward the
-     indicated direction.\cr
-
+   indicated direction.\cr
+   
+   - \code{\link{geo.bookmark}}, \code{\link{geo.goto}}: set and goto a
+     bookmarked area.\cr
+ 
   
 
 
@@ -107,15 +119,14 @@
     Package: \tab geoGraph\cr
     Type: \tab Package\cr
     Version: \tab 1.0-0\cr
-    Date: \tab 2009-02-13 \cr
+    Date: \tab 2010-07-01 \cr
     License: \tab GPL (>=2)
   }  
 }
 \author{
   Thibaut Jombart <t.jombart@imperial.ac.uk> (maintainer)\cr
-  Andrea Manica \cr
   François Balloux \cr
- 
+  Andrea Manica \cr
 }
 \examples{
 ## the class gGraph
