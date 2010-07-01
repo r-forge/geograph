@@ -624,7 +624,7 @@ effective.
 An important feature of \code{geoGraph} is serving as an interface between \emph{geographic information
 system} (GIS) layers and geographic data.
 As currently implemented, \code{geoGraph} can extract information from shapefiles with the Arc GIS
-(\url{http://...}) format, using the function \code{extractFromLayer}.
+(\url{http://www.esri.com/software/arcgis/index.html}) format, using the function \code{extractFromLayer}.
 Here, we illustrate this procedure using the shapefile \code{world-countries.shp} provided with the
 package.
 The GIS shapefile is first read in R using \code{readShapePoly} from the \code{maptools} package:
@@ -633,20 +633,19 @@ world.countries <- readShapePoly(system.file("files/shapefiles/world-countries.s
 class(world.countries)
 summary(world.countries)
 @
-The summary of the object shows the different informations (`\emph{attributes}') stored in the layer.
-For now, we assume that we are only interested in retrieving continent and country information for the
+The summary of \code{world.countries} shows the data (`\emph{attributes}') stored in the layer.
+Let us assume that we are interested in retrieving continent and country information for the
 \code{worldgraph.10k} object.
-Note that \code{extractFromLayer} can handle other types of objects (see \code{?extractFromLayer})
+Note that \code{extractFromLayer} can extract information to other types of objects than \code{gGraph} (see \code{?extractFromLayer})
 <<>>=
 data(worldgraph.10k)
 summary(getNodesAttr(worldgraph.10k))
-data(worldgraph.10k)
 newGraph <- extractFromLayer(worldgraph.10k,  layer=world.countries, attr=c("CONTINENT","NAME"))
 summary(getNodesAttr(newGraph))
 @
 The new object \code{newGraph} is a \code{gGraph} which now includes, for each node of the grid, the
 corresponding continent and country retrieved from the GIS layer.
-We can use the newly acquired information for plotting \code{newGraph}, by defining
+We can use the newly acquired information for plotting \code{newGraph}, by defining new color rules:
 <<fig=TRUE>>=
 temp <- unique(getNodesAttr(newGraph)$"NAME")
 col <- c("transparent", rainbow(length(temp)-1))
@@ -664,7 +663,7 @@ habitat model, and derive costs for dispersal on the grid.
 As soon as a GIS layer has been extracted to a \code{gGraph}, this information becomes also available for
 any \code{gData} interfaced with this object.
 For instance, we can re-use the \code{cities} example defined in a previous section, and interface it
-with \code{newGraph}:
+with \code{newGraph} to retrieve continent and country information for the cities of the dataset:
 <<>>=
 cities.dat
 cities <- new("gData", coords=cities.dat[,1:2], data=cities.dat[,3,drop=FALSE], gGraph.name="newGraph")
@@ -681,7 +680,7 @@ getNodesAttr(cities)
 %%%%%%%%%%%%%%%%%%%%%
 \subsection{Finding least-cost paths}
 %%%%%%%%%%%%%%%%%%%%%
-One especially useful application of \code{geoGraph} is the research of least-cost paths between
+One of the most useful applications of \code{geoGraph} is the research of least-cost paths between
 couples of locations.
 This can be achieved using the functions \code{dijkstraFrom} and \code{dijkstraBetween} on a
 \code{gData} object which contains all the locations of interest.
