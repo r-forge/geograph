@@ -3,16 +3,23 @@
 \alias{getCosts}
 \alias{getCosts-methods}
 \alias{getCosts,gGraph-method}
+\alias{getNodeCosts-methods}
+\alias{getNodeCosts,gGraph-method}
 \title{Get costs associated to edges of a gGraph object}
 \description{
   The function \code{getCosts} returns the costs associated to the edges of a
   \linkS4class{gGraph} object using different possible outputs. These
   outputs are designed to match possible outputs of
   \code{\link{getEdges}} function.
+
+  \code{getNodeCosts} returns the costs associated to nodes based on one
+  node attribute.
 }
 \usage{
 getCosts(x, \dots)
 \S4method{getCosts}{gGraph}(x, res.type=c("asIs","vector"), unique=FALSE, \dots)
+getNodeCosts(x, \dots)
+\S4method{getNodeCosts}{gGraph}(x, attr.name, \dots)
 }
 \arguments{
   \item{x}{a valid \linkS4class{gGraph}.}
@@ -21,6 +28,7 @@ getCosts(x, \dots)
   \item{unique}{a logical indicating whether the costs should be
     returned for unique edges (TRUE), or if duplicate edges should be
     considered as well (TRUE, default).}
+  \item{attr.name}{the name of the node attribute used to define node costs.}
   \item{\dots}{other arguments passed to other methods (currently
     unused).}
 }

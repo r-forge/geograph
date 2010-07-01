@@ -471,6 +471,12 @@ This method takes an extra argument \code{original}, which is TRUE if original s
 are seeked, or FALSE for coordinates of the nodes on the grid.
 We can use this to represent, for instance, the population sizes for the different cities:
 <<fig=TRUE>>=
+transp <- function(col, alpha=.5){
+    res <- apply(col2rgb(col),2, function(c) rgb(c[1]/255, c[2]/255, c[3]/255, alpha))
+    return(res)
+}
+
+
 plot(cities, reset=TRUE)
 par(xpd=TRUE)
 text(getCoords(cities)+-.5, rownames(getData(cities)))
