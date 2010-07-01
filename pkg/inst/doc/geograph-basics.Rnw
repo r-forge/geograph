@@ -688,8 +688,8 @@ These functions return least-cost paths with the format \code{gPath}.
 \code{dijkstraFrom} compute the paths from a given node of the grid to all locations of the
 \code{gData}, while \code{dijkstraBetween} computes the paths between pairs of locations of the
 \code{gData}.
-Below, we re-use the example of the documentation of these functions, which uses the famous dataset of native
-Human populations HGDP:
+Below, we detail the example of the documentation of these functions, which uses the famous dataset of native
+Human populations, HGDP:
 <<fig=TRUE>>=
 data(hgdp)
 data(worldgraph.40k)
@@ -700,7 +700,7 @@ plot(hgdp, reset=TRUE)
 \noindent Populations of the dataset are shown by red circles, while the underlying grid
 (\code{worldgraph.40k}) is represented with colors depending on habitat (blue: sea; green: land;
 pink: coasts).
-Genetic theory predicts that genetic diversity within populations should decrease as populations are
+Population genetics predicts that genetic diversity within populations should decay as populations are
 located further away from the geographic origin of the species.
 Here, we verify this relationship for a theoretical origin in Addis abeba, Ethiopia.
 We shall seek all paths through landmasses to the HGDP populations.
@@ -711,8 +711,8 @@ First, we check that all populations are connected on the grid using \code{isCon
 isConnected(hgdp)
 @
 Note that in practice, we may often want to assess graphically the connectivity of the underlying grid, especially
-if not all locations of the \code{gData} are not connected.
-This can be done by \code{connectivityPlot}, which has methods for both \code{gGraph} and
+if not all locations of the \code{gData} are connected.
+This can be done using \code{connectivityPlot}, which has methods for both \code{gGraph} and
 \code{gData}, and represents different connected components using different colors.
 For instance, for \code{worldgraph.10k}:
 <<>>=
@@ -726,13 +726,14 @@ title("Different connected components\n in worldgraph.10k")
 
 
 Since all locations in \code{hgdp} are connected, we can proceed further.
-We have to set the costs of the \code{gGraph}.
+We have to set the costs of edges in the \code{gGraph} grid.
 To do so, we can choose between i) strictly uniform costs (using \code{dropCosts}) ii)
 distance-based costs -- roughly uniform -- (using \code{setDistCosts}) or iii) attribute-driven
 costs (using \code{setCosts}).
+\\
 
-We shall illustrate first the strictly uniform costs.
-After setting a \code{gGraph} with uniform costs, we use \code{dijkstraFrom} to find the shortests
+We shall first illustrate the strictly uniform costs.
+After setting a \code{gGraph} with uniform costs, we use \code{dijkstraFrom} to find the shortest
 paths between Addis abeba and the populations of \code{hgdp}:
 <<>>=
 myGraph <- dropCosts(worldgraph.40k)
@@ -741,7 +742,7 @@ addis <- cbind(38,9)
 ori <- closestNode(myGraph, addis)
 paths <- dijkstraFrom(hgdp, ori)
 @
-The object \code{paths} contains the identified paths, as a list with class \code{gPath} (see \code{?gPath}).
+The object \code{paths} contains the identified paths, which are stored as a list with class \code{gPath} (see \code{?gPath}).
 Paths can be plotted easily:
 <<fig=TRUE>>=
 addis <- as.vector(addis)
@@ -752,9 +753,9 @@ text(addis[1]+35, addis[2], "Addis abeba", cex=.8, font=2)
 points(hgdp, col.node="black")
 @
 
-\noindent On this graph, each path is plotted with a different color, but paths overlap at several places.
+\noindent In this graph, each path is plotted with a different color, but several paths overlap in several places.
 We can extract the distances from the `origin' using \code{as.dist.gPath}, and then examine the
-relationship between genetic diversity within populations and the distance from the origin:
+relationship between genetic diversity within populations (stored in \code{hgdp}) and the distance from the origin:
 <<fig=TRUE>>=
 div <- getData(hgdp)$"Genetic.Div"
 dgeo.unif <- as.dist.gPath(paths, res.type="vector")
@@ -766,10 +767,10 @@ title("Genetic diversity vs geographic distance \n uniform costs ")
 @
 
 
-Alternatively, we could use costs based on habitat.
+Alternatively, we can use costs based on habitat.
 As a toy example, we will consider that coasts are four times more favourable for dispersal than
 the rest of the landmasses.
-We first define these new costs:
+We define these new costs, and then compute and plot the corresponding shortest paths:
 <<>>=
 myGraph@meta$costs[7,] <- c("coast", 0.25)
 myGraph@meta$costs
@@ -784,7 +785,7 @@ text(addis[1]+35, addis[2], "Addis abeba", cex=.8, font=2)
 points(hgdp, col.node="black")
 @
 
-Now the new paths are slightly different from the previous ones.
+The new paths are slightly different from the previous ones.
 We can examine the new relationship with genetic distance:
 <<fig=TRUE>>=
 dgeo.hab <- as.dist.gPath(paths.2, res.type="vector")
@@ -795,7 +796,7 @@ summary(lm.hab)
 title("Genetic diversity vs geographic distance \n habitat costs ")
 @
 
-Of course, the distinction between coasts and inner landmasses is a somewhat poor description of the habitat.
+Of course, the distinction between coasts and inner landmasses is a somewhat poor description of habitat.
 In practice, complex habitat models can be used as simply.
 
 
