@@ -1,9 +1,0 @@
-File monthly_gpp.out produced by ADF 7/4/09.
-Values relate to centre of 1/4 degree lat/lon vegetated land cells.
-
-Columns:
-lat lon kmo gpp
-lat: latitude (degree)
-lon: longitude (degree)
-kmo: month (1-12)
-gpp: gross primary productivity (gC/m2/month)
