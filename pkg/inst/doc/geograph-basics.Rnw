@@ -760,11 +760,11 @@ points(hgdp, col.node="black")
 @
 
 \noindent In this graph, each path is plotted with a different color, but several paths overlap in several places.
-We can extract the distances from the `origin' using \code{as.dist.gPath}, and then examine the
+We can extract the distances from the `origin' using \code{gPath2dist}, and then examine the
 relationship between genetic diversity within populations (stored in \code{hgdp}) and the distance from the origin:
 <<fig=TRUE>>=
 div <- getData(hgdp)$"Genetic.Div"
-dgeo.unif <- as.dist.gPath(paths, res.type="vector")
+dgeo.unif <- gPath2dist(paths, res.type="vector")
 plot(div~dgeo.unif, xlab="Geographic distance (arbitrary units)", ylab="Genetic diversity")
 lm.unif <- lm(div~dgeo.unif)
 abline(lm.unif, col="red")
@@ -794,7 +794,7 @@ points(hgdp, col.node="black")
 The new paths are slightly different from the previous ones.
 We can examine the new relationship with genetic distance:
 <<fig=TRUE>>=
-dgeo.hab <- as.dist.gPath(paths.2, res.type="vector")
+dgeo.hab <- gPath2dist(paths.2, res.type="vector")
 plot(div~dgeo.hab, xlab="Geographic distance (arbitrary units)", ylab="Genetic diversity")
 lm.hab <- lm(div~dgeo.hab)
 abline(lm.hab, col="red")

@@ -297,7 +297,7 @@ plot.gPath <- function(x, col="rainbow", lwd=3, ...){
 ## CONVERSION gPath -> distance
 ##
 
-as.dist.gPath <- function(m, diag=FALSE, upper=FALSE, res.type=c("dist","vector")){
+gPath2dist <- function(m, diag=FALSE, upper=FALSE, res.type=c("dist","vector")){
 
     ## find the size of the dist object ##
     x <- m
@@ -333,4 +333,4 @@ as.dist.gPath <- function(m, diag=FALSE, upper=FALSE, res.type=c("dist","vector"
     }
 
     return(res)
-} # end as.dist.gPath
+} # end gPath2dist

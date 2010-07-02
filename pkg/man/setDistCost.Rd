@@ -9,7 +9,7 @@
   \linkS4class{gGraph} object using the geographic distance. The cost
   associated to an edge is defined as the great circle distance between
   the two nodes of this edge. \code{setDistCosts} actually relies on
-  \code{\link[pkg:fields]{rdist.earth}} of the \code{fields} package.
+  \code{\link[fields]{rdist.earth}} of the \code{fields} package.
 }
 \usage{
 setDistCosts(x, \dots)
