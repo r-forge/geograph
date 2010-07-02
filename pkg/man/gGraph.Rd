@@ -173,7 +173,7 @@
 }
 \examples{
 ## create an empty object
-new("gGraph", comments="This is my first gGraph")
+new("gGraph")
 
 
 ## plotting the object
