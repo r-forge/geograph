@@ -17,9 +17,9 @@
 }
 \usage{
 findLand(x, \dots)
-\S4method{findLand}{matrix}(x, shape="world", \dots)
-\S4method{findLand}{data.frame}(x, shape="world", \dots)
-\S4method{findLand}{gGraph}(x, shape="world", attr.name="habitat", \dots)
+\S4method{findLand}{matrix}(x, shape="world")
+\S4method{findLand}{data.frame}(x, shape="world")
+\S4method{findLand}{gGraph}(x, shape="world", attr.name="habitat")
 }
 \arguments{
   \item{x}{a matrix, a data.frame, or a valid \linkS4class{gGraph}
@@ -30,8 +30,8 @@ findLand(x, \dots)
     from a GIS shapefile). Alternatively, a character string indicating
     one shapefile released with geoGraph; currently, only 'world' is
     available (see \code{?data(worldshape)}).}
-  \item{\dots}{further arguments to be passed to other
-    methods. Currently not used.}
+  % \item{\dots}{further arguments to be passed to other
+  %   methods. Currently not used.}
   \item{attr.name}{a character string giving the name of the node
     attribute in which the output is to be stored.}
 }
