@@ -48,10 +48,6 @@
       coords. For matrix-like objects, rows should correspond to locations.}
     \item{\code{gGraph.name}}{a character string the name of the \linkS4class{gGraph}
       object against which the object is matched.}
-    \item{\code{gGraph.version}}{a character string being a syntaxically
-      valid POSIXct expression (see \code{?POSIXct}), indicating the
-      version (i.e., precise date) of the \linkS4class{gGraph}
-      object against which the object is matched.}
   }
   Note that none of these is mandatory: \code{new("gData")} would work, and
   create an empty \code{gGraph} object. Also note that a finer matching
@@ -70,9 +66,7 @@
     \code{@coords}.}
     \item{\code{gGraph.name}:}{the name of a \code{gGraph} object
     (see above).}
-    \item{\code{gGraph.version}:}{the version of a \code{gGraph} object
-    (see above).}
-  }
+}
 }
 \section{Methods}{
   Here is a list of methods available for \code{gData} objects. See

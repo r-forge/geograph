@@ -81,9 +81,9 @@ setMethod("getNodesAttr", "gData", function(x, attr.name=NULL,...) {
 #############
 ## getDates
 #############
-setGeneric("getDates", function(x, ...) {
-    standardGeneric("getDates")
-})
+## setGeneric("getDates", function(x, ...) {
+##     standardGeneric("getDates")
+## })
 
 
 

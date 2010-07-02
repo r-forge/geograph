@@ -10,7 +10,7 @@
 }
 \usage{
 getColors(x, \dots)
-\S4method{getColors}{gGraph}(x, nodes="all", attr.name, \dots)
+\S4method{getColors}{gGraph}(x, nodes="all", attr.name, col.rules = NULL, \dots)
 }
 \arguments{
   \item{x}{a valid \linkS4class{gGraph}.}
@@ -19,6 +19,8 @@ getColors(x, \dots)
     which case all nodes are considered.}
   \item{attr.name}{a character string indicating the name of node
     attribute to be used to define colors.}
+  \item{col.rules}{a matrix giving the rules for plotting attribute
+    values with different colors. See details.}
   \item{\dots}{other arguments passed to other methods.}
 }
 \value{
@@ -29,8 +31,12 @@ getColors(x, \dots)
   \code{nodes.attr} data.frame. This attribute should have a finite
   number of values, and would most likely be a factor. Correspondence
   between values of this variable and colors must be provided in the
-  \code{@meta\$color} slot. See example section to know how this slot
-  should be designed.
+  \code{@meta\$color} slot, or as \code{col.rules} argument. Color rules
+  mus be provided as a two-column matrix; the first column contains
+  values of a node attribute, and is named after this attribute; the
+  second must be named "color", and contain valid colors.
+
+  See example section to know how this slot should be designed.
   
 }
 \author{Thibaut Jombart (\email{t.jombart@imperial.ac.uk})}

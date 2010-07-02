@@ -13,7 +13,7 @@ setGeneric("findLand", function(x,...) {
 ################
 ## for matrices (of long/lat)
 ################
-setMethod("findLand", "matrix", function(x, shape="world") {
+setMethod("findLand", "matrix", function(x, shape="world", ...) {
 
     ## This functions automatically assigns to land all points overlapping the country polygons
     if(!require(maptools)) stop("maptools package is required.")
