@@ -3,6 +3,7 @@
 \alias{getCosts}
 \alias{getCosts-methods}
 \alias{getCosts,gGraph-method}
+\alias{getNodeCosts}
 \alias{getNodeCosts-methods}
 \alias{getNodeCosts,gGraph-method}
 \title{Get costs associated to edges of a gGraph object}

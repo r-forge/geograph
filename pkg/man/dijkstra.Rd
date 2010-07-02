@@ -32,18 +32,17 @@
   likely be meaningless.\cr
 }
 \usage{
-  \S4method{dijkstraFrom}{gGraph}(x, start, weights="default")
-  \S4method{dijkstraFrom}{gData}(x, start, weights="default")
+  \S4method{dijkstraFrom}{gGraph}(x, start)
+  \S4method{dijkstraFrom}{gData}(x, start)
   \S4method{dijkstraBetween}{gGraph}(x, from, to)
-  \S4method{dijkstraBetween}{gData}(m, diag = FALSE, upper = FALSE)
+  \S4method{dijkstraBetween}{gData}(x)
   \method{plot}{gPath}(x, col="rainbow", lwd=3, \dots)
-  \method{as.dist}{gPath}(m, diag=FALSE, upper=FALSE, res.type=c("dist","vector"))
+  gPath2dist(m, diag=FALSE, upper=FALSE, res.type=c("dist","vector"))
 }
 \arguments{
   \item{x}{a \linkS4class{gGraph} or a \linkS4class{gData}
     object. For plotting method of \code{gPath} objects, a \code{gPath} object.}
   \item{start}{a character string naming the 'source' node.}
-  \item{weights}{an optional set of weights for the edges.}
   \item{from}{a vector of character strings giving node names.}
   \item{to}{a vector of character strings giving node names.}
   \item{col}{a character string indicating a color or
