@@ -5,7 +5,7 @@
 \alias{[,gGraph-method}
 \alias{[,gGraph,ANY,ANY-method}
 \alias{getCoords,gGraph-method}
-\alias{getDates,gGraph-method}
+% \alias{getDates,gGraph-method}
 \alias{getGraph,gGraph-method}
 % \alias{getHistory,gGraph-method}
 \alias{getNodes,gGraph-method}
@@ -16,7 +16,7 @@
 \alias{is.gGraph}
 % \alias{getHistory}
 \alias{getGraph}
-\alias{getDates}
+% \alias{getDates}
 \alias{getCoords}
 \alias{getNodes}
 %%%%% THESE HAVE THEIR OWN MANPAGES
@@ -133,7 +133,7 @@
       corresponding to the nodes, as specified in the \code{@meta\$color} slot.}
     \item{getCoords}{\code{signature(x = "gGraph")}: get geographic
       coordinates of the object.}
-    \item{getDates}{\code{signature(x = "gGraph")}: get dates of modifications of the object.}
+    % \item{getDates}{\code{signature(x = "gGraph")}: get dates of modifications of the object.}
     \item{getEdges*}{\code{signature(x = "gGraph")}: get edges of the object.}
     \item{getGraph}{\code{signature(x = "gGraph")}: get the graph of the
       object (as a \code{graphNEL} object).}
