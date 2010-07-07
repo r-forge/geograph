@@ -72,7 +72,7 @@ geo.zoomin <- function(reg=NULL){ # reg should be a list as returned by locator(
         ##     temp <- paste(temp, ")")
 
         newCall <- parse(text=temp)
-        eval(newCall)
+        eval(newCall, env=.GlobalEnv)
 
     } else { ## reg not provided => looping ##
 
@@ -96,7 +96,7 @@ geo.zoomin <- function(reg=NULL){ # reg should be a list as returned by locator(
                 temp <- sub(",[[:blank:]]*res..[^)]*", "",temp) # same thing, if last arg
 
                 newCall <- parse(text=temp)
-                eval(newCall)
+                eval(newCall, env=.GlobalEnv)
 
                 reg <- data.frame(reg)
             } # end if nrow(reg) > 1
@@ -170,7 +170,7 @@ geo.zoomout <- function(){
 
         newCall <- parse(text=temp)
 
-        eval(newCall)
+        eval(newCall, env=.GlobalEnv)
     }
 
     return(invisible())
@@ -207,7 +207,7 @@ geo.back <- function(){
 
         newCall <- parse(text=temp)
 
-        eval(newCall)
+        eval(newCall, env=.GlobalEnv)
     }
 
     return(invisible())
@@ -247,7 +247,7 @@ geo.slide <- function(){
 
         newCall <- parse(text=temp)
 
-        eval(newCall)
+        eval(newCall, env=.GlobalEnv)
     }
 
     return(invisible())
@@ -319,7 +319,7 @@ geo.goto <- function(name){
     ## reconstruct a valid call to plot
     temp <- deparse(last.plot.call)
     newCall <- parse(text=temp)
-    eval(newCall)
+    eval(newCall, env=.GlobalEnv)
 
     return(invisible())
 } # end geo.goto
