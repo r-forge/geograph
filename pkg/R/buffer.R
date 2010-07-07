@@ -12,7 +12,7 @@ setGeneric("buffer", function(x, ...) {
 ################
 ## gGraph method
 ################
-setMethod("buffer", "gGraph", function(x, nodes, d, res.type=c("nodes", "gGraph", "gData"), ...){
+setMethod("buffer", "gGraph", function(x, nodes, d, res.type=c("nodes", "gGraph"), ...){
     ## CHECKS ##
     if(!is.gGraph(x)) stop("x is not a valid gGraph object")
     if(!is.numeric(d)) stop("d is not numeric")
@@ -56,10 +56,15 @@ setMethod("buffer", "gGraph", function(x, nodes, d, res.type=c("nodes", "gGraph"
     res <- unique(res)
     if(res.type == "nodes") return(res) # if res.type is nodes
 
-    if(res.type == "gData"){ # if res.type is gData
-        temp <- new("gData", coords=XY[res,,drop=FALSE], gGraph.name=deparse(substitute(x)))
-        return(temp)
-    }
+
+    #### DOES NOT WORK
+    ## ISSUES WHEN DEPARSING THE GGRAPH
+    ## if(res.type == "gData"){ # if res.type is gData
+    ##     graphName <- gsub("\"","",deparse(x, back=FALSE))
+    ##     return(graphName)
+    ##     temp <- new("gData", coords=XY[res,,drop=FALSE], gGraph.name=graphName)
+    ##     return(temp)
+    ## }
 
 
     ## else ... (res.type==gGraph)
