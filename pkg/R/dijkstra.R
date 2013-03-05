@@ -20,11 +20,11 @@ setMethod("dijkstraBetween", "gGraph", function(x, from, to){
     if(!all(from %in% getNodes(x))) stop("Some starting nodes are not in x.")
     if(!all(to %in% getNodes(x))) stop("Some ending nodes are not in x.")
 
-    ## build the wrapper ##
-    myGraph <- getGraph(x)
-
     ## check connectivity ##
     if(!areConnected(myGraph, unique(c(from,to)))) stop("Not all nodes are connected by the graph.")
+
+    ## build the wrapper ##
+    myGraph <- getGraph(x)
 
     ## recycle from and to
     maxLength <- max(length(from), length(to))
@@ -32,17 +32,20 @@ setMethod("dijkstraBetween", "gGraph", function(x, from, to){
     to <- rep(to, length=maxLength)
 
     ## build indices of all pairwise combinations ##
-    pairIdStart <- integer()
-    pairIdStop <- integer()
+    if(maxLength>1){
+        pairIdStart <- integer()
+        pairIdStop <- integer()
 
-    for(i in 1:maxLength){
-        j <- i
-        while((j <- j+1) < (maxLength+1) ){
-            pairIdStart <- c(pairIdStart, i)
-            pairIdStop <- c(pairIdStop, j)
+        for(i in 1:maxLength){
+            j <- i
+            while((j <- j+1) < (maxLength+1) ){
+                pairIdStart <- c(pairIdStart, i)
+                pairIdStop <- c(pairIdStop, j)
+            }
         }
+    } else {
+        pairIdStart <- pairIdStop <- 1
     }
-
 
     ## wrap ##
     ## ! sp.between does not return duplicated paths
